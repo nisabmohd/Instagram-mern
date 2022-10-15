@@ -45,12 +45,11 @@ exports.loginUser = async (req, res) => {
         message: "Wrong password",
       });
     const token = jwt.sign({ _id: user._id }, process.env.JWT_Secret);
-    res
-      .cookie("token", token,  { maxAge: 900000, httpOnly: true })
-      .send({
-        success: true,
-        user,
-      });
+    res.send({
+      success: true,
+      user,
+      token
+    });
   } catch (err) {
     res.status(400).send({
       success: false,
