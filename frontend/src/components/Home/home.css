@@ -1,0 +1,33 @@
+.home {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 23px 0;
+    position: relative;
+    top: 55px;
+}
+
+.left-home {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+}
+
+.right-home {
+    width: 30%;
+    height: 50px;
+}
+.stories{
+    width: 100%;
+    background-color: white;
+    margin-bottom: 15px;
+    height: 109px;
+    border-radius: 7px;
+    border: 1.7px solid var(--border);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: auto;
+}
