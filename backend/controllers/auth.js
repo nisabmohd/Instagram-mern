@@ -30,9 +30,9 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email }).select(
-      "+password"
-    );
+    const user = await User.findOne({
+      $or: [{ email: req.body.text }, { username: req.body.text }],
+    }).select("+password");
     if (!user)
       return res.status(401).send({
         success: false,
@@ -48,7 +48,7 @@ exports.loginUser = async (req, res) => {
     res.send({
       success: true,
       user,
-      token
+      token,
     });
   } catch (err) {
     res.status(400).send({
