@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema({
   caption: String,
   image: {
     type: String,
-    required: [true,"Empty Post cannot be made"],
+    required: [true, "Empty Post cannot be made"],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -28,7 +28,7 @@ const postSchema = new mongoose.Schema({
       },
       comment: {
         type: String,
-        required: [true,"Empty comment not allowed"],
+        required: [true, "Empty comment not allowed"],
       },
     },
   ],

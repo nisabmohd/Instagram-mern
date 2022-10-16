@@ -48,6 +48,38 @@ const userSchema = new mongoose.Schema({
     maxLength: 300,
   },
   website: String,
+
+  notifications: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      NotificationType: Number,
+      content: String,
+      seen: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
+  hasNotifications: {
+    type: Boolean,
+    default: false,
+  },
+  conversations: [
+    {
+      roomId: {
+        type: String,
+      },
+      people: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+    },
+  ],
 });
 
 module.exports = new mongoose.model("User", userSchema);
