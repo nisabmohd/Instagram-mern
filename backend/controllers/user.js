@@ -1,5 +1,6 @@
 const User = require("../models/User");
 
+// get a user
 exports.getUser = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -19,6 +20,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
+// follow/Unfollow user
 exports.followHandle = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -35,7 +37,7 @@ exports.followHandle = async (req, res) => {
         {
           $push: {
             notifications: {
-              user: userId,
+              user: user,
               content: "Followed you",
               NotificationType: 3,
             },
@@ -55,6 +57,7 @@ exports.followHandle = async (req, res) => {
   }
 };
 
+// get followings list og a user
 exports.getFollowings = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -75,6 +78,7 @@ exports.getFollowings = async (req, res) => {
   }
 };
 
+// get followers list og a user
 exports.getFollowers = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -95,6 +99,7 @@ exports.getFollowers = async (req, res) => {
   }
 };
 
+// check user has unreadnotifications
 exports.hasNotications = async (req, res) => {
   try {
     const user = req.user._id;
@@ -111,11 +116,12 @@ exports.hasNotications = async (req, res) => {
   }
 };
 
+// get all notifications of user
 exports.notications = async (req, res) => {
   try {
     const user = req.user._id;
     const notifications = await User.findOne({ _id: user });
-    const unSorted=notifications.notifications
+    const unSorted = notifications.notifications;
     res.send(unSorted.reverse());
   } catch (err) {
     res.send({
@@ -124,3 +130,51 @@ exports.notications = async (req, res) => {
     });
   }
 };
+
+// update user
+exports.updateUser = async (req, res) => {
+  try {
+    const user = req.user._id;
+    const findUser = await User.findOne({ _id: user });
+    console.log();
+    res.send(
+      await User.updateOne(
+        { _id: user },
+        { $set: { ...{ ...findUser }._doc, ...req.body } }
+      )
+    );
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// search user
+exports.search = async (req, res) => {
+  try {
+    const { text } = req.params;
+    const result = await User.find({
+      username: { $regex: text, $options: "i" },
+    });
+    res.send(result);
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// forgot password
+
+// add story
+
+// get user story
+
+// followings users story
+
+// suggestions
+
+// read unread notifications to read

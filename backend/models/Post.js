@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   caption: String,
-  image: {
-    type: String,
-    required: [true, "Empty Post cannot be made"],
-  },
+  images: [
+    {
+      type: String,
+      require: true,
+    },
+  ],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

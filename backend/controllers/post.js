@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
+const { all } = require("../routes/post");
 
 exports.getPost = async (req, res) => {
   try {
@@ -207,12 +208,96 @@ exports.deleteComment = async (req, res) => {
 
 exports.save = async (req, res) => {
   try {
-    res.send(
-      await User.updateOne(
-        { _id: req.user._id },
-        { $push: { saved: req.params.postId } }
-      )
-    );
+    const userFind = await User.findOne({ _id: req.user._id });
+    const savedArr = userFind.saved;
+    if (savedArr.includes(req.params.postId)) {
+      res.send(
+        await User.updateOne(
+          { _id: req.user._id },
+          { $pull: { saved: req.params.postId } }
+        )
+      );
+    } else {
+      res.send(
+        await User.updateOne(
+          { _id: req.user._id },
+          { $push: { saved: req.params.postId } }
+        )
+      );
+    }
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// users post
+exports.userPosts = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const posts = await Post.find({ owner: userId }).sort({ createdAt: -1 });
+    res.send(posts);
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// explore post
+exports.explore = async (req, res) => {
+  try {
+    const posts = await Post.find({ owner: { $ne: req.user._id } }).sort({
+      createdAt: -1,
+    });
+    res.send(posts);
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// saved posts
+exports.savedPosts = async (req, res) => {
+  try {
+    const findUser = await User.findOne({ _id: req.user._id });
+    let savedPost = [];
+    Promise.all(
+      findUser.saved.map(async (item) => {
+        savedPost.push(await Post.findOne({ _id: item }));
+      })
+    ).then(() => {
+      res.send(savedPost.reverse());
+    });
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// followings + my posts (home)
+exports.homePosts = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const posts = await Post.find({ owner: userId });
+    const user = await User.findOne({ _id: userId });
+    Promise.all(
+      user.followings.map(async (item) => {
+        posts.push(...(await Post.find({ owner: item })));
+      })
+    ).then(() => {
+      const arr = posts.sort((a, b) => {
+       return b.createdAt - a.createdAt;
+      });
+      res.send(arr);
+    });
   } catch (err) {
     res.send({
       success: false,
