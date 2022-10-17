@@ -59,7 +59,7 @@ exports.loginUser = async (req, res) => {
         message: "Wrong password",
       });
     const access_token = jwt.sign({ _id: user._id }, process.env.JWT_Secret, {
-      expiresIn: "20s",
+      expiresIn: "45m",
     });
     const refresh_token = jwt.sign(
       { _id: user._id },
@@ -99,7 +99,7 @@ exports.tokenManage = async (req, res) => {
       });
     const decode = jwt.verify(token, process.env.JWT_Refresh_Secret);
     const accessToken = jwt.sign({ _id: decode._id }, process.env.JWT_Secret, {
-      expiresIn: "20s",
+      expiresIn: "45m",
     });
     res.send({
       access_token: accessToken,
