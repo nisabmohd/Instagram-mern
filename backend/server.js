@@ -5,6 +5,7 @@ const cors=require('cors')
 
 const authRoute=require('./routes/auth')
 const postRoute=require('./routes/post')
+const userRoute=require('./routes/user')
 
 const app=express();
 app.use(express.json())
@@ -12,6 +13,7 @@ app.use(cors())
 
 app.use('/auth',authRoute)
 app.use('/post',postRoute)
+app.use('/user',userRoute)
 
 app.get('/test',(req,res)=>{
     res.send("Hello from other side")
