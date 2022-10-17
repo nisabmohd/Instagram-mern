@@ -30,6 +30,18 @@ exports.followHandle = async (req, res) => {
     } else {
       await User.updateOne({ _id: user }, { $push: { followings: userId } });
       await User.updateOne({ _id: userId }, { $push: { followers: user } });
+      await User.updateOne(
+        { _id: userId },
+        {
+          $push: {
+            notifications: {
+              user: userId,
+              content: "Followed you",
+              NotificationType: 3,
+            },
+          },
+        }
+      );
     }
     res.send({
       success: true,

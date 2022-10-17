@@ -55,6 +55,9 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
+      // 1 -> like
+      // 2 -> comment
+      // 3 ->Follow 
       NotificationType: Number,
       content: String,
       seen: {
@@ -63,10 +66,6 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-  hasNotifications: {
-    type: Boolean,
-    default: false,
-  },
   conversations: [
     {
       roomId: {
