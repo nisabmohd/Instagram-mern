@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Token = require("../models/AuthTokens");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -16,9 +17,22 @@ exports.registerUser = async (req, res) => {
     };
     const newUser = new User(data);
     const user = await newUser.save();
+    const access_token = jwt.sign({ _id: user._id }, process.env.JWT_Secret, {
+      expiresIn: "45m",
+    });
+    const refresh_token = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_Refresh_Secret
+    );
+    const refToken = new Token({
+      token: refresh_token,
+    });
+    await refToken.save();
     res.send({
       success: true,
       user,
+      access_token,
+      refresh_token,
     });
   } catch (err) {
     res.status(400).send({
@@ -44,11 +58,22 @@ exports.loginUser = async (req, res) => {
         success: false,
         message: "Wrong password",
       });
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_Secret);
+    const access_token = jwt.sign({ _id: user._id }, process.env.JWT_Secret, {
+      expiresIn: "45m",
+    });
+    const refresh_token = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_Refresh_Secret
+    );
+    const refToken = new Token({
+      token: refresh_token,
+    });
+    await refToken.save();
     res.send({
       success: true,
       user,
-      token,
+      access_token,
+      refresh_token,
     });
   } catch (err) {
     res.status(400).send({
@@ -56,4 +81,24 @@ exports.loginUser = async (req, res) => {
       message: err.message,
     });
   }
+};
+
+exports.tokenManage = async (req, res) => {
+  const { token } = req.body;
+  if (!token)
+    return res.status(401).send({
+      success: false,
+      message: "No Refresh Token Provided",
+    });
+  const isToken = await Token.findOne({ token });
+  if (!isToken)
+    return res.status(401).send({
+      success: false,
+      message: "Invalid Refresh Token",
+    });
+  const decode = jwt.verify(token, process.env.JWT_Refresh_Secret);
+  const accessToken = jwt.sign(decode._id, process.env.JWT_Secret);
+  res.send({
+    access_token: accessToken,
+  });
 };
