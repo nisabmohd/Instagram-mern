@@ -102,3 +102,15 @@ exports.tokenManage = async (req, res) => {
     access_token: accessToken,
   });
 };
+
+exports.logout = async (req, res) => {
+  try {
+    const { token } = req.body;
+    res.send(await Token.deleteOne({ token }));
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
