@@ -152,7 +152,7 @@ exports.addComment = async (req, res) => {
           notifications: {
             user: req.user._id,
             content: "Commented on your post",
-            NotificationType: 1,
+            NotificationType: 2,
             postId: req.params.postId,
           },
         },

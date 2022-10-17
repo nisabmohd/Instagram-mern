@@ -115,7 +115,8 @@ exports.notications = async (req, res) => {
   try {
     const user = req.user._id;
     const notifications = await User.findOne({ _id: user });
-    res.send(notifications);
+    const unSorted=notifications.notifications
+    res.send(unSorted.reverse());
   } catch (err) {
     res.send({
       success: false,
