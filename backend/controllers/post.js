@@ -105,6 +105,19 @@ exports.likesHandle = async (req, res) => {
         { _id: req.params.postId },
         { $push: { likes: user } }
       );
+      await User.updateOne(
+        { _id: post.owner.toString() },
+        {
+          $push: {
+            notifications: {
+              user: user,
+              content: "Liked your post",
+              NotificationType: 1,
+              postId: req.params.postId,
+            },
+          },
+        }
+      );
       return res.send(change);
     }
   } catch (err) {
@@ -131,6 +144,19 @@ exports.addComment = async (req, res) => {
     const comment = await Post.updateOne(
       { _id: req.params.postId },
       { $push: { comments: { user: req.user._id, comment: req.body.comment } } }
+    );
+    await User.updateOne(
+      { _id: post.owner.toString() },
+      {
+        $push: {
+          notifications: {
+            user: req.user._id,
+            content: "Commented on your post",
+            NotificationType: 1,
+            postId: req.params.postId,
+          },
+        },
+      }
     );
     res.send(comment);
   } catch (err) {

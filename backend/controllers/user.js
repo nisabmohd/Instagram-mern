@@ -94,3 +94,32 @@ exports.getFollowers = async (req, res) => {
     });
   }
 };
+
+exports.hasNotications = async (req, res) => {
+  try {
+    const user = req.user._id;
+    const notificationsUser = await User.findOne(
+      { _id: user },
+      { notifications: { $elemMatch: { seen: false } } }
+    );
+    res.send({ notifications: notificationsUser.notifications !== undefined });
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+exports.notications = async (req, res) => {
+  try {
+    const user = req.user._id;
+    const notifications = await User.findOne({ _id: user });
+    res.send(notifications);
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};

@@ -57,12 +57,17 @@ const userSchema = new mongoose.Schema({
       },
       // 1 -> like
       // 2 -> comment
-      // 3 ->Follow 
+      // 3 ->Follow
       NotificationType: Number,
       content: String,
       seen: {
         type: Boolean,
         default: false,
+      },
+      postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+        default:undefined
       },
     },
   ],
