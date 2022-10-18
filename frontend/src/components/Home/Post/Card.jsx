@@ -6,13 +6,13 @@ import "./card.css";
 export default function Card({ img, likes, avatar, username, caption, time, comments }) {
     return (
         <div className="card">
-            <div className="user-details" style={{ marginBottom: '4px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="user-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="left-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '12px' }}>
                     <div className="user-img">
                         <img src={avatar && avatar} style={{ width: '35px', borderRadius: '50%', }} alt="" />
                     </div>
                     <div className="username">
-                        <p style={{ fontWeight: 'bold', fontSize: '13.35px', marginLeft: '9px', marginTop: '-9px' }}>{username && username}</p>
+                        <p style={{ fontWeight: 'bold', fontSize: '13.35px', marginLeft: '9px' }}>{username && username}</p>
                     </div>
                 </div>
                 <div className="right-details">
@@ -46,7 +46,7 @@ export default function Card({ img, likes, avatar, username, caption, time, comm
                 <button className="no-style" >
                     {emojiIcon}
                 </button>
-                <input type="text" placeholder="Add a comment" style={{ width: '87%', height: '22px', outline: 'none', border: 'none' }} />
+                <input type="text" placeholder="Add a comment" style={{ width: '87%', height: '22px', outline: 'none', border: 'none',fontSize:'13px' }} />
                 <button className="no-style" style={{ color: '#0095F6', fontSize: '14.25px' }}>post</button>
             </div>
         </div>

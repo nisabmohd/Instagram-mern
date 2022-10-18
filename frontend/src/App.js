@@ -1,6 +1,7 @@
-import { Navbar } from "./components/navbar/Navbar";
+import { Navbar } from "./components/Navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home/Home";
+import Home from "./pages/Home";
+import Explore from './pages/Explore'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <div className="width60">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
         </Routes>
       </div>
     </>

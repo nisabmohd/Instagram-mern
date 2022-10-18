@@ -2,7 +2,8 @@
     width: 100%;
     height: 55px;
     border-bottom: 1.75px solid var(--border);
-    position: fixed;
+    position: sticky;
+    top: 0;
     background-color: white;
     z-index: 999;
 }
@@ -16,9 +17,9 @@
 }
 
 .search {
-    height: 19px;
-    width: 189px;
-    border-radius: 3px;
+    height: 29.5px;
+    width: 199px;
+    border-radius: 4px;
     padding: 5px 9px;
     display: flex;
     align-items: center;
