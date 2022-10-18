@@ -11,7 +11,8 @@ import { homeOutline } from "../../assets/svgIcons";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import {Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Notification } from "../notification/Notification";
 
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,6 +24,14 @@ export const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const [anchorElNot, setAnchorElNot] = React.useState(null);
+  const openNot = Boolean(anchorElNot);
+  const handleClickNot = (event) => {
+    setAnchorElNot(event.currentTarget);
+  };
+  const handleCloseNot = () => {
+    setAnchorElNot(null);
+  };
 
   const [openDailog, setOpenDilaog] = React.useState(false);
 
@@ -71,29 +80,19 @@ export const Navbar = () => {
           </Dialog>
 
 
-          <button className="no-style " >{likeOutline}</button>
-
-
-
-
-
-
-          <button onClick={handleClick} className="no-style " >
-            <img style={{ width: '27px', borderRadius: '50%' }} src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" alt="" />
-          </button>
           <Menu
-            anchorEl={anchorEl}
+            anchorEl={anchorElNot}
             id="account-menu"
-            open={open}
-
-            onClose={handleClose}
-            onClick={handleClose}
+            open={openNot}
+            onClose={handleCloseNot}
+            onClick={handleCloseNot}
             PaperProps={{
               elevation: 0,
               sx: {
                 overflow: 'visible',
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                width: '250px',  
+                width: '390px',
+                height: '400px',
                 mt: 1.5,
                 '& .MuiAvatar-root': {
                   width: 32,
@@ -118,25 +117,97 @@ export const Navbar = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <MenuItem style={{fontSize:'14px',fontFamily:'Questrial'}}>
+            <div style={{ height: '390px', display: 'flex', flexDirection: 'column', overflowY: 'scroll',}}>
+
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              </div>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
+                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              </div>
+            </div>
+
+          </Menu>
+
+          <button className="no-style " onClick={handleClickNot} >{likeOutline}</button>
+          
+
+          <button onClick={handleClick} className="no-style " >
+            <img style={{ width: '27px', borderRadius: '50%' }} src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" alt="" />
+          </button>
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                width: '250px',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
               {profileIcon}
-              <span style={{marginLeft:'12px'}}>Profile</span>
+              <span style={{ marginLeft: '12px' }}>Profile</span>
             </MenuItem>
-            <MenuItem style={{fontSize:'14px',fontFamily:'Questrial'}}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
               {savedIcon}
-              <span style={{marginLeft:'12px'}}>Saved</span>
+              <span style={{ marginLeft: '12px' }}>Saved</span>
             </MenuItem>
-            <MenuItem style={{fontSize:'14px',fontFamily:'Questrial'}}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
               {settingsIcon}
-              <span style={{marginLeft:'12px'}}>Settings</span>
+              <span style={{ marginLeft: '12px' }}>Settings</span>
             </MenuItem>
-            <MenuItem style={{fontSize:'14px',fontFamily:'Questrial'}}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
               {switchAccountIcon}
-              <span style={{marginLeft:'12px'}}>Switch accounts</span>
+              <span style={{ marginLeft: '12px' }}>Switch accounts</span>
             </MenuItem>
             <Divider />
-            <MenuItem style={{fontSize:'14px',fontFamily:'Questrial'}}>
-            <span style={{marginLeft:'7px'}}>Logout</span>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+              <span style={{ marginLeft: '7px' }}>Logout</span>
             </MenuItem>
           </Menu>
         </div>
