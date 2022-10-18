@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const StorySchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     data: {
       type: String,
       require: true,

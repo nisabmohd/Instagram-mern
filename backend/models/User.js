@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
       },
       // 1 -> like
       // 2 -> comment
-      // 3 ->Follow
+      // 3 -> follow
       NotificationType: Number,
       content: String,
       seen: {
