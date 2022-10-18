@@ -1,8 +1,8 @@
 import React from "react";
-import Card from "../components/Home/Post/Card";
-import '../components/Home/home.css'
-import Story from "../components/Home/Stories/Story";
-import Right from "../components/Home/Rightbar/Right";
+import Card from "../components/home/post/Card";
+import '../components/home/home.css'
+import Story from "../components/home/stories/Story";
+import Right from "../components/home/rightbar/Right";
 
 export default function Home() {
   return (

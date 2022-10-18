@@ -1,6 +1,6 @@
 import React from 'react'
-import { Masonary } from '../components/Explore/Masonary'
-import '../components/Home/home.css'
+import { Masonary } from '../components/explore/Masonary'
+import '../components/home/home.css'
 
 export default function Explore() {
   return (
