@@ -76,3 +76,60 @@ body {
   scrollbar-width: none;
   /* Firefox */
 }
+
+.lg-sg {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 7.5vh;
+  height: fit-content;
+}
+
+.login-left {
+  width: 47%;
+}
+
+.right-login {
+  width: 37%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.login-box {
+  background-color: white;
+  min-height: 410px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 14px;
+}
+.signup-box {
+  background-color: white;
+  min-height: 490px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.signup-action-box {
+  background-color: white;
+  min-height: 70px;
+  width: 100%;
+  margin-top: 12px;
+  display: flex;align-items: center;
+  justify-content: center;
+}
+
+.phone {
+  position: relative !important;
+}
+
+.images {
+  position: absolute !important;
+  top: 19.9px;
+  right: 46.2px;
+}

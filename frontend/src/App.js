@@ -10,7 +10,7 @@ import { Private } from "./Routers/Private";
 import Redirect from "./Routers/Redirect";
 
 function App() {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(null);
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {auth && <Navbar />}
