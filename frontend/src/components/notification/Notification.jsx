@@ -4,7 +4,7 @@ export const Notification = ({ avatar, username, content, time }) => {
     return (
         <div className='notification' style={{ display: 'flex', flexDirection: 'row' }}>
             <div className="user-img">
-                <img src={avatar && avatar} style={{ width: '35px', borderRadius: '50%', }} alt="" />
+                <img src={avatar && avatar} style={{ width: '40px', borderRadius: '50%', }} alt="" />
             </div>
             <div className="username" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <p style={{ fontSize: '13px', marginLeft: '9px', fontWeight: 'bold', marginTop: '-1px' }}>{username && username}</p>

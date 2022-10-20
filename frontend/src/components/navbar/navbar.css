@@ -1,11 +1,11 @@
 .navbar {
     width: 100%;
-    height: 55px;
+    height: 60px;
     border-bottom: 1.75px solid var(--border);
     position: sticky;
     top: 0;
     background-color: white;
-    z-index: 999;
+    z-index: 999;;
 }
 
 .icons {
@@ -15,15 +15,18 @@
     justify-content: space-between;
     align-items: center;
 }
+.logo{
+    width: 28%;
+}
 
 .search {
-    height: 29.5px;
-    width: 199px;
-    border-radius: 4px;
+    height: 34.5px;
+    width: 259px;
+    border-radius: 7px;
     padding: 5px 9px;
     display: flex;
     align-items: center;
-    background-color: #fafafa;
+    background-color: #f0f0f0;
 }
 
 input {

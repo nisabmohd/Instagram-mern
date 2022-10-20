@@ -9,9 +9,10 @@ import { useState } from "react";
 import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
+import { Profile } from "./pages/Profile";
 
 function App() {
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState(true);
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {auth && <Navbar />}
@@ -54,6 +55,22 @@ function App() {
             element={
               <Private>
                 <Explore />
+              </Private>
+            }
+          />
+          <Route
+            path="/saved/:username"
+            element={
+              <Private>
+                <Profile post={false} />
+              </Private>
+            }
+          />
+          <Route
+            path="/:username"
+            element={
+              <Private>
+                <Profile />
               </Private>
             }
           />
