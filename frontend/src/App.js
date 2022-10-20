@@ -6,8 +6,8 @@ import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthContext } from "./context/Auth";
 import { useState } from "react";
-import { Private } from "./Routers/Private";
-import Redirect from "./Routers/Redirect";
+import { Private } from "./routers/Private";
+import Redirect from "./routers/Redirect";
 
 function App() {
   const [auth, setAuth] = useState(null);

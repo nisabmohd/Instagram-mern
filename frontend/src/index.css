@@ -81,7 +81,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 7.5vh;
+  margin-top: 9.5vh;
   height: fit-content;
 }
 
@@ -98,27 +98,29 @@ body {
 
 .login-box {
   background-color: white;
-  min-height: 410px;
-  width: 100%;
+  min-height: 450px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 14px;
+  padding-top: 22px;
 }
 .signup-box {
   background-color: white;
-  min-height: 490px;
-  width: 100%;
+  min-height: 590px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 14px;
+  padding-top: 22px;
+
 }
 
 .signup-action-box {
   background-color: white;
   min-height: 70px;
-  width: 100%;
+  width: 350px;
   margin-top: 12px;
   display: flex;align-items: center;
   justify-content: center;
@@ -133,3 +135,4 @@ body {
   top: 19.9px;
   right: 46.2px;
 }
+
