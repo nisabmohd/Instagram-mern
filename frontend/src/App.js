@@ -8,6 +8,7 @@ import { AuthContext } from "./context/Auth";
 import { useState } from "react";
 import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
+import { Forgot } from "./pages/Forgot";
 
 function App() {
   const [auth, setAuth] = useState(null);
@@ -29,6 +30,14 @@ function App() {
             element={
               <Redirect>
                 <Signup />
+              </Redirect>
+            }
+          />
+          <Route
+            path="/forgot"
+            element={
+              <Redirect>
+                <Forgot />
               </Redirect>
             }
           />
