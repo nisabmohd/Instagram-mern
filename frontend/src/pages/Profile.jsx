@@ -82,7 +82,10 @@ export const Profile = ({ post=true }) => {
             <Image src="https://cf.ltkcdn.net/family/images/orig/274715-1600x1066-ultimate-family-picnic-guide.jpg"></Image>
             <Image src="https://cdn.givemesport.com/wp-content/uploads/2022/01/20_08_25_81d951608b8a2c375bd7326b805d65e8_960.jpg"></Image>
             <Image src="https://us.123rf.com/450wm/rido/rido1907/rido190700122/127284879-portrait-of-handsome-young-man-in-casual-denim-shirt-keeping-arms-crossed-and-smiling-while-standing.jpg?ver=6"></Image>
-            </div> : <>"saved</>
+            </div> :<div className='grid' style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',rowGap:'17px'}}>
+            <Image src="https://i.pinimg.com/736x/aa/23/77/aa2377b0e13636027b15df69ae5189ab.jpg"></Image>
+            <Image src="https://us.123rf.com/450wm/rido/rido1907/rido190700122/127284879-portrait-of-handsome-young-man-in-casual-denim-shirt-keeping-arms-crossed-and-smiling-while-standing.jpg?ver=6"></Image>
+            </div>
           }
         </div>
       </div>
