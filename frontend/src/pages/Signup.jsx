@@ -13,7 +13,7 @@ export function Signup() {
             </div>
             <SignupCard/>
             
-            <span style={{position:'absolute',bottom:'15px',fontSize:'14px'}}>© 2022 Instagram</span>
+            <span style={{position:'absolute',bottom:'15px',fontSize:'14px',color:'gray'}}>© 2022 Instagram</span>
         </div>
     </div>
   )

@@ -108,12 +108,13 @@ body {
 }
 .signup-box {
   background-color: white;
-  min-height: 590px;
+  min-height: 630px;
   width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 22px;
+  margin-top: -3.8vh;
 
 }
 
