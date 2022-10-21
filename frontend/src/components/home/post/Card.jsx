@@ -1,9 +1,11 @@
 import React from "react";
+import { useRef } from "react";
 import { moreIcons, commentIcon, emojiIcon, likeOutline, shareIcon } from "../../../assets/svgIcons";
 
 import "./card.css";
 
 export default function Card({ img, likes, avatar, username, caption, time, comments }) {
+    const commentRef=useRef()
     return (
         <div className="card">
             <div className="user-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -29,7 +31,7 @@ export default function Card({ img, likes, avatar, username, caption, time, comm
                 <button className="no-style" style={{ marginRight: '12px' }} >
                     {likeOutline}
                 </button>
-                <button className="no-style" style={{ marginRight: '12px' }} >
+                <button onClick={()=>{commentRef.current.focus()}} className="no-style" style={{ marginRight: '12px' }} >
                     {commentIcon}
                 </button>
                 <button className="no-style" style={{ marginRight: '12px', marginBottom: '-3px', }} >
@@ -46,7 +48,7 @@ export default function Card({ img, likes, avatar, username, caption, time, comm
                 <button className="no-style" >
                     {emojiIcon}
                 </button>
-                <input type="text" placeholder="Add a comment" style={{ width: '87%', height: '22px', outline: 'none', border: 'none',fontSize:'13px' }} />
+                <input ref={commentRef} type="text" placeholder="Add a comment" style={{ width: '87%', height: '22px', outline: 'none', border: 'none',fontSize:'13px',paddingLeft:'9px' }} />
                 <button className="no-style" style={{ color: '#0095F6', fontSize: '14.25px' }}>post</button>
             </div>
         </div>

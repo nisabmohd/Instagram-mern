@@ -84,7 +84,6 @@ export const Navbar = () => {
             id="account-menu"
             open={openNot}
             onClose={handleCloseNot}
-            onClick={handleCloseNot}
             PaperProps={{
               elevation: 0,
               sx: {
@@ -118,29 +117,23 @@ export const Navbar = () => {
           >
             <div style={{ height: '390px', display: 'flex', flexDirection: 'column', overflowY: 'scroll', }}>
 
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented : Nice Pic" time="13m" img={true} />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" img={true} content="Liked your post" time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
-              </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Followed you" time="13m" />
-              </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial', borderBottom: '1px solid #d6d6d6', padding: '15px 15px' }}>
-                <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented on your post" time="13m" />
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+                <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
             </div>
 

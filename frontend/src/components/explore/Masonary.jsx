@@ -1,6 +1,5 @@
 import React from 'react'
-import Box from '@mui/material/Box';
-import { ImageList, ImageListItem } from '@mui/material';
+import { Image } from '../post/Image'
 
 export const Masonary = () => {
     const itemData = [
@@ -9,7 +8,7 @@ export const Masonary = () => {
             title: 'Fern',
         },
         {
-            img: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f',
+            img: 'https://www.visitdubai.com/-/media/gathercontent/poi/s/skydive-dubai/fallback-image/sky-dive-dubai-3.jpg',
             title: 'Snacks',
         },
         {
@@ -17,7 +16,7 @@ export const Masonary = () => {
             title: 'Mushrooms',
         },
         {
-            img: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383',
+            img: 'https://images.unsplash.com/photo-1664575602276-acd073f104c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
             title: 'Tower',
         },
         {
@@ -28,16 +27,13 @@ export const Masonary = () => {
             img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
             title: 'Honey',
         },
-        {
-            img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-            title: 'Basketball',
-        },
+        
         {
             img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
             title: 'Breakfast',
         },
         {
-            img: 'https://images.unsplash.com/photo-1627328715728-7bcc1b5db87d',
+            img: 'https://images.unsplash.com/photo-1661956602868-6ae368943878?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
             title: 'Tree',
         },
         {
@@ -53,7 +49,7 @@ export const Masonary = () => {
             title: 'Coffee',
         },
         {
-            img: 'https://images.unsplash.com/photo-1627000086207-76eabf23aa2e',
+            img: 'https://images.unsplash.com/photo-1666202566722-26e17e78cb07?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80',
             title: 'Camping Car',
         },
         {
@@ -72,21 +68,19 @@ export const Masonary = () => {
             img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
             title: 'Bike',
         },
+        {
+            img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
+            title: 'Basketball',
+        },
     ];
     return (
-        <Box sx={{ width: "100%", height: "fit-content", overflowY: 'scroll', }}>
-            <ImageList variant="masonry" cols={3} gap={22}>
-                {itemData.map((item) => (
-                    <ImageListItem key={item.img}>
-                        <img
-                            src={`${item.img}?w=308&fit=crop&auto=format`}
-                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                            loading="lazy"
-                        />
-                    </ImageListItem>
-                ))}
-            </ImageList>
-        </Box>
+        <div className='grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', rowGap: '17px', columnGap: '23px' }}>
+            {
+                itemData.map(item =>
+                    <Image key={item.title} src={item.img}></Image>
+
+                )
+            }
+        </div>
     )
 }
