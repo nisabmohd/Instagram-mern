@@ -2,8 +2,8 @@ import React from "react";
 import "./navbar.css";
 import logo from "./logo.png";
 import Search from "./Search";
-import { Link } from "react-router-dom";
-import { messageOutline, profileIcon, savedIcon, settingsIcon, switchAccountIcon } from "../../assets/svgIcons";
+import { Link, NavLink } from "react-router-dom";
+import { exploreFill, homeFill, messageOutline, profileIcon, savedIcon, settingsIcon, switchAccountIcon } from "../../assets/svgIcons";
 import { exploreOutline } from "../../assets/svgIcons";
 import { postUploadOutline } from "../../assets/svgIcons";
 import { likeOutline } from "../../assets/svgIcons";
@@ -53,7 +53,14 @@ export const Navbar = () => {
           <Search />
         </div>
         <div className="icons">
-          <Link to="/">{homeOutline}</Link>
+          <NavLink to="/home" children={({ isActive }) => {
+            const file = isActive ? homeFill : homeOutline;
+            return (
+              <>
+                {file}
+              </>
+            );
+          }} />
           <Link to="/chats">{messageOutline}</Link>
 
           <button onClick={handleClickOpen} className="no-style " >{postUploadOutline}</button>
@@ -117,29 +124,36 @@ export const Navbar = () => {
           >
             <div style={{ height: '390px', display: 'flex', flexDirection: 'column', overflowY: 'scroll', }}>
 
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 25px' }}>
                 <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 25px' }}>
                 <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" content="Commented : Nice Pic" time="13m" img={true} />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 25px' }}>
                 <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 25px' }}>
                 <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 25px' }}>
                 <Notification username="karen01" avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" img={true} content="Liked your post" time="13m" />
               </div>
-              <div style={{ fontSize: '14px', fontFamily: 'Questrial',padding: '15px 25px' }}>
+              <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 25px' }}>
                 <Notification username="nisabmohd" avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" content="Started following you . " followbtn={true} time="13m" />
               </div>
             </div>
 
           </Menu>
 
-          <Link to="/explore">{exploreOutline}</Link>
+          <NavLink to="/explore" children={({ isActive }) => {
+            const file = isActive ? exploreFill : exploreOutline;
+            return (
+              <>
+                {file}
+              </>
+            );
+          }} />
 
 
           <button className="no-style " onClick={handleClickNot} >{likeOutline}</button>
@@ -185,19 +199,19 @@ export const Navbar = () => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
-              <Link to="/thisnisab" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center',width:'100%' }}>
+              <Link to="/thisnisab" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {profileIcon}
                 <span style={{ marginLeft: '12px' }}>Profile</span>
               </Link>
             </MenuItem>
             <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
-              <Link to="/saved/thenisab" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center',width:'100%' }}>
+              <Link to="/saved/thenisab" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {savedIcon}
                 <span style={{ marginLeft: '12px' }}>Saved</span>
               </Link>
             </MenuItem>
             <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
-              <Link to="/accounts/edit" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center',width:'100%' }}>
+              <Link to="/accounts/edit" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {settingsIcon}
                 <span style={{ marginLeft: '12px' }}>Settings</span>
               </Link>

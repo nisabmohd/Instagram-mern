@@ -43,7 +43,8 @@ function App() {
             }
           />
           <Route
-            path="/"
+            exact
+            path="/home"
             element={
               <Private>
                 <Home />
