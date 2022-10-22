@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     require: [true, "Enter Username"],
+    unique: [true, "Username already exist"],
   },
   name: {
     type: String,
@@ -11,6 +12,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     require: [true, "Enter email"],
+    unique: [true, "User with email already exist"],
   },
   avatar: String,
   followers: [
@@ -67,7 +69,7 @@ const userSchema = new mongoose.Schema({
       postId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
-        default:undefined
+        default: undefined,
       },
     },
   ],

@@ -3,8 +3,8 @@ const User = require("../models/User");
 // get a user
 exports.getUser = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const user = await User.findOne({ _id: userId });
+    const { username } = req.params;
+    const user = await User.findOne({ username });
     if (!user) {
       return res.send({
         success: false,

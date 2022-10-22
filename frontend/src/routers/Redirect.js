@@ -7,7 +7,7 @@ export default function Redirect({ children }) {
   const navigate = useNavigate();
   useEffect(() => {
     if (context.auth) {
-      navigate("/home");
+      navigate("/");
     }
   }, [context, navigate]);
   return children;

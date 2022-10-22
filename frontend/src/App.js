@@ -5,14 +5,20 @@ import Explore from "./pages/Explore";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthContext } from "./context/Auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
 import { Profile } from "./pages/Profile";
 
 function App() {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) return;
+    setAuth(user);
+  }, []);
+
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {auth && <Navbar />}
@@ -43,15 +49,6 @@ function App() {
             }
           />
           <Route
-            exact
-            path="/home"
-            element={
-              <Private>
-                <Home />
-              </Private>
-            }
-          />
-          <Route
             path="/explore"
             element={
               <Private>
@@ -60,10 +57,19 @@ function App() {
             }
           />
           <Route
-            path="/saved/:username"
+            path="/chats"
             element={
               <Private>
-                <Profile post={false} />
+                <></>
+              </Private>
+            }
+          />
+          <Route
+            exact
+            path="/"
+            element={
+              <Private>
+                <Home />
               </Private>
             }
           />
@@ -72,6 +78,14 @@ function App() {
             element={
               <Private>
                 <Profile />
+              </Private>
+            }
+          />
+          <Route
+            path="/saved/:username"
+            element={
+              <Private>
+                <Profile post={false} />
               </Private>
             }
           />

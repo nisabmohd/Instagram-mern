@@ -13,9 +13,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { Notification } from "../notification/Notification";
+import { useContext } from "react";
+import { AuthContext } from "../../context/Auth";
+import axios from "axios";
+import { url } from "../../baseUrl";
 
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const context = useContext(AuthContext)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -43,6 +48,15 @@ export const Navbar = () => {
     setOpenDilaog(false);
   };
 
+  const logout = async () => {
+    const resp = await axios.post(`${url}/auth/logout`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+    }, {
+      token: localStorage.getItem('refresh_token')
+    })
+    console.log(resp)
+  }
+
   return (
     <div className="navbar flex">
       <div className="width60 nav flex flex-row justify-btwn">
@@ -53,7 +67,7 @@ export const Navbar = () => {
           <Search />
         </div>
         <div className="icons">
-          <NavLink to="/home" children={({ isActive }) => {
+          <NavLink to="/" children={({ isActive }) => {
             const file = isActive ? homeFill : homeOutline;
             return (
               <>
@@ -199,7 +213,7 @@ export const Navbar = () => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
-              <Link to="/thisnisab" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+              <Link to={`/${context.auth.username}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {profileIcon}
                 <span style={{ marginLeft: '12px' }}>Profile</span>
               </Link>
@@ -221,7 +235,7 @@ export const Navbar = () => {
               <span style={{ marginLeft: '12px' }}>Switch accounts</span>
             </MenuItem>
             <Divider />
-            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+            <MenuItem onClick={() => logout()} style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
               <span style={{ marginLeft: '7px' }}>Logout</span>
             </MenuItem>
           </Menu>

@@ -5,7 +5,7 @@ const router = require('express').Router()
 
 router.route('/').put(isAuthenticated, updateUser)
 
-router.route('/:userId').get(getUser)
+router.route('/:username').get(getUser)
 
 router.route("/get/notifications").get(isAuthenticated, notications)
 

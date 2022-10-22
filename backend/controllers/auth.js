@@ -69,6 +69,7 @@ exports.loginUser = async (req, res) => {
       token: refresh_token,
     });
     await refToken.save();
+    user.password = undefined;
     res.send({
       success: true,
       user,
@@ -87,13 +88,13 @@ exports.tokenManage = async (req, res) => {
   try {
     const { token } = req.body;
     if (!token)
-      return res.status(401).send({
+      return res.status(400).send({
         success: false,
         message: "No Refresh Token Provided",
       });
     const isToken = await Token.findOne({ token });
     if (!isToken)
-      return res.status(401).send({
+      return res.status(400).send({
         success: false,
         message: "Invalid Refresh Token",
       });
