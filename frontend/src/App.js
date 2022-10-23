@@ -10,7 +10,8 @@ import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
 import { Profile } from "./pages/Profile";
-import {Settings} from './pages/Settings'
+import { Settings } from "./pages/Settings";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const [auth, setAuth] = useState();
@@ -20,8 +21,17 @@ function App() {
     setAuth(user);
   }, []);
 
+  const throwErr = (err) => {
+    toast.error(err, {
+      style: {
+        fontFamily: "Questrial",
+        fontSize: "12.5px",
+      },
+    });
+  };
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth,throwErr }}>
+      <Toaster />
       {auth && <Navbar />}
       <div className="width60">
         <Routes>
@@ -94,7 +104,7 @@ function App() {
             path="/saved/:username"
             element={
               <Private>
-                <Profile post={false}/>
+                <Profile post={false} />
               </Private>
             }
           />

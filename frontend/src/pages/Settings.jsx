@@ -5,7 +5,7 @@ export const Settings = () => {
     const context = useContext(AuthContext)
     return (
         <>
-            <div className='' style={{ width: '100%', backgroundColor: 'white', marginTop: '32px', border: '1px solid #dbdbdb', display: 'flex', flexDirection: 'row', minHeight: '90vh', marginBottom: '3vh' }}>
+            <div className='' style={{ width: '100%', backgroundColor: 'white', marginTop: '22px', border: '1px solid #dbdbdb', display: 'flex', flexDirection: 'row', minHeight: '90vh', marginBottom: '3vh' }}>
                 <div className="left-sett" style={{ width: '230px', height: '100%', marginLeft: '0px', marginTop: '17px' }}>
                     <div style={{ margin: '20px 0px', fontSize: '14.7px', color: 'black', fontWeight: 'bold', borderLeft: '2px solid black', paddingLeft: '22px', height: '29px', display: 'flex', alignItems: 'center' }}>Edit Profile</div>
                     <div style={{ margin: '20px 5px', fontSize: '14.7px', color: 'gray', paddingLeft: '22px', height: '29px', display: 'flex', alignItems: 'center' }}>Change Password</div>
@@ -14,7 +14,7 @@ export const Settings = () => {
                 <div className="right-set" style={{ width: '70%', marginLeft: 'auto', borderLeft: '1px solid #dbdbdb' }}>
                     <div className="input" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '95%', margin: '20px 2px', marginLeft: 'auto' }}>
                         <div className="tableleft" style={{ width: '20%', textAlign: 'right' }}>
-                            <img src={context.auth.avatar} style={{ minWidth: '35px',height:'35px',objectFit:'cover', borderRadius: '50%', marginLeft: 'auto', marginRight: '27px', }} alt="" />
+                            <img src={context.auth.avatar} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', marginLeft: 'auto', marginRight: '27px', }} alt="" />
                         </div>
                         <div className="tableright" style={{ width: '70%' }}>
                             <p style={{ fontWeight: 'bold', fontSize: '19px' }}>{context.auth.username}</p>

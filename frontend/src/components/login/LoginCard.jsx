@@ -8,7 +8,6 @@ import { url } from '../../baseUrl'
 
 export const LoginCard = () => {
     const context = useContext(AuthContext)
-
     const [username, setUsername] = useState('')
     const [password, setPasword] = useState('')
     const login = async () => {
@@ -21,10 +20,10 @@ export const LoginCard = () => {
             localStorage.setItem("access_token", response.data.access_token)
             localStorage.setItem("refresh_token", response.data.refresh_token)
             context.setAuth(response.data.user)
-        } catch (err) {
-
-        } finally {
             window.location.reload()
+        } catch (err) {
+            context.throwErr(err.response.data.message)
+            console.log(err.response.data.message);
         }
     }
     return (
