@@ -14,6 +14,8 @@ export default function Home() {
   useEffect(() => {
     api.get(`${url}/post/get/home`).then((res) => {
       setPosts(res.data)
+    }).catch(err => {
+      console.log(err);
     }).finally(() => {
       setLoading(false)
     })

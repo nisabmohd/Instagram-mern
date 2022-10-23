@@ -7,10 +7,11 @@ import ReactTimeAgo from 'react-time-ago'
 export const Notification = ({ content, time, followbtn, postId = null, userId,seen }) => {
     const [user, setUser] = useState()
     const [post, setPost] = useState()
-    console.log((<ReactTimeAgo date={Date.parse(time)} locale="en-US" />));
     useEffect(() => {
         api.get(`${url}/user/get/${userId}`).then(res => {
             setUser(res.data)
+        }).catch(err=>{
+            console.log(err);
         })
     }, [userId])
 
@@ -18,6 +19,8 @@ export const Notification = ({ content, time, followbtn, postId = null, userId,s
         if (!postId) return
         api.get(`${url}/post/${postId}`).then(res => {
             setPost(res.data)
+        }).catch(err=>{
+            console.log(err);
         })
     }, [postId])
     return (

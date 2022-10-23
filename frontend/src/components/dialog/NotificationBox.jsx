@@ -7,7 +7,6 @@ export const NotificationBox = () => {
     const [noti, setNoti] = useState([])
     useEffect(() => {
         api.get(`${url}/user/view/notifications`).then((res) => {
-            console.log(res.data);
             setNoti(res.data)
         })
     }, [])
@@ -15,7 +14,7 @@ export const NotificationBox = () => {
         <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 0px',marginTop:'-20px'}}>
             {
                 noti.map(item =>
-                    <Notification seen={item.seen} userId={item.user} content={item.content} postId={item.postId} NotificationType={item.NotificationType} followbtn={item.NotificationType === 3} time={item.time} />
+                    <Notification key={item._id} seen={item.seen} userId={item.user} content={item.content} postId={item.postId} NotificationType={item.NotificationType} followbtn={item.NotificationType === 3} time={item.time} />
                 )
             }
 

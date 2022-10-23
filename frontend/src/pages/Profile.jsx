@@ -26,6 +26,8 @@ export const Profile = ({ post = true }) => {
           console.log(data.data);
           setPosts(data.data);
         }
+      }).catch(err => {
+        console.log(err);
       })
     }
     if (!post) {
@@ -35,6 +37,8 @@ export const Profile = ({ post = true }) => {
           console.log(data.data);
           setPosts(data.data);
         }
+      }).catch(err => {
+        console.log(err);
       })
     }
     return () => {

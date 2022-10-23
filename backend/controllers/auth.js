@@ -18,7 +18,7 @@ exports.registerUser = async (req, res) => {
     const newUser = new User(data);
     const user = await newUser.save();
     const access_token = jwt.sign({ _id: user._id }, process.env.JWT_Secret, {
-      expiresIn: "45m",
+      expiresIn: "30m",
     });
     const refresh_token = jwt.sign(
       { _id: user._id },
@@ -59,7 +59,7 @@ exports.loginUser = async (req, res) => {
         message: "Wrong password",
       });
     const access_token = jwt.sign({ _id: user._id }, process.env.JWT_Secret, {
-      expiresIn: "15s",
+      expiresIn: "30m",
     });
     const refresh_token = jwt.sign(
       { _id: user._id },
@@ -100,7 +100,7 @@ exports.tokenManage = async (req, res) => {
       });
     const decode = jwt.verify(token, process.env.JWT_Refresh_Secret);
     const accessToken = jwt.sign({ _id: decode._id }, process.env.JWT_Secret, {
-      expiresIn: "15s",
+      expiresIn: "30m",
     });
     res.send({
       access_token: accessToken,
