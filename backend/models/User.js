@@ -71,6 +71,10 @@ const userSchema = new mongoose.Schema({
         ref: "Post",
         default: undefined,
       },
+      time:{
+        type:Date,
+        default:Date.now()
+      }
     },
   ],
   conversations: [

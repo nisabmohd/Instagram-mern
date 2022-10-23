@@ -14,10 +14,13 @@ export default function Home() {
   useEffect(() => {
     api.get(`${url}/post/get/home`).then((res) => {
       setPosts(res.data)
-      console.log(res.data);
     }).finally(() => {
       setLoading(false)
     })
+
+    return () => {
+      setPosts([])
+    }
   }, [])
 
   return (
@@ -50,7 +53,7 @@ export default function Home() {
           }
           {
             posts.map(item =>
-              <Card key={item._id} id={item._id} img={item.images[0]} likes={item.likes} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={item.createdAt} />
+              <Card key={item._id} id={item._id} img={item.images[0]} likes={item.likes} saved={item.saved} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={item.createdAt} />
             )
 
           }

@@ -9,9 +9,9 @@ router.route('/:username').get(getUser)
 
 router.route('/get/:id').get(getUserById)
 
-router.route("/get/notifications").get(isAuthenticated, notications)
+router.route("/view/notifications").get(isAuthenticated, notications)
 
-router.route("/get/has-notifications").get(isAuthenticated, hasNotications)
+router.route("/view/has-notifications").get(isAuthenticated, hasNotications)
 
 router.route("/handlefollow/:userId").get(isAuthenticated, followHandle)
 

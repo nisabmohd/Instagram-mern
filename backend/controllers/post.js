@@ -106,19 +106,21 @@ exports.likesHandle = async (req, res) => {
         { _id: req.params.postId },
         { $push: { likes: user } }
       );
-      await User.updateOne(
-        { _id: post.owner.toString() },
-        {
-          $push: {
-            notifications: {
-              user: user,
-              content: "Liked your post",
-              NotificationType: 1,
-              postId: req.params.postId,
+      if (post.owner != user) {
+        await User.updateOne(
+          { _id: post.owner.toString() },
+          {
+            $push: {
+              notifications: {
+                user: user,
+                content: "Liked your post",
+                NotificationType: 1,
+                postId: req.params.postId,
+              },
             },
-          },
-        }
-      );
+          }
+        );
+      }
       return res.send(change);
     }
   } catch (err) {
@@ -146,19 +148,20 @@ exports.addComment = async (req, res) => {
       { _id: req.params.postId },
       { $push: { comments: { user: req.user._id, comment: req.body.comment } } }
     );
-    await User.updateOne(
-      { _id: post.owner.toString() },
-      {
-        $push: {
-          notifications: {
-            user: req.user._id,
-            content: "Commented on your post",
-            NotificationType: 2,
-            postId: req.params.postId,
+    if (post.owner != req.user._id)
+      await User.updateOne(
+        { _id: post.owner.toString() },
+        {
+          $push: {
+            notifications: {
+              user: req.user._id,
+              content: `${req.body.comment} `,
+              NotificationType: 2,
+              postId: req.params.postId,
+            },
           },
-        },
-      }
-    );
+        }
+      );
     res.send(comment);
   } catch (err) {
     res.send({
@@ -211,19 +214,29 @@ exports.save = async (req, res) => {
     const userFind = await User.findOne({ _id: req.user._id });
     const savedArr = userFind.saved;
     if (savedArr.includes(req.params.postId)) {
-      res.send(
-        await User.updateOne(
-          { _id: req.user._id },
-          { $pull: { saved: req.params.postId } }
-        )
+      await User.updateOne(
+        { _id: req.user._id },
+        { $pull: { saved: req.params.postId } }
       );
+      await Post.updateOne(
+        { _id: req.params.postId },
+        { $pull: { saved: req.user._id } }
+      );
+      res.send({
+        success: true,
+      });
     } else {
-      res.send(
-        await User.updateOne(
-          { _id: req.user._id },
-          { $push: { saved: req.params.postId } }
-        )
+      await User.updateOne(
+        { _id: req.user._id },
+        { $push: { saved: req.params.postId } }
       );
+      await Post.updateOne(
+        { _id: req.params.postId },
+        { $push: { saved: req.user._id } }
+      );
+      res.send({
+        success: true,
+      });
     }
   } catch (err) {
     res.send({
@@ -294,7 +307,7 @@ exports.homePosts = async (req, res) => {
       })
     ).then(() => {
       const arr = posts.sort((a, b) => {
-       return b.createdAt - a.createdAt;
+        return b.createdAt - a.createdAt;
       });
       res.send(arr);
     });

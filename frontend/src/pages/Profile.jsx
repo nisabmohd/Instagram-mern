@@ -15,6 +15,7 @@ export const Profile = ({ post = true }) => {
     api.get(`${url}/user/${params.username}`).then(resp => {
       setUser(resp.data)
     }).catch(err => console.log(err))
+    return () => setUser()
   }, [params.username])
   useEffect(() => {
     if (!user) return
@@ -36,7 +37,9 @@ export const Profile = ({ post = true }) => {
         }
       })
     }
-
+    return () => {
+      setPosts([])
+    }
   }, [post, user])
   return (
     <div className='home' style={{ display: 'flex', flexDirection: 'column' }}>
@@ -44,8 +47,8 @@ export const Profile = ({ post = true }) => {
         <div className="image-user">
           <div className="imageuser" style={{ width: '155px', height: '155px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', objectFit: 'cover' }}>
             {
-                <img src={user?.avatar?user.avatar:defaultimg} style={{ minWidth: '145px', height: '145px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
-                
+              <img src={user?.avatar ? user.avatar : defaultimg} style={{ minWidth: '145px', height: '145px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
+
             }
           </div>
         </div>
@@ -120,7 +123,7 @@ export const Profile = ({ post = true }) => {
           }
 
           {
-            posts.length === 0 && !loading && <p style={{ textAlign: 'center', marginTop: '72px', width: '100%' ,fontWeight:'bold',fontSize:'16px'}}>No posts to see</p>
+            posts.length === 0 && !loading && <p style={{ textAlign: 'center', marginTop: '72px', width: '100%', fontWeight: 'bold', fontSize: '16px' }}>No posts to see</p>
           }
 
           {

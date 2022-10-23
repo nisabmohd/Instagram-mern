@@ -30,10 +30,40 @@ export const searchIcon = (
   </svg>
 );
 
+export const savedHome = (
+  <svg
+    aria-label="Remove"
+    className="_ab6-"
+    color="#262626"
+    fill="#262626"
+    height="24"
+    role="img"
+    viewBox="0 0 24 24"
+    width="24"
+  >
+    <path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path>
+  </svg>
+);
+
+export const saveHome = (
+  <svg
+    aria-label="Remove"
+    className="_ab6-"
+    color="#262626"
+    fill="#262626"
+    height="24"
+    role="img"
+    viewBox="0 0 24 24"
+    width="24"
+  >
+    <path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path>
+  </svg>
+);
+
 export const afterLike = (
   <svg
     aria-label="Unlike"
-    class="_ab6-"
+    className="_ab6-"
     color="#ed4956"
     fill="#ed4956"
     height="24"

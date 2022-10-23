@@ -16,6 +16,10 @@ export default function Explore() {
     }).finally(() => {
       setLoading(false)
     })
+
+    return () => {
+      setPost([])
+    }
   }, [])
   return (
     <div className='home'>
