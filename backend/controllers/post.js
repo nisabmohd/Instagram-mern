@@ -155,7 +155,7 @@ exports.addComment = async (req, res) => {
           $push: {
             notifications: {
               user: req.user._id,
-              content: `${req.body.comment} `,
+              content: `commented : ${req.body.comment} `,
               NotificationType: 2,
               postId: req.params.postId,
             },

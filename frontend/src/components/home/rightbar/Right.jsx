@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { UserCard } from './UserCard'
 import { AuthContext } from '../../../context/Auth'
 import defaultImg from '../../../assets/dafault.png'
+import { Link } from 'react-router-dom'
 
 export default function Right() {
     const { auth } = useContext(AuthContext)
@@ -11,12 +12,12 @@ export default function Right() {
             <div className="my-acc" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="img" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                     {
-                        <img src={auth?.avatar ? auth.avatar : defaultImg} style={{ minWidth: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
+                        <Link to={`/${auth?.username}`}><img src={auth?.avatar ? auth.avatar : defaultImg} style={{ minWidth: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt="" /></Link>
 
                     }
                     <div className="name" style={{ display: 'flex', flexDirection: 'column', marginLeft: '18px' }}>
-                        <p style={{ color: 'black', fontSize: '14.75px', fontWeight: 'bold' }}>{auth?.username}</p>
-                        <p style={{ color: 'gray', fontSize: '14.75px', marginTop: '9px' }}>{auth?.name}</p>
+                        <Link to={`/${auth?.username}`} style={{ color: 'black', fontSize: '14.75px', fontWeight: 'bold' }}>{auth?.username}</Link>
+                        <Link to={`/${auth?.username}`} style={{ color: 'gray', fontSize: '14.75px', marginTop: '9px' }}>{auth?.name}</Link>
                     </div>
                 </div>
                 <div className="switch">

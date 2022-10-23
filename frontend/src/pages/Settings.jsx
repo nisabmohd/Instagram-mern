@@ -28,7 +28,7 @@ export const Settings = () => {
                             <p style={{ marginRight: '27px', fontWeight: 'bold' }}>Name</p>
                         </div>
                         <div className="tableright" style={{ width: '80%' }}>
-                            <input type="text" value={context.auth.name} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%' }} />
+                            <input type="text" value={context.auth.name} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%',fontSize:'14px' }} />
                             <p style={{ marginTop: '13px', fontSize: '13.2px', width: '60%', color: 'gray' }}>Help people follow your account by using the username that you're known by: either your full name, nickname or business name.</p>
                         </div>
                     </div>
@@ -37,7 +37,7 @@ export const Settings = () => {
                             <p style={{ marginRight: '27px', fontWeight: 'bold' }}>Username</p>
                         </div>
                         <div className="tableright" style={{ width: '80%' }}>
-                            <input type="text" value={context.auth.username} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%' }} />
+                            <input type="text" value={context.auth.username} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%',fontSize:'14px'  }} />
                             <p style={{ marginTop: '13px', fontSize: '13.2px', width: '60%', color: 'gray' }}>Help people follow your account by using the username.</p>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ export const Settings = () => {
                             <p style={{ marginRight: '27px', fontWeight: 'bold' }}>Website</p>
                         </div>
                         <div className="tableright" style={{ width: '80%' }}>
-                            <input type="text" value={context.auth.website} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%' }} />
+                            <input type="text" value={context.auth.website} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%',fontSize:'14px' }} />
                             <p style={{ marginTop: '13px', fontSize: '13.2px', width: '60%', color: 'gray' }}>Providing links will enhace your social reach.</p>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ export const Settings = () => {
                             <p style={{ marginRight: '27px', fontWeight: 'bold' }}>Bio</p>
                         </div>
                         <div className="tableright" style={{ width: '80%' }}>
-                            <textarea value={context.auth.bio} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%' }} />
+                            <textarea value={context.auth.bio} style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%',fontSize:'14px' }} />
                             <p style={{ marginTop: '3px', fontSize: '13.2px', width: '60%', color: 'gray' }}>23 / 150</p>
 
                             <p style={{ marginTop: '23px', fontSize: '14.52px', width: '60%', color: 'gray', fontWeight: 'bold' }}>Personal information</p>
@@ -68,7 +68,7 @@ export const Settings = () => {
                             <p style={{ marginRight: '27px', fontWeight: 'bold' }}>Email</p>
                         </div>
                         <div className="tableright" style={{ width: '80%' }}>
-                            <input type="text" style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%', fontWeight: '14px' }} placeholder="Enter Email" />
+                            <input type="text" style={{ outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%', fontWeight: '14px',fontSize:'14px' }} placeholder="Enter Email" />
 
                         </div>
                     </div>
