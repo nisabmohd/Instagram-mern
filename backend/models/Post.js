@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   caption: String,
-  images: [
+  files: [
     {
-      type: String,
-      require: true,
+      fileType: String,
+      link: {
+        type: String,
+        require: true,
+      },
     },
   ],
   owner: {

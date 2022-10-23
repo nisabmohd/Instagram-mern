@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/Auth'
+import defaultimg from '../assets/dafault.png'
+
 
 export const Settings = () => {
     const context = useContext(AuthContext)
@@ -14,7 +16,7 @@ export const Settings = () => {
                 <div className="right-set" style={{ width: '70%', marginLeft: 'auto', borderLeft: '1px solid #dbdbdb' }}>
                     <div className="input" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '95%', margin: '20px 2px', marginLeft: 'auto' }}>
                         <div className="tableleft" style={{ width: '20%', textAlign: 'right' }}>
-                            <img src={context.auth.avatar} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', marginLeft: 'auto', marginRight: '27px', }} alt="" />
+                            <img src={context?.auth?.avatar?context.auth.avatar:defaultimg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', marginLeft: 'auto', marginRight: '27px', }} alt="" />
                         </div>
                         <div className="tableright" style={{ width: '70%' }}>
                             <p style={{ fontWeight: 'bold', fontSize: '19px' }}>{context.auth.username}</p>

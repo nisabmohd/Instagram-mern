@@ -10,6 +10,7 @@ import ReactTimeAgo from 'react-time-ago'
 import { AuthContext } from '../../../context/Auth'
 import "./card.css";
 import { useContext } from "react";
+import {Link} from 'react-router-dom'
 
 export default function Card({ img, likes, caption, time, comments, userId, id, saved }) {
     const context = useContext(AuthContext)
@@ -63,11 +64,11 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                 <div className="left-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '12px' }}>
                     <div className="user-img">
                         {
-                            <img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" />
+                            <Link to={user?.username}><img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
                         }
                     </div>
                     <div className="username">
-                        <p style={{ fontWeight: 'bold', fontSize: '13.35px', marginLeft: '9px' }}>{user?.username}</p>
+                        <Link to={user?.username} style={{ fontWeight: 'bold', fontSize: '13.35px', marginLeft: '9px' }}>{user?.username}</Link>
                     </div>
                 </div>
                 <div className="right-details">

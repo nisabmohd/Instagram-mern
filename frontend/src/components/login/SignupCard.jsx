@@ -24,7 +24,7 @@ export const SignupCard = () => {
             localStorage.setItem("access_token", response.data.access_token)
             localStorage.setItem("refresh_token", response.data.refresh_token)
         } catch (err) {
-
+            context.throwErr(err.response.data.message)
         }
     }
 

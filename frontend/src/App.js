@@ -12,6 +12,7 @@ import { Forgot } from "./pages/Forgot";
 import { Profile } from "./pages/Profile";
 import { Settings } from "./pages/Settings";
 import toast, { Toaster } from "react-hot-toast";
+import {Chat} from './pages/Chat'
 
 function App() {
   const [auth, setAuth] = useState();
@@ -71,7 +72,7 @@ function App() {
             path="/chats"
             element={
               <Private>
-                <></>
+                <Chat/>
               </Private>
             }
           />
