@@ -15,8 +15,9 @@ import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { Notification } from "../notification/Notification";
 import { useContext } from "react";
 import { AuthContext } from "../../context/Auth";
-import axios from "axios";
 import { url } from "../../baseUrl";
+import { api } from "../../Interceptor/apiCall";
+import defaultImg from '../../assets/dafault.png'
 
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -49,12 +50,16 @@ export const Navbar = () => {
   };
 
   const logout = async () => {
-    const resp = await axios.post(`${url}/auth/logout`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-    }, {
+    api.post(`${url}/auth/logout`, {
       token: localStorage.getItem('refresh_token')
+    }).then((resp) => {
+      if (resp.data) {
+        localStorage.clear()
+        context.setAuth(null)
+      }
+    }).catch((err) => {
+
     })
-    console.log(resp)
   }
 
   return (
@@ -174,7 +179,7 @@ export const Navbar = () => {
 
 
           <button onClick={handleClick} className="no-style " >
-            <img style={{ width: '27px', borderRadius: '50%' }} src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" alt="" />
+            <img style={{ minWidth: '27px',height:'27px' ,objectFit:'cover',borderRadius: '50%' }} src={context?.auth?.avatar?context.auth.avatar:defaultImg} alt="" />
           </button>
           <Menu
             anchorEl={anchorEl}

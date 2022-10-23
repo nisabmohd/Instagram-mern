@@ -1,10 +1,29 @@
 const User = require("../models/User");
 
-// get a user
+// get a user by username
 exports.getUser = async (req, res) => {
   try {
     const { username } = req.params;
     const user = await User.findOne({ username });
+    if (!user) {
+      return res.send({
+        success: false,
+        message: "No user found",
+      });
+    }
+    res.send(user);
+  } catch (err) {
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+exports.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({ _id: id });
     if (!user) {
       return res.send({
         success: false,

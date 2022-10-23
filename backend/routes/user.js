@@ -1,4 +1,4 @@
-const { getUser, followHandle, getFollowings, getFollowers, notications, hasNotications, updateUser, search } = require('../controllers/user')
+const { getUser, followHandle, getFollowings, getFollowers, notications, hasNotications, updateUser, search, getUserById } = require('../controllers/user')
 const { isAuthenticated } = require('../middlewares/auth')
 
 const router = require('express').Router()
@@ -6,6 +6,8 @@ const router = require('express').Router()
 router.route('/').put(isAuthenticated, updateUser)
 
 router.route('/:username').get(getUser)
+
+router.route('/get/:id').get(getUserById)
 
 router.route("/get/notifications").get(isAuthenticated, notications)
 

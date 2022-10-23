@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../components/home/post/Card";
 import '../components/home/home.css'
 import Story from "../components/home/stories/Story";
 import Right from "../components/home/rightbar/Right";
+import { api } from '../Interceptor/apiCall'
+import { url } from "../baseUrl";
+import { useState } from "react";
+import { Spinner } from "../assets/Spinner";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true)
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    api.get(`${url}/post/get/home`).then((res) => {
+      setPosts(res.data)
+      console.log(res.data);
+    }).finally(() => {
+      setLoading(false)
+    })
+  }, [])
+
   return (
     <div className="home">
       <div className="left-home">
@@ -26,13 +41,23 @@ export default function Home() {
           <Story avatar="https://www.freecodecamp.org/news/content/images/2021/05/beau-carnes-gravatar.jpeg" username="helen321" seen={false} />
         </div>
         <div className="posts">
-          <Card img="https://images.unsplash.com/photo-1525824617522-ca036119a052?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bWluaW1hbCUyMGRlc2slMjBzZXR1cHxlbnwwfHwwfHw%3D&w=1000&q=80" likes={1520} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption="Imperdiet in sit rhoncus, eleifend tellus augue lectus potenti pellentesque" comments={99} time={"3 hour ago"} />
-          <Card img="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" likes={120} avatar="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2F05407c79-a3dc-46d0-bc35-2b0b0a59374d.png?alt=media&token=65e0ba5c-5b86-463f-8364-d4f4ebc1ad8a" username="nisabmohd" caption="lorem ipsum koren chinese tea sugar potato" comments={99} time={"1 hour ago"} />
-          <Card img="https://www.heart.org/-/media/AHA/H4GM/Article-Images/healthy-cooking.jpg?h=540&iar=0&mw=960&w=960&hash=D9CDF11543BB1E2BD169DF2D9C8B8675" likes={720} avatar="https://www.freecodecamp.org/news/content/images/2021/05/beau-carnes-gravatar.jpeg" username="helen01" caption="lorem ipsum koren chinese tea sugar potato" comments={99} time={"1 hour ago"} />
+          {
+            posts?.length === 0 && loading && <Spinner />
+          }
+
+          {
+            posts?.length === 0 && !loading && <p style={{ textAlign: 'center', marginTop: '32px', width: '100%', fontWeight: 'bold', fontSize: '16px' }}>No posts to see</p>
+          }
+          {
+            posts.map(item =>
+              <Card img={item.images[0]} likes={item.likes} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={"3 hour ago"} />
+            )
+
+          }
         </div>
       </div>
       <div className="right-home ">
-        <Right/>
+        <Right />
       </div>
     </div>
   );

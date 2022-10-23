@@ -45,7 +45,6 @@ export const SignupCard = () => {
                     People who use our service may have uploaded your contact information to Instagram.
                 </p>
                 <p style={{ color: 'gray', fontSize: '12px', textAlign: 'center', width: '78%', marginTop: '17px' }}>
-
                     By signing up, you agree to our Terms, Privacy Policy and Cookies Policy.
                 </p>
                 {
