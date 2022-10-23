@@ -2,16 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
-import { moreIcons, commentIcon, emojiIcon, likeOutline, shareIcon } from "../../../assets/svgIcons";
+import { moreIcons, commentIcon, emojiIcon, likeOutline, shareIcon, afterLike } from "../../../assets/svgIcons";
 import { url } from "../../../baseUrl";
 import { api } from "../../../Interceptor/apiCall";
 import defaultImg from '../../../assets/dafault.png'
-
+import ReactTimeAgo from 'react-time-ago'
+import {AuthContext} from '../../../context/Auth'
 import "./card.css";
+import { useContext } from "react";
 
-export default function Card({ img, likes, avatar, caption, time, comments, userId }) {
+export default function Card({ img, likes, caption, time, comments, userId ,id}) {
+    const context=useContext(AuthContext)
     const [commnetsCount, setCommentsCount] = useState(comments.length)
     const [likesCount, setLikesCount] = useState(likes.length)
+    const [iLiked,setIliked]=useState(likes.includes(context.auth._id))
     const [user, setUser] = useState()
     useEffect(() => {
         api.get(`${url}/user/get/${userId}`).then(res => {
@@ -19,6 +23,7 @@ export default function Card({ img, likes, avatar, caption, time, comments, user
             setUser(res.data)
         })
     }, [userId])
+    
     const commentRef = useRef()
     return (
         <div className="card">
@@ -45,7 +50,9 @@ export default function Card({ img, likes, avatar, caption, time, comments, user
             </div>
             <div className="labels" style={{ marginTop: '9px', marginLeft: '9.2px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                 <button className="no-style" style={{ marginRight: '12px' }} >
-                    {likeOutline}
+                    {
+                        iLiked?afterLike:likeOutline
+                    }
                 </button>
                 <button onClick={() => { commentRef.current.focus() }} className="no-style" style={{ marginRight: '12px' }} >
                     {commentIcon}
@@ -62,7 +69,7 @@ export default function Card({ img, likes, avatar, caption, time, comments, user
                 commnetsCount!==0 && <div className="comments" style={{ marginTop: '9px' }}><p style={{ fontSize: '13.59px', marginLeft: '9px', color: 'gray' }}>View all {commnetsCount} comments</p></div>
             }
             
-            <div className="timestamp" style={{ marginTop: '7px' }}><p style={{ fontSize: '13.09px', marginLeft: '9px', color: 'gray' }}>{time}</p></div>
+            <div className="timestamp" style={{ marginTop: '7px' }}><p style={{ fontSize: '13.09px', marginLeft: '9px', color: 'gray' }}><ReactTimeAgo date={time} locale="en-US"/></p></div>
             <div className="addComment" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '9px', marginTop: '22px', width: '95%', borderTop: '1px solid #dbdbdb', paddingTop: '15px' }}>
                 <button className="no-style" >
                     {emojiIcon}

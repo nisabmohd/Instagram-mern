@@ -10,6 +10,7 @@ import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
 import { Profile } from "./pages/Profile";
+import {Settings} from './pages/Settings'
 
 function App() {
   const [auth, setAuth] = useState();
@@ -82,10 +83,26 @@ function App() {
             }
           />
           <Route
+            path="/"
+            element={
+              <Private>
+                <Profile />
+              </Private>
+            }
+          />
+          <Route
             path="/saved/:username"
             element={
               <Private>
-                <Profile post={false} />
+                <Profile post={false}/>
+              </Private>
+            }
+          />
+          <Route
+            path="/accounts/edit"
+            element={
+              <Private>
+                <Settings />
               </Private>
             }
           />

@@ -17,12 +17,14 @@ export const LoginCard = () => {
                 text: username,
                 password
             })
-            context.setAuth(response.data.user)
             localStorage.setItem('user', JSON.stringify(response.data.user))
             localStorage.setItem("access_token", response.data.access_token)
             localStorage.setItem("refresh_token", response.data.refresh_token)
+            context.setAuth(response.data.user)
         } catch (err) {
 
+        } finally {
+            window.location.reload()
         }
     }
     return (

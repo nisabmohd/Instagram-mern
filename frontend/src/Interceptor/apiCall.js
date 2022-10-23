@@ -18,18 +18,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      error.response.status === 401 &&
-      originalRequest.url === url + "/token"
-    ) {
-      window.location.href = "/login";
-      return Promise.reject(error);
-    }
-
-    if (
-      error.response.status === 401 &&
-      error.response.statusText === "Unauthorized"
-    ) {
+    if (error.response.status === 401) {
       const refreshToken = localStorage.getItem("refresh_token");
 
       if (refreshToken) {

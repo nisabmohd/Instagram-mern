@@ -11,7 +11,7 @@ export function Login() {
                 </div>
             </div>
             <LoginCard/>
-            
+            <span style={{position:'absolute',bottom:'15px',fontSize:'14px',color:'gray'}}>© 2022 Instagram</span>
         </div>
     )
 }

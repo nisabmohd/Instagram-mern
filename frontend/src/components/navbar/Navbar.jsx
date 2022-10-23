@@ -55,6 +55,7 @@ export const Navbar = () => {
     }).then((resp) => {
       if (resp.data) {
         localStorage.clear()
+        window.location.reload()
         context.setAuth(null)
       }
     }).catch((err) => {
