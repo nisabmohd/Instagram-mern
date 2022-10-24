@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
   ],
   bio: {
     type: String,
-    maxLength: 300,
+    maxLength: 150,
   },
   website: String,
 
@@ -71,23 +71,50 @@ const userSchema = new mongoose.Schema({
         ref: "Post",
         default: undefined,
       },
-      time:{
-        type:Date,
-        default:Date.now()
-      }
+      time: {
+        type: Date,
+        default: Date.now(),
+      },
     },
   ],
   conversations: [
     {
-      roomId: {
-        type: String,
+      type: String,
+      ref: "Room",
+    },
+  ],
+  private: {
+    type: Boolean,
+    default: false,
+  },
+  requestSent: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
       },
-      people: [
+    },
+  ],
+  requestReceived: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    },
+  ],
+  highlights: [
+    {
+      stories: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
+          ref: "Story",
         },
       ],
+      name: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });
