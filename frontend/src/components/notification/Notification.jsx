@@ -30,8 +30,8 @@ export const Notification = ({ content, time, followbtn, postId = null, userId,s
                 <Link to={`/${user?.username}`} ><img src={user?.avatar?user.avatar:defaultImg} style={{ minWidth: '44px', height: '44px', objectFit: 'cover', borderRadius: '50%',marginRight:'3px' }} alt="" /></Link>
             </div>
             <div className="username" style={{ display: 'flex', flexDirection: 'row',marginLeft: '4px',alignItems:'center',marginTop:'4px'}}>
-                <p style={{ fontSize: '12.99px', marginLeft: '4.2px', color: 'black' ,width:'85%'}}><Link to={`/${user?.username}`} style={{ fontWeight: 'bold',marginRight:'5px'}}>{user?.username}</Link>{content && content}</p>
-                <p style={{ fontSize: '12.15px', marginLeft: '4.2px', color: 'gray',marginTop:'3px' }}>{<ReactTimeAgo date={Date.parse(time)} locale="en-US" timeStyle="twitter"/>}</p>
+                <p style={{ fontSize: '12.99px', marginLeft: '4.2px', color: 'black' ,width:'95%'}}><Link to={`/${user?.username}`} style={{ fontWeight: 'bold',marginRight:'5px'}}>{user?.username}</Link>{content && content}</p>
+                <p style={{ fontSize: '12.15px', marginLeft: '7.2px', color: 'gray',}}>{<ReactTimeAgo date={Date.parse(time)} locale="en-US" timeStyle="twitter"/>}</p>
             </div>
             {
                 followbtn && <button style={{ border: 'none', outline: 'none', background: 'blue', padding: '1px 5px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', fontSize: '13px', width: '65px', fontWeight: 'bold', marginLeft: 'auto', height: '30px' }}>Follow</button>

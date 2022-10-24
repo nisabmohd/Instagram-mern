@@ -91,7 +91,7 @@ export const Navbar = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle style={{ fontFamily: 'Questrial', textAlign: 'center', fontSize: '16.5px' }} id="alert-dialog-title">
+            <DialogTitle style={{ fontFamily: 'Poppins', textAlign: 'center', fontSize: '16.5px' }} id="alert-dialog-title">
               {"Create new post"}
             </DialogTitle>
             <Divider style={{ marginTop: '-10px' }} />
@@ -204,30 +204,30 @@ export const Navbar = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Poppins' }}>
               <Link to={`/${context.auth.username}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {profileIcon}
                 <span style={{ marginLeft: '12px' }}>Profile</span>
               </Link>
             </MenuItem>
-            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Poppins' }}>
               <Link to="/saved/thenisab" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {savedIcon}
                 <span style={{ marginLeft: '12px' }}>Saved</span>
               </Link>
             </MenuItem>
-            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Poppins' }}>
               <Link to="/accounts/edit" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 {settingsIcon}
                 <span style={{ marginLeft: '12px' }}>Settings</span>
               </Link>
             </MenuItem>
-            <MenuItem style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+            <MenuItem style={{ fontSize: '14px', fontFamily: 'Poppins' }}>
               {switchAccountIcon}
               <span style={{ marginLeft: '12px' }}>Switch accounts</span>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={() => logout()} style={{ fontSize: '14px', fontFamily: 'Questrial' }}>
+            <MenuItem onClick={() => logout()} style={{ fontSize: '14px', fontFamily: 'Poppins' }}>
               <span style={{ marginLeft: '7px' }}>Logout</span>
             </MenuItem>
           </Menu>

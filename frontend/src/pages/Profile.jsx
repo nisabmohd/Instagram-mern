@@ -89,7 +89,7 @@ export const Profile = ({ post = true }) => {
             <p style={{ marginTop: '4px', marginBottom: '3px' }}>{user?.bio ? user.bio : "-"}</p>
             {
               user?.website &&
-              <a href={user?.website} target="_blank" style={{ marginTop: '10px', color: '#0e4378', fontWeight: 'bold' }} rel="noreferrer">{user?.website.replace('https://', '')}</a>
+              <a href={user?.website} target="_blank" style={{ marginTop: '10px', color: '#0e4378', fontWeight: 'normal' }} rel="noreferrer">{user?.website.replace('https://', '')}</a>
             }
           </div>
         </div>

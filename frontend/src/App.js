@@ -12,7 +12,7 @@ import { Forgot } from "./pages/Forgot";
 import { Profile } from "./pages/Profile";
 import { Settings } from "./pages/Settings";
 import toast, { Toaster } from "react-hot-toast";
-import {Chat} from './pages/Chat'
+import { Chat } from "./pages/Chat";
 
 function App() {
   const [auth, setAuth] = useState();
@@ -25,13 +25,21 @@ function App() {
   const throwErr = (err) => {
     toast.error(err, {
       style: {
-        fontFamily: "Questrial",
+        fontFamily: "Poppins",
+        fontSize: "12.5px",
+      },
+    });
+  };
+  const throwSuccess = (msg) => {
+    toast.success(msg, {
+      style: {
+        fontFamily: "Poppins",
         fontSize: "12.5px",
       },
     });
   };
   return (
-    <AuthContext.Provider value={{ auth, setAuth,throwErr }}>
+    <AuthContext.Provider value={{ auth, setAuth, throwErr,throwSuccess }}>
       <Toaster />
       {auth && <Navbar />}
       <div className="width60">
@@ -72,7 +80,7 @@ function App() {
             path="/chats"
             element={
               <Private>
-                <Chat/>
+                <Chat />
               </Private>
             }
           />

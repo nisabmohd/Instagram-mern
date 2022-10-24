@@ -11,7 +11,7 @@ export const NotificationBox = () => {
         })
     }, [])
     return (
-        <div style={{ fontSize: '14px', fontFamily: 'Questrial', padding: '15px 0px',marginTop:'-20px'}}>
+        <div style={{ fontSize: '14px', fontFamily: 'Poppins', padding: '15px 0px',marginTop:'-5px'}}>
             {
                 noti?.length===0 && <p style={{fontSize:'16px',fontWeight:'bold',textAlign:'center',marginTop:'135px'}}>No notifications</p>
             }
