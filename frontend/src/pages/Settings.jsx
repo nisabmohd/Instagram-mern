@@ -161,7 +161,7 @@ export const Settings = () => {
                         </div>
                         <div className="tableright" style={{ width: '80%' }}>
                             {
-                                !(username && name && bio && website) ?
+                                !(username && name) ?
                                     <button disabled style={{ border: 'none', outline: 'none', background: 'blue', padding: '4px 9px', borderRadius: '5px', color: 'gray', backgroundColor: 'rgb(172 194 212)', marginTop: '18px', fontSize: '13px', width: '75px', cursor: 'not-allowed' }}>Submit</button>
                                     :
                                     <button onClick={() => edit()} style={{ border: 'none', outline: 'none', background: 'blue', padding: '4px 9px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', marginTop: '18px', fontSize: '13px', width: '75px', fontWeight: 'bold' }}>Submit</button>
