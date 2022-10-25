@@ -102,16 +102,12 @@ export const Post = ({ postId, userId }) => {
                     <div className="coments-itr" style={{ height: '90%', overflowY: 'auto', marginBottom: '10px' }}>
 
 
-
-
-
-
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '43px' }}>
                             <div className="caption-right">
-                                <Link to={user?.username}><img src={user?.avatar} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
+                                <Link to={`/${user?.username}`}><img src={user?.avatar} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
                             </div>
                             <div className="right-comment" onMouseOver={() => setShow(true)} onMouseLeave={() => setShow(false)} style={{ display: 'flex', flexDirection: 'column', marginLeft: '9px' }}>
-                                <p style={{ fontSize: '13px' }} className="username-comment"><Link to={user?.username} style={{ fontWeight: 'bold' }}>{user?.username}</Link> {post?.caption}</p>
+                                <p style={{ fontSize: '13px' }} className="username-comment"><Link to={`/${user?.username}`} style={{ fontWeight: 'bold' }}>{user?.username}</Link> {post?.caption}</p>
                                 <div className="comment-labels">
                                     <div className="same-line" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                         <p className='timestamp' style={{ fontSize: '11.5px' }} >
@@ -130,9 +126,6 @@ export const Post = ({ postId, userId }) => {
                                 </div>
                             </div>
                         </div>
-
-
-
 
 
 
