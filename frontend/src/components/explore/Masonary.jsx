@@ -10,7 +10,7 @@ export const Masonary = ({ posts }) => {
         <div className='grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', rowGap: '17px', columnGap: '23px' }}>
             {
                 images?.map(item =>
-                    <Image key={item._id} src={item.files[0].link}></Image>
+                    <Image userId={item.owner} postId={item._id} key={item._id} src={item.files[0].link}></Image>
                 )
             }
         </div>

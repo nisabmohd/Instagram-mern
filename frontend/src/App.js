@@ -5,7 +5,7 @@ import Explore from "./pages/Explore";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthContext } from "./context/Auth";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
@@ -15,12 +15,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Chat } from "./pages/Chat";
 
 function App() {
-  const [auth, setAuth] = useState();
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) return;
-    setAuth(user);
-  }, []);
+  const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
 
   const throwErr = (err) => {
     toast.error(err, {
@@ -39,7 +34,7 @@ function App() {
     });
   };
   return (
-    <AuthContext.Provider value={{ auth, setAuth, throwErr,throwSuccess }}>
+    <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess }}>
       <Toaster />
       {auth && <Navbar />}
       <div className="width60">

@@ -11,6 +11,8 @@ import { AuthContext } from '../../../context/Auth'
 import "./card.css";
 import { useContext } from "react";
 import { Link } from 'react-router-dom'
+import { Dialog } from "@mui/material";
+import { Post } from "../../dialog/Post";
 
 export default function Card({ img, likes, caption, time, comments, userId, id, saved }) {
     const context = useContext(AuthContext)
@@ -20,6 +22,16 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
     const [iLiked, setIliked] = useState(likes.includes(context.auth._id))
     const [user, setUser] = useState()
     const [iSaved, setIsaved] = useState(saved.includes(context.auth._id))
+
+    const [openDailog, setOpenDilaog] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpenDilaog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDilaog(false);
+    };
 
     useEffect(() => {
         api.get(`${url}/user/get/${userId}`).then(res => {
@@ -57,6 +69,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
             }
         })
     }
+    
     const commentRef = useRef()
     return (
         <div className="card">
@@ -87,7 +100,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                         iLiked ? afterLike : likeOutline
                     }
                 </button>
-                <button onClick={() => { commentRef.current.focus() }} className="no-style" style={{ marginRight: '12px' }} >
+                <button onClick={handleClickOpen} className="no-style" style={{ marginRight: '12px' }} >
                     {commentIcon}
                 </button>
                 <button className="no-style" style={{ marginRight: '12px', marginBottom: '-3px', }} >
@@ -106,7 +119,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                 <Link to={user?.username} style={{ fontWeight: 'bold', fontSize: '13.65px', marginLeft: '9px' }}>{user?.username}</Link>
                 <p style={{ fontSize: '13.19px', marginLeft: '5px' }}>{caption && caption}</p></div>
             {
-                commnetsCount !== 0 && <div className="comments" style={{ marginTop: '9px' }}><p style={{ fontSize: '13.39px', marginLeft: '9px', color: 'gray' }}>View all {commnetsCount} comments</p></div>
+                commnetsCount !== 0 && <div onClick={handleClickOpen} className="comments" style={{ marginTop: '9px', cursor: 'pointer' }}><p style={{ fontSize: '13.39px', marginLeft: '9px', color: 'gray' }}>View all {commnetsCount} comments</p></div>
             }
 
             <div className="timestamp" style={{ marginTop: '7px' }}><p style={{ fontSize: '12.89px', marginLeft: '9px', color: 'gray' }}><ReactTimeAgo date={Date.parse(time)} locale="en-US" /></p></div>
@@ -121,6 +134,26 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                         : <button disabled={true} className="no-style" style={{ color: 'rgb(157 161 163)', fontSize: '14.25px', cursor: 'not-allowed' }}>post</button>
                 }
             </div>
+
+            <Dialog
+                maxWidth="lg"
+                open={openDailog}
+                PaperProps={{
+                    style: {
+                        minHeight: '95%',
+                        maxHeight: '95%',
+                        minWidth:'65vw',
+                        padding: 0
+                    }
+                }}
+                onClose={handleCloseDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <Post postId={id} userId={userId} />
+
+            </Dialog>
+
         </div>
     );
 }

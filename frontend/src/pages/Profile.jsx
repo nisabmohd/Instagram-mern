@@ -70,7 +70,10 @@ export const Profile = ({ post = true }) => {
               user?._id === context.auth._id ?
                 <button onClick={() => { navigate('/accounts/edit') }} style={{ border: '1px solid #c1c1c1', padding: '4px 7px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', color: '#424141' }}>Edit Profile</button>
                 :
-                <button style={{ padding: '5.5px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', backgroundColor: 'rgb(33, 150, 243)', color: 'white' }}>Follow</button>
+                user?.followers.includes(context.auth._id) ?
+                  <button style={{ padding: '4px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', border: '1px solid #c1c1c1', color: '#424141' }}>Unfollow</button>
+                  :
+                  <button style={{ padding: '5.5px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', backgroundColor: 'rgb(33, 150, 243)', color: 'white' }}>Follow</button>
             }
 
             {
@@ -156,14 +159,14 @@ export const Profile = ({ post = true }) => {
               <div className='grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', rowGap: '17px' }}>
                 {
                   posts?.map(item =>
-                    <Image likes={item.likes.length} comments={item.comments.length} key={item._id} src={item.files[0].link}></Image>
+                    <Image userId={item.owner} postId={item._id} likes={item.likes.length} comments={item.comments.length} key={item._id} src={item.files[0].link}></Image>
                   )
                 }
 
               </div> : <div className='grid' style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', rowGap: '17px' }}>
                 {
                   posts?.map(item =>
-                    <Image likes={item.likes.length} comments={item.comments.length} key={item._id} src={item.files[0].link}></Image>
+                    <Image userId={item.owner} postId={item._id} likes={item.likes.length} comments={item.comments.length} key={item._id} src={item.files[0].link}></Image>
                   )
                 }
               </div>

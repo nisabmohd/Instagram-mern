@@ -2,18 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { url } from '../../baseUrl'
 import { api } from '../../Interceptor/apiCall'
 import { Notification } from '../notification/Notification'
+import { Spinner } from '../../assets/Spinner'
 
 export const NotificationBox = () => {
     const [noti, setNoti] = useState([])
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         api.get(`${url}/user/view/notifications`).then((res) => {
             setNoti(res.data)
+        }).finally(() => {
+            setLoading(false)
         })
     }, [])
     return (
-        <div style={{ fontSize: '14px', fontFamily: 'Poppins', padding: '15px 0px',marginTop:'-5px'}}>
+        <div style={{ fontSize: '14px', fontFamily: 'Poppins', padding: '15px 0px', marginTop: '-5px' }}>
             {
-                noti?.length===0 && <p style={{fontSize:'16px',fontWeight:'bold',textAlign:'center',marginTop:'135px'}}>No notifications</p>
+                noti?.length === 0 && loading && <Spinner />
+            }
+            {
+                noti?.length === 0 && !loading && <p style={{ fontSize: '16px', fontWeight: 'bold', textAlign: 'center', marginTop: '135px' }}>No notifications</p>
             }
             {
                 noti.map(item =>
