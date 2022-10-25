@@ -41,6 +41,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: [true, "Empty comment not allowed"],
       },
+      createdAt: {
+        type: Date,
+        default: Date.now(),
+      },
     },
   ],
 });

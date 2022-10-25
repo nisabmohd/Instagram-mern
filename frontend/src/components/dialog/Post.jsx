@@ -5,23 +5,28 @@ import { url } from '../../baseUrl'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import defaultImg from '../../assets/dafault.png'
-import { afterLike, commentIcon, emojiIcon, likeOutline, moreIcons, saveHome, saveIconOutline, shareIcon } from '../../assets/svgIcons'
+import { afterLike, commentIcon, commentMore, emojiIcon, likeOutline, moreIcons, saveHome, saveIconOutline, shareIcon } from '../../assets/svgIcons'
 import ReactTimeAgo from 'react-time-ago'
 import { useRef } from 'react'
+import Comment from './Comment'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/Auth'
+
 
 export const Post = ({ postId, userId }) => {
-    console.log(userId);
+    const context = useContext(AuthContext)
     const [post, setPost] = useState()
     const [comment, setComment] = useState('')
     const [iLiked, setIliked] = useState(false)
     const [iSaved, setIsaved] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [user, setUser] = useState()
+    const [getComments, setGetComments] = useState([])
+    const [show, setShow] = useState(false)
     const inputRef = useRef()
 
     useEffect(() => {
         api.get(`${url}/user/get/${userId}`).then(res => {
-            console.log("user", res.data);
             setUser(res.data)
         })
     }, [userId])
@@ -29,10 +34,10 @@ export const Post = ({ postId, userId }) => {
     useEffect(() => {
         if (!user) return
         api.get(`${url}/post/${postId}`).then((res) => {
-            console.log(res.data);
             setIliked(res.data.likes.includes(user?._id))
             setIsaved(res.data.saved.includes(user?._id))
             setLikesCount(res.data.likes.length)
+            setGetComments(res.data.comments.reverse())
             setPost(res.data)
         })
     }, [postId, user])
@@ -51,11 +56,16 @@ export const Post = ({ postId, userId }) => {
 
     }
     function handleComment() {
+
         api.post(`${url}/post/addcomment/${postId}`, {
             comment
         }).then(res => {
             if (res.data) {
                 setComment('')
+                //key={item._id} userId={item.user} time={item.createdAt} text={item.comment}
+                setGetComments((prev) => {
+                    return [{ _id: new Date().toString(), createdAt: new Date(), comment, user: context.auth._id }, ...prev,]
+                })
             }
         }).catch(err => console.log(err))
     }
@@ -69,12 +79,12 @@ export const Post = ({ postId, userId }) => {
 
     return (
         <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
-            <div className="left-dialog" style={{ width: '55%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div className="left-dialog" style={{ width: 'fit-content', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <img style={{ width: '100%' }} src={post && post.files[0].link} alt="" />
             </div>
-            <div className="right-dialog" style={{ width: '45%', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
+            <div className="right-dialog" style={{ width: '795px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
                 <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '9px', paddingTop: '1.25px' }}>
-                    <div className="right-post-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '12px' }}>
+                    <div className="right-post-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '18.7px' }}>
                         <div className="user-img">
                             {
                                 <Link to={`/${user?.username}`}><img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
@@ -88,8 +98,47 @@ export const Post = ({ postId, userId }) => {
                         <button className="no-style" style={{ marginLeft: '-32px' }}>{moreIcons}</button>
                     </div>
                 </div>
-                <div className="comments" style={{ padding: '10px 19px', height: '94%' }}>
-                    <div className="coments-itr" style={{ height: '90%' }}>
+                <div className="comments" style={{ padding: '10px 19px', height: '84.25%' }}>
+                    <div className="coments-itr" style={{ height: '90%', overflowY: 'auto', marginBottom: '10px' }}>
+
+
+
+
+
+
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '43px' }}>
+                            <div className="caption-right">
+                                <Link to={user?.username}><img src={user?.avatar} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
+                            </div>
+                            <div className="right-comment" onMouseOver={() => setShow(true)} onMouseLeave={() => setShow(false)} style={{ display: 'flex', flexDirection: 'column', marginLeft: '9px' }}>
+                                <p style={{ fontSize: '13px' }} className="username-comment"><Link to={user?.username} style={{ fontWeight: 'bold' }}>{user?.username}</Link> {post?.caption}</p>
+                                <div className="comment-labels">
+                                    <div className="same-line" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                        <p className='timestamp' style={{ fontSize: '11.5px' }} >
+                                            {post &&<ReactTimeAgo date={Date.parse(post.createdAt)} locale="en-US" timeStyle="twitter" />}
+                                        </p>
+                                        {
+                                            user?._id === context.auth._id &&
+                                            <button className='no-style' style={{ marginLeft: '6px', fontSize: '12px', cursor: 'pointer', height: '10px', marginTop: '-12px' }}>
+                                                {
+                                                    show && commentMore
+                                                }
+                                            </button>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        {
+                            getComments?.map(item => <Comment key={item._id} userId={item.user} time={item.createdAt} text={item.comment} />)
+                        }
 
                     </div>
                     <div className="bootom-labels" style={{ marginTop: 'auto' }}>
