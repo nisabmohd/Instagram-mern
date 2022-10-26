@@ -7,6 +7,8 @@ import { url } from '../baseUrl'
 import { api } from '../Interceptor/apiCall'
 import { useContext } from 'react'
 import { AuthContext } from '../context/Auth'
+import { Dialog, DialogContent, DialogTitle } from '@mui/material'
+import { Followers } from '../components/dialog/Followers'
 
 export const Profile = ({ post = true }) => {
   const navigate = useNavigate()
@@ -14,20 +16,24 @@ export const Profile = ({ post = true }) => {
   const [user, setUser] = useState()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [iFollow, setIFollow] = useState(false)
+  const [toggle, setToggle] = useState(1)
+  const [followers, setFollowers] = useState(0)
   const params = useParams()
   useEffect(() => {
     api.get(`${url}/user/${params.username}`).then(resp => {
       setUser(resp.data)
+      setFollowers(resp.data.followers.length)
+      setIFollow(resp.data.followers.includes(context.auth._id))
     }).catch(err => console.log(err))
     return () => setUser()
-  }, [params.username])
+  }, [context.auth._id, params.username])
   useEffect(() => {
     if (!user) return
     if (post) {
       api.get(`${url}/post/userpost/${user?._id}`).then((data) => {
         setLoading(false)
         if (data) {
-          console.log(data.data);
           setPosts(data.data);
         }
       }).catch(err => {
@@ -38,7 +44,6 @@ export const Profile = ({ post = true }) => {
       api.get(`${url}/post/get/saved`).then((data) => {
         setLoading(false)
         if (data) {
-          console.log(data.data);
           setPosts(data.data);
         }
       }).catch(err => {
@@ -49,6 +54,30 @@ export const Profile = ({ post = true }) => {
       setPosts([])
     }
   }, [post, user])
+
+
+  async function handleFollow() {
+    api.get(`${url}/user/handlefollow/${user._id}`).then((res) => {
+      if (res.data?.success) {
+        setIFollow(prev => !prev)
+      }
+      if (iFollow) {
+        setFollowers(f => f - 1)
+      } else {
+        setFollowers(f => f + 1)
+      }
+    })
+  }
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className='home' style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="user-info" style={{ display: 'flex', flexDirection: 'row', width: '84%', margin: 'auto', marginTop: '20px' }}>
@@ -70,10 +99,10 @@ export const Profile = ({ post = true }) => {
               user?._id === context.auth._id ?
                 <button onClick={() => { navigate('/accounts/edit') }} style={{ border: '1px solid #c1c1c1', padding: '4px 7px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', color: '#424141' }}>Edit Profile</button>
                 :
-                user?.followers.includes(context.auth._id) ?
-                  <button style={{ padding: '4px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', border: '1px solid #c1c1c1', color: '#424141' }}>Unfollow</button>
+                iFollow ?
+                  <button onClick={() => handleFollow()} style={{ padding: '4px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', border: '1px solid #c1c1c1', color: '#424141' }}>Unfollow</button>
                   :
-                  <button style={{ padding: '5.5px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', backgroundColor: 'rgb(33, 150, 243)', color: 'white' }}>Follow</button>
+                  <button onClick={() => handleFollow()} style={{ padding: '5.5px 13px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', backgroundColor: 'rgb(33, 150, 243)', color: 'white' }}>Follow</button>
             }
 
             {
@@ -84,9 +113,32 @@ export const Profile = ({ post = true }) => {
           </div>
           <div className="singleline" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '20px' }}>
             <p style={{ marginRight: '28px' }}><span style={{ fontWeight: 'bold', marginRight: '4px' }}>{user?.posts?.length}</span> Posts</p>
-            <p style={{ marginRight: '28px' }}><span style={{ fontWeight: 'bold', marginRight: '4px' }}>{user?.followers?.length}</span> Followers</p>
-            <p style={{ marginRight: '28px' }}><span style={{ fontWeight: 'bold', marginRight: '4px' }}>{user?.followings?.length}</span> Followings</p>
+            <p onClick={() => { setToggle(1); handleClickOpen() }} style={{ marginRight: '28px', cursor: 'pointer' }}><span style={{ fontWeight: 'bold', marginRight: '4px' }}>{followers}</span> Followers</p>
+            <p onClick={() => { setToggle(2); handleClickOpen() }} style={{ marginRight: '28px', cursor: 'pointer' }}><span style={{ fontWeight: 'bold', marginRight: '4px', cursor: 'pointer' }}>{user?.followings?.length}</span> Followings</p>
           </div>
+          <Dialog
+            PaperProps={{
+              style: {
+                minHeight: '25%',
+                maxHeight: '55%',
+                minWidth: '400px',
+                maxWidth: '400px',
+                padding: 0,
+                overflowY: 'auto'
+              }
+            }}
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+          >
+            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+              <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px' }}>{toggle === 2 ? "Followings" : "Followers"}</p>
+            </DialogTitle>
+            <DialogContent style={{ marginTop: '-9px' }} dividers>
+              <Followers toggle={toggle} userId={user?._id} />
+            </DialogContent>
+
+          </Dialog>
           <div className="bioandstuff" style={{ marginTop: '20px' }}>
             <p style={{ fontWeight: 'bold' }}>{user?.name}</p>
             <p style={{ marginTop: '4px', marginBottom: '3px' }}>{user?.bio ? user.bio : "-"}</p>

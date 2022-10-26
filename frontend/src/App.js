@@ -5,7 +5,7 @@ import Explore from "./pages/Explore";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthContext } from "./context/Auth";
-import {useState } from "react";
+import { useState } from "react";
 import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
@@ -90,14 +90,6 @@ function App() {
           />
           <Route
             path="/:username"
-            element={
-              <Private>
-                <Profile />
-              </Private>
-            }
-          />
-          <Route
-            path="/"
             element={
               <Private>
                 <Profile />
