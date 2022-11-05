@@ -2,7 +2,6 @@
   --border: #dbdbdb;
 }
 
-
 .width60 {
   width: 52%;
   margin: auto;
@@ -28,6 +27,7 @@
 button{
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .flex-col {
