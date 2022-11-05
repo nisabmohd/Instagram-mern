@@ -52,6 +52,7 @@ export const Navbar = () => {
 
   const handleCloseDialog = () => {
     setImgurl('')
+    setCaption('')
     setOpenDilaog(false);
   };
 
