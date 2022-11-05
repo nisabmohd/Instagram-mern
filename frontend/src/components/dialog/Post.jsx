@@ -78,11 +78,11 @@ export const Post = ({ postId, userId }) => {
     }
 
     return (
-        <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
-            <div className="left-dialog" style={{ width: 'fit-content', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <img style={{ width: '100%' }} src={post && post.files[0].link} alt="" />
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden',justifyContent:'space-between' }}>
+            <div className="left-dialog" style={{  display: 'flex', justifyContent: 'center', alignItems: 'center',margin:'auto' }}>
+                <img style={{ width: '100%',margin:'auto' }} src={post && post.files[0].link} alt="" />
             </div>
-            <div className="right-dialog" style={{ width: '795px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
+            <div className="right-dialog" style={{ minWidth: '420px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
                 <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '9px', paddingTop: '1.25px' }}>
                     <div className="right-post-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '18.7px' }}>
                         <div className="user-img">

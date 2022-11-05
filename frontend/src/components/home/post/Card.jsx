@@ -89,7 +89,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                 </div>
             </div>
             <div className="post" style={{ zIndex: '99' }}>
-                <img style={{ width: '100.20%', marginLeft: '-0.92px' }}
+                <img style={{ width: '100.20%', marginLeft: '-0.92px',margin:'auto' }}
                     src={img}
                     alt=""
                 />
@@ -142,7 +142,6 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                     style: {
                         minHeight: '95%',
                         maxHeight: '95%',
-                        minWidth:'65vw',
                         padding: 0
                     }
                 }}
