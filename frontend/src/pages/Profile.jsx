@@ -82,9 +82,9 @@ export const Profile = ({ post = true }) => {
     <div className='home' style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="user-info" style={{ display: 'flex', flexDirection: 'row', width: '84%', margin: 'auto', marginTop: '20px' }}>
         <div className="image-user">
-          <div className="imageuser" style={{ width: '155px', height: '155px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', objectFit: 'cover' }}>
+          <div className="imageuser" style={{ borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', objectFit: 'cover' }}>
             {
-              <img src={user?.avatar ? user.avatar : defaultimg} style={{ minWidth: '145px', height: '145px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
+              <img className='pf' src={user?.avatar ? user.avatar : defaultimg} style={{ minWidth: '145px', height: '145px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
             }
           </div>
         </div>
@@ -151,31 +151,31 @@ export const Profile = ({ post = true }) => {
       </div>
       <div className="highlights" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '88%', margin: 'auto', marginTop: '42px', }}>
         <div className="highlight-story" style={{ display: 'flex', flexDirection: 'column', marginRight: '35px' }}>
-          <div className="imageuser" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
+          <div className="imageuser storybox" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
             <img src="https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" style={{ width: '75px', height: '75px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
           </div>
           <p style={{ textAlign: 'center', marginTop: '4px', fontSize: '14px', fontWeight: 'bold', color: '#424141' }}>Highlights</p>
         </div>
         <div className="highlight-story" style={{ display: 'flex', flexDirection: 'column', marginRight: '35px' }}>
-          <div className="imageuser" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
+          <div className="imageuser storybox" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
             <img src="https://images.unsplash.com/photo-1666202566722-26e17e78cb07?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" style={{ width: '75px', height: '75px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
           </div>
           <p style={{ textAlign: 'center', marginTop: '4px', fontSize: '14px', fontWeight: 'bold', color: '#424141' }}>Highlights</p>
         </div>
         <div className="highlight-story" style={{ display: 'flex', flexDirection: 'column', marginRight: '35px' }}>
-          <div className="imageuser" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
+          <div className="imageuser storybox" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
             <img src="https://images.unsplash.com/photo-1666207482115-53756be8a995?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" style={{ width: '75px', height: '75px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
           </div>
           <p style={{ textAlign: 'center', marginTop: '4px', fontSize: '14px', fontWeight: 'bold', color: '#424141' }}>Highlights</p>
         </div>
         <div className="highlight-story" style={{ display: 'flex', flexDirection: 'column', marginRight: '35px' }}>
-          <div className="imageuser" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
+          <div className="imageuser storybox" style={{ width: '85px', height: '85px', borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
             <img src="https://images.unsplash.com/photo-1666202566722-26e17e78cb07?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" style={{ width: '75px', height: '75px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
           </div>
           <p style={{ textAlign: 'center', marginTop: '4px', fontSize: '14px', fontWeight: 'bold', color: '#424141' }}>Highlights</p>
         </div>
         <div className="highlight-story" style={{ display: 'flex', flexDirection: 'column', marginRight: '35px' }}>
-          <div className="imageuser" style={{ width: '82px', height: '82px', borderRadius: '50%', border: '1px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
+          <div className="imageuser storybox" style={{ width: '82px', height: '82px', borderRadius: '50%', border: '1px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', }}>
             <svg aria-label="Plus icon" className="_ab6-" color="#c7c7c7" fill="#c7c7c7" height="44" role="img" viewBox="0 0 24 24" width="44"><path d="M21 11.3h-8.2V3c0-.4-.3-.8-.8-.8s-.8.4-.8.8v8.2H3c-.4 0-.8.3-.8.8s.3.8.8.8h8.2V21c0 .4.3.8.8.8s.8-.3.8-.8v-8.2H21c.4 0 .8-.3.8-.8s-.4-.7-.8-.7z"></path></svg>
           </div>
           <p style={{ textAlign: 'center', marginTop: '4px', fontSize: '14px', fontWeight: 'bold', color: '#424141' }}>New</p>

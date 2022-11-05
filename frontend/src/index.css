@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --border: #dbdbdb;
 }
@@ -29,9 +25,7 @@
   border: none;
 }
 
-img {
-  max-width: fit-content;
-}
+
 
 .flex-col {
   flex-direction: column;
@@ -131,7 +125,8 @@ body {
   position: relative;
 
 }
-.separate{
+
+.separate {
   position: absolute;
   bottom: 0;
   border-top: 1px solid var(--border);
@@ -155,4 +150,67 @@ body {
   position: absolute !important;
   top: 19.9px;
   right: 46.2px;
+}
+
+@media screen and (max-width:1500px) {
+  .width60 {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width:980px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .ppp {
+    width: 200px !important;
+    height: 220px !important;
+    margin: auto;
+  }
+  .imageuser{
+    width: 102px !important;
+    height: 101px !important;
+    padding: 7px !important;
+  }
+  .pf{
+    min-width: 111px !important;
+    height: 111px !important;
+  }
+  .storybox{
+    width: 62px !important;
+    height: 63px !important;
+  }
+}
+
+@media screen and (max-width:850px) {
+  .width60 {
+    width: 95%;
+  }
+
+  .right-home {
+    display: none;
+  }
+
+  .left-home {
+    width: 100% !important;
+  }
+
+  .search {
+    display: none !important;
+  }
+
+  .logo {
+    display: none !important;
+  }
+
+  .icons {
+    width: 100% !important;
+  }
+
+  .navbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
