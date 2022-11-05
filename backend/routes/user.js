@@ -9,6 +9,10 @@ router.route('/:username').get(getUser)
 
 router.route('/get/:id').get(getUserById)
 
+router.route("/view/notifications").get(isAuthenticated, notications)
+
+router.route("/view/has-notifications").get(isAuthenticated, hasNotications)
+
 router.route("/handlefollow/:userId").get(isAuthenticated, followHandle)
 
 router.route("/followings/:userId").get(isAuthenticated, getFollowings)
@@ -16,13 +20,6 @@ router.route("/followings/:userId").get(isAuthenticated, getFollowings)
 router.route("/followers/:userId").get(isAuthenticated, getFollowers)
 
 router.route("/search/:text").get(isAuthenticated, search)
-
-router.route("/view/notifications").get(isAuthenticated, notications)
-
-router.route("/view/has-notifications").get(isAuthenticated, hasNotications)
-
-
-
 
 
 module.exports = router
