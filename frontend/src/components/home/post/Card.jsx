@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import { Dialog } from "@mui/material";
 import { Post } from "../../dialog/Post";
 
-export default function Card({ img, likes, caption, time, comments, userId, id, saved }) {
+export default function Card({ img, likes, caption, time, comments, userId, id, saved, filterPosts }) {
     const context = useContext(AuthContext)
     const [comment, setComment] = useState('')
     const [commnetsCount, setCommentsCount] = useState(comments.length)
@@ -69,7 +69,26 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
             }
         })
     }
-    
+
+    function deletepost() {
+        api.delete(`${url}/post/delete/${id}`).then((res) => {
+            if (res.data) {
+                handleCloseMenu()
+                context.throwErr("Deleted Post")
+                filterPosts(id)
+            }
+        })
+    }
+
+    const [openMore, setMore] = React.useState(false);
+
+    const handleClickMenu = () => {
+        setMore(true);
+    };
+    const handleCloseMenu = () => {
+        setMore(false);
+    };
+
     const commentRef = useRef()
     return (
         <div className="card">
@@ -85,11 +104,47 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                     </div>
                 </div>
                 <div className="right-details">
-                    <button className="no-style" style={{ marginLeft: '-32px' }}>{moreIcons}</button>
+                    <button onClick={() => handleClickMenu()} className="no-style" style={{ marginLeft: '-32px' }}>{moreIcons}</button>
+                    <Dialog
+                        PaperProps={{
+                            style: {
+                                minHeight: '10%',
+                                maxHeight: '55%',
+                                minWidth: '350px',
+                                maxWidth: '350px',
+                                padding: 0,
+                                overflowY: 'auto'
+                            }
+                        }}
+                        onClose={handleCloseMenu}
+                        aria-labelledby="customized-dialog-title"
+                        open={openMore}
+                    >
+                        <div>
+                            {
+                                userId === context.auth._id ? <div onClick={() => deletepost()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
+                                    Delete
+                                </div> :
+                                    <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'red', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
+                                        Unfollow
+                                    </div>
+                            }
+                            {userId === context.auth._id && <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                                Edit
+                            </div>}
+                            <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                                Copy link
+                            </div>
+                            <div onClick={() => handleCloseMenu()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginBottom: '0px', textAlign: 'center', cursor: 'pointer' }}>
+                                Cancel
+                            </div>
+
+                        </div>
+                    </Dialog>
                 </div>
             </div>
             <div className="post" style={{ zIndex: '99' }}>
-                <img style={{ width: '100.20%', marginLeft: '-0.92px',margin:'auto' }}
+                <img style={{ width: '100.20%', marginLeft: '-0.92px', margin: 'auto' }}
                     src={img}
                     alt=""
                 />
@@ -149,7 +204,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <Post postId={id} userId={userId} />
+                <Post setOpenDilaog={setOpenDilaog} filterPosts={filterPosts} postId={id} userId={userId} />
 
             </Dialog>
 

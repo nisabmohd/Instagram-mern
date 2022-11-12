@@ -11,9 +11,10 @@ import { useRef } from 'react'
 import Comment from './Comment'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/Auth'
+import { Dialog } from '@mui/material'
 
 
-export const Post = ({ postId, userId }) => {
+export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
     const context = useContext(AuthContext)
     const [post, setPost] = useState()
     const [comment, setComment] = useState('')
@@ -76,14 +77,32 @@ export const Post = ({ postId, userId }) => {
             }
         })
     }
+    const [openMore, setMore] = React.useState(false);
 
+    const handleClickMenu = () => {
+        setMore(true);
+    };
+    const handleCloseMenu = () => {
+        setMore(false);
+    };
+
+    function deletepost() {
+        api.delete(`${url}/post/delete/${postId}`).then((res) => {
+            if (res.data) {
+                handleCloseMenu()
+                context.throwErr("Deleted Post")
+                setOpenDilaog(false)
+                filterPosts(postId)
+            }
+        })
+    }
     return (
-        <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden',justifyContent:'space-between' }}>
-            <div className="left-dialog" style={{  display: 'flex', justifyContent: 'center', alignItems: 'center',margin:'auto' }}>
-                <img style={{ width: '100%',margin:'auto' }} src={post && post.files[0].link} alt="" />
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden', justifyContent: 'space-between' }}>
+            <div className="left-dialog" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                <img style={{ width: '100%', margin: 'auto' }} src={post && post.files[0].link} alt="" />
             </div>
-            <div className="right-dialog" style={{ minWidth: '420px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
-                <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '9px', paddingTop: '1.25px' }}>
+            <div className="right-dialog" style={{ minWidth: '460px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
+                <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '5px', paddingTop: '1.25px' }}>
                     <div className="right-post-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '18.7px' }}>
                         <div className="user-img">
                             {
@@ -95,23 +114,61 @@ export const Post = ({ postId, userId }) => {
                         </div>
                     </div>
                     <div className="right-details-post">
-                        <button className="no-style" style={{ marginLeft: '-32px' }}>{moreIcons}</button>
+                        <button onClick={() => handleClickMenu()} className="no-style" style={{ marginLeft: '-32px' }}>{moreIcons}</button>
+                        <Dialog
+                            PaperProps={{
+                                style: {
+                                    minHeight: '10%',
+                                    maxHeight: '55%',
+                                    minWidth: '350px',
+                                    maxWidth: '350px',
+                                    padding: 0,
+                                    overflowY: 'auto'
+                                }
+                            }}
+                            onClose={handleCloseMenu}
+                            aria-labelledby="customized-dialog-title"
+                            open={openMore}
+                        >
+                            <div>
+                                {
+                                    userId === context.auth._id ? <div className="option" onClick={() => deletepost()} style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
+                                        Delete
+                                    </div> :
+                                        <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'red', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
+                                            Unfollow
+                                        </div>
+                                }
+                                {userId === context.auth._id && <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                                    Edit
+                                </div>}
+                                <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                                    Copy link
+                                </div>
+                                <div onClick={() => handleCloseMenu()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginBottom: '0px', textAlign: 'center', cursor: 'pointer' }}>
+                                    Cancel
+                                </div>
+
+                            </div>
+                        </Dialog>
+
+
                     </div>
                 </div>
-                <div className="comments" style={{ padding: '10px 19px', height: '84.25%' }}>
+                <div className="comments" style={{ padding: '10px 19px', height: '84.05%' }}>
                     <div className="coments-itr" style={{ height: '90%', overflowY: 'auto', marginBottom: '10px' }}>
 
 
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '43px' }}>
                             <div className="caption-right">
-                                <Link to={`/${user?.username}`}><img src={user?.avatar?user.avatar:defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
+                                <Link to={`/${user?.username}`}><img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
                             </div>
                             <div className="right-comment" onMouseOver={() => setShow(true)} onMouseLeave={() => setShow(false)} style={{ display: 'flex', flexDirection: 'column', marginLeft: '9px' }}>
                                 <p style={{ fontSize: '13px' }} className="username-comment"><Link to={`/${user?.username}`} style={{ fontWeight: 'bold' }}>{user?.username}</Link> {post?.caption}</p>
                                 <div className="comment-labels">
                                     <div className="same-line" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                         <p className='timestamp' style={{ fontSize: '11.5px' }} >
-                                            {post &&<ReactTimeAgo date={Date.parse(post.createdAt)} locale="en-US" timeStyle="twitter" />}
+                                            {post && <ReactTimeAgo date={Date.parse(post.createdAt)} locale="en-US" timeStyle="twitter" />}
                                         </p>
                                         {
                                             user?._id === context.auth._id &&
@@ -177,6 +234,6 @@ export const Post = ({ postId, userId }) => {
                     }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

@@ -24,6 +24,9 @@ export default function Home() {
       setPosts([])
     }
   }, [])
+  function filterPosts(id) {
+    setPosts(posts => posts.filter(item => item._id !== id))
+  }
 
   return (
     <div className="home">
@@ -55,7 +58,7 @@ export default function Home() {
           }
           {
             posts.map(item =>
-              <Card key={item._id} id={item._id} img={item.files[0].link} likes={item.likes} saved={item.saved} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={item.createdAt} />
+              <Card filterPosts={filterPosts} key={item._id} id={item._id} img={item.files[0].link} likes={item.likes} saved={item.saved} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={item.createdAt} />
             )
 
           }

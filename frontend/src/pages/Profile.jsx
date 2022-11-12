@@ -119,7 +119,7 @@ export const Profile = ({ post = true }) => {
           <Dialog
             PaperProps={{
               style: {
-                minHeight: '25%',
+                minHeight: '15%',
                 maxHeight: '55%',
                 minWidth: '400px',
                 maxWidth: '400px',
@@ -134,10 +134,13 @@ export const Profile = ({ post = true }) => {
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
               <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px' }}>{toggle === 2 ? "Followings" : "Followers"}</p>
             </DialogTitle>
-            <DialogContent style={{ marginTop: '-9px' }} dividers>
-              <Followers toggle={toggle} userId={user?._id} />
-            </DialogContent>
+            {
+              followers === 0 ? <p style={{textAlign:'center',marginTop:'19px'}}>Nothing to see</p> :
+                <DialogContent style={{ marginTop: '-9px', minHeight: '5px' }} dividers>
+                  <Followers toggle={toggle} userId={user?._id} />
 
+                </DialogContent>
+            }
           </Dialog>
           <div className="bioandstuff" style={{ marginTop: '20px' }}>
             <p style={{ fontWeight: 'bold' }}>{user?.name}</p>

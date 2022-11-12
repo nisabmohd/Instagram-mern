@@ -5,7 +5,8 @@
 
 .line-likes {
   position: absolute;
+  width: 100%;
   top: 45%;
-  left: 36%;
+  left: 30%;
   z-index: 55;
 }
