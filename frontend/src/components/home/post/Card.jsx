@@ -92,7 +92,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
     const commentRef = useRef()
     return (
         <div className="card">
-            <div className="user-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="user-details" style={{ marginBottom: '2px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="left-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '12px' }}>
                     <div className="user-img">
                         {
