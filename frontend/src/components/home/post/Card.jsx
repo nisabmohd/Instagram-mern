@@ -113,7 +113,8 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                                 minWidth: '350px',
                                 maxWidth: '350px',
                                 padding: 0,
-                                overflowY: 'auto'
+                                overflowY: 'auto',
+                                borderRadius:'15px'
                             }
                         }}
                         onClose={handleCloseMenu}

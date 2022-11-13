@@ -1,40 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
-import { Menu, MenuItem } from "@mui/material";
+import { api } from '../../Interceptor/apiCall'
+import { url } from '../../baseUrl'
+import { User } from '../dialog/User'
+import { Spinner } from '../../assets/Spinner'
 
 export default function Search() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [text, setText] = useState('')
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [show, setShow] = useState(false)
+  const [userResults, setuserResults] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const time = setTimeout(() => {
+      if (!text) {
+        setLoading(false)
+        return
+      }
+      api.get(`${url}/user/search/${text}`).then(res => {
+        if (res.data) {
+          console.log(res.data);
+          setuserResults(res.data)
+        }
+        setLoading(false)
+      })
+    }, 1200)
+    return () => { clearInterval(time); setuserResults([]); setLoading(true) }
+  }, [text])
 
   return (
     <>
-      <div className="search">
+      <div className="search" onBlur={() => setShow(false)} style={{ position: 'relative' }}>
         <SearchIcon sx={{ fontSize: '17px', marginRight: '8px', color: 'gray' }} />
         <input
+          onClick={() => setShow(true)}
           value={text}
-          onClick={handleClick}
-          onChange={e=>setText(e.target.value)}
+          onChange={e => setText(e.target.value)}
           style={{ width: "100%", fontSize: '14px' }}
           type="text" className="noborder" placeholder="Search" />
       </div>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
+      {show && <div className="containerSuggest" style={{ position: 'absolute', top: '58px', backgroundColor: 'white', width: '390px', border: '1px solid #e7e7e7', borderRadius: '11px', minHeight: '75px', maxHeight: '300px', overflowY: 'auto', padding: '15px 15px' }}>
+        {loading && <Spinner />}
+        {userResults.length === 0 && !loading ? <p style={{ fontSize: '13px', textAlign: 'center', marginTop: '22px' }}>Nothing to see !</p>
+          :
+          <>
+            {
+              userResults.map(item =>
+                <User setShow={setShow} key={item._id} user={item} />
+              )
+            }
 
-      </Menu>
+          </>
+        }
+
+      </div>}
 
     </>
   );

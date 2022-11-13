@@ -33,6 +33,8 @@ function App() {
       },
     });
   };
+
+  
   return (
     <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess }}>
       <Toaster />

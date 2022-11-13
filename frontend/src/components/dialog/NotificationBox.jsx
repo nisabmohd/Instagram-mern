@@ -20,7 +20,7 @@ export const NotificationBox = () => {
                 noti?.length === 0 && loading && <Spinner />
             }
             {
-                noti?.length === 0 && !loading && <p style={{ fontSize: '15px', fontWeight: 'bold', textAlign: 'center', marginTop: '39px' }}>No Notifications To See</p>
+                noti?.length === 0 && !loading && <p style={{ fontSize: '14px', textAlign: 'center', marginTop: '39px' }}>Nothing to see here</p>
             }
             {
                 noti.map(item =>

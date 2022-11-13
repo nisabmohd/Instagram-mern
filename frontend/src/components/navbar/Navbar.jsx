@@ -69,6 +69,7 @@ export const Navbar = () => {
 
     })
   }
+  context.logout = logout
 
   const upload = async (e) => {
     const file = e.target.files[0]
@@ -108,7 +109,9 @@ export const Navbar = () => {
       if (res.data) {
         context.throwSuccess("Posted")
         handleCloseDialog()
+        context.newpost(res.data)
       }
+      console.log(res.data);
     })
   }
 
@@ -139,27 +142,32 @@ export const Navbar = () => {
             onClose={handleCloseDialog}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            PaperProps={{
+              style: {
+                borderRadius: '15px'
+              }
+            }}
           >
             <DialogTitle style={{ fontFamily: 'Poppins', textAlign: 'center', fontSize: '15.5px' }} id="alert-dialog-title">
               {"Create new post"}
             </DialogTitle>
             <Divider style={{ marginTop: '-10px' }} />
-            <DialogContent style={{ }}>
+            <DialogContent style={{}}>
               <div className="post" style={{ width: '45vw', height: '70vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
 
                 {
                   imgurl ?
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
                       <div className="imageup" style={{ height: '65%' }}>
-                        <img style={{ width: '95%',height:'100%', margin: 'auto' }} src={imgurl} alt="" />
+                        <img style={{ width: '95%', height: '100%', margin: 'auto' }} src={imgurl} alt="" />
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', width: '80%', position: 'absolute', bottom: 15,margin:'auto'}}>
+                      <div style={{ display: 'flex', flexDirection: 'column', width: '80%', position: 'absolute', bottom: 15, margin: 'auto' }}>
                         <TextField
                           id="outlined-multiline-static"
                           label="Caption"
                           multiline
                           rows={4}
-                          style={{fontSize:'14px',fontFamily:'Poppins'}}
+                          style={{ fontSize: '14px', fontFamily: 'Poppins' }}
                           value={caption} onChange={e => setCaption(e.target.value)}
                         />
                         <button onClick={() => handlePost()} style={{ border: 'none', outline: 'none', background: 'blue', padding: '3.5px 9px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', marginTop: '12px', fontSize: '15px', cursor: 'pointer' }}>Upload</button>
@@ -191,7 +199,7 @@ export const Navbar = () => {
                 overflow: 'visible',
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 width: '470px',
-                minHeight:'30px',
+                minHeight: '30px',
                 maxHeight: '400px',
                 mt: 1.5,
                 '& .MuiAvatar-root': {
@@ -217,7 +225,7 @@ export const Navbar = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <div style={{ minHeight:'150px',maxHeight: '390px', display: 'flex', flexDirection: 'column', overflowY: 'scroll', }}>
+            <div style={{ minHeight: '150px', maxHeight: '390px', display: 'flex', flexDirection: 'column', overflowY: 'scroll', }}>
 
               {
                 <NotificationBox />

@@ -175,11 +175,12 @@ exports.updateUser = async (req, res) => {
 // search user
 exports.search = async (req, res) => {
   try {
+    const user = req.user._id;
     const { text } = req.params;
     const result = await User.find({
       username: { $regex: text, $options: "i" },
     });
-    res.send(result);
+    res.send(result.filter(item => item._id.toString() !== user))
   } catch (err) {
     res.send({
       success: false,

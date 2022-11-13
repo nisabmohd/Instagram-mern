@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Card from "../components/home/post/Card";
 import '../components/home/home.css'
 import Story from "../components/home/stories/Story";
@@ -7,10 +7,12 @@ import { api } from '../Interceptor/apiCall'
 import { url } from "../baseUrl";
 import { useState } from "react";
 import { Spinner } from "../assets/Spinner";
+import { AuthContext } from "../context/Auth";
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
   const [posts, setPosts] = useState([])
+  const context = useContext(AuthContext)
   useEffect(() => {
     api.get(`${url}/post/get/home`).then((res) => {
       setPosts(res.data)
@@ -27,6 +29,10 @@ export default function Home() {
   function filterPosts(id) {
     setPosts(posts => posts.filter(item => item._id !== id))
   }
+  function newPost(post) {
+    setPosts(posta => [post, ...posts])
+  }
+  context.newpost = newPost
 
   return (
     <div className="home">
