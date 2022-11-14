@@ -4,7 +4,7 @@ import { api } from '../../Interceptor/apiCall'
 import { User } from './User'
 
 export const Followers = ({ userId, toggle }) => {
-  const [users,setUsers]=useState([])
+  const [users, setUsers] = useState([])
   console.log(userId);
   useEffect(() => {
     if (!userId) return
@@ -20,11 +20,14 @@ export const Followers = ({ userId, toggle }) => {
       })
   }, [toggle, userId])
   return (
-    <>
-    {
-      users.map((item=><User key={item._id} user={item} />))
+    <div style={{ padding: '0 -17px' }}>
+      {
+        users.length === 0 && <p style={{ textAlign: 'center', marginTop: '19px' }}>Nothing to see</p>
+      }
+      {
+        users.map((item => <User key={item._id} user={item} />))
 
-    }
-    </>
+      }
+    </div>
   )
 }

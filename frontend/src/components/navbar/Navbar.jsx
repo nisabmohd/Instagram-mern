@@ -167,7 +167,9 @@ export const Navbar = () => {
                           label="Caption"
                           multiline
                           rows={4}
-                          style={{ fontSize: '14px', fontFamily: 'Poppins' }}
+                          InputProps={{
+                            style:{fontSize: '13.5px', fontFamily: 'Poppins' }
+                          }}
                           value={caption} onChange={e => setCaption(e.target.value)}
                         />
                         <button onClick={() => handlePost()} style={{ border: 'none', outline: 'none', background: 'blue', padding: '3.5px 9px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', marginTop: '12px', fontSize: '15px', cursor: 'pointer' }}>Upload</button>

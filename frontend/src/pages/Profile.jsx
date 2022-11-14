@@ -7,7 +7,7 @@ import { url } from '../baseUrl'
 import { api } from '../Interceptor/apiCall'
 import { useContext } from 'react'
 import { AuthContext } from '../context/Auth'
-import { Dialog, DialogContent, DialogTitle, Divider } from '@mui/material'
+import { Dialog, DialogContent, DialogTitle, } from '@mui/material'
 import { Followers } from '../components/dialog/Followers'
 
 export const Profile = ({ post = true }) => {
@@ -20,6 +20,7 @@ export const Profile = ({ post = true }) => {
   const [toggle, setToggle] = useState(1)
   const [followers, setFollowers] = useState(0)
   const params = useParams()
+
   useEffect(() => {
     api.get(`${url}/user/${params.username}`).then(resp => {
       setUser(resp.data)
@@ -28,6 +29,7 @@ export const Profile = ({ post = true }) => {
     }).catch(err => console.log(err))
     return () => setUser()
   }, [context.auth._id, params.username])
+
   useEffect(() => {
     if (!user) return
     if (post) {
@@ -115,7 +117,7 @@ export const Profile = ({ post = true }) => {
             }
 
             {
-              user?._id === context.auth._id && <button className='no-style'><svg onClick={()=>handleClickMenu()} style={{ marginTop: '5px' }} aria-label="Options" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><circle cx="12" cy="12" fill="none" r="8.635" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></circle><path d="M14.232 3.656a1.269 1.269 0 0 1-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 0 1-.796.66m-.001 16.688a1.269 1.269 0 0 1 .796.66l.505.996h1.862l.505-.996a1.269 1.269 0 0 1 .796-.66M3.656 9.768a1.269 1.269 0 0 1-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 0 1 .66.796m16.688-.001a1.269 1.269 0 0 1 .66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 0 1-.66-.796M7.678 4.522a1.269 1.269 0 0 1-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 0 1-.096 1.03m11.8 11.799a1.269 1.269 0 0 1 1.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 0 1 .096-1.03m-14.956.001a1.269 1.269 0 0 1 .096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 0 1 1.03.096m11.799-11.8a1.269 1.269 0 0 1-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 0 1-1.03-.096" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path></svg></button>
+              user?._id === context.auth._id && <button className='no-style'><svg onClick={() => handleClickMenu()} style={{ marginTop: '5px' }} aria-label="Options" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><circle cx="12" cy="12" fill="none" r="8.635" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></circle><path d="M14.232 3.656a1.269 1.269 0 0 1-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 0 1-.796.66m-.001 16.688a1.269 1.269 0 0 1 .796.66l.505.996h1.862l.505-.996a1.269 1.269 0 0 1 .796-.66M3.656 9.768a1.269 1.269 0 0 1-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 0 1 .66.796m16.688-.001a1.269 1.269 0 0 1 .66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 0 1-.66-.796M7.678 4.522a1.269 1.269 0 0 1-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 0 1-.096 1.03m11.8 11.799a1.269 1.269 0 0 1 1.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 0 1 .096-1.03m-14.956.001a1.269 1.269 0 0 1 .096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 0 1 1.03.096m11.799-11.8a1.269 1.269 0 0 1-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 0 1-1.03-.096" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path></svg></button>
 
             }
             <Dialog
@@ -127,7 +129,7 @@ export const Profile = ({ post = true }) => {
                   maxWidth: '350px',
                   padding: 0,
                   overflowY: 'auto',
-                  borderRadius:'15px'
+                  borderRadius: '15px'
                 }
               }}
               onClose={handleCloseMenu}
@@ -135,10 +137,10 @@ export const Profile = ({ post = true }) => {
               open={openMore}
             >
               <div>
-                <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginTop: '0px', textAlign: 'center',cursor: 'pointer' }}>
+                <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginTop: '0px', textAlign: 'center', cursor: 'pointer' }}>
                   Change password
                 </div>
-                <div onClick={()=>context.logout()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                <div onClick={() => context.logout()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
                   Logout
                 </div>
                 <div onClick={() => handleCloseMenu()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginBottom: '0px', textAlign: 'center', cursor: 'pointer' }}>
@@ -163,7 +165,7 @@ export const Profile = ({ post = true }) => {
                 maxWidth: '400px',
                 padding: 0,
                 overflowY: 'auto',
-                borderRadius:'15px'
+                borderRadius: '15px'
               }
             }}
             onClose={handleClose}
@@ -171,14 +173,11 @@ export const Profile = ({ post = true }) => {
             open={open}
           >
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-              <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px',marginBottom:'-8px'}}>{toggle === 2 ? "Followings" : "Followers"}</p>
+              <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px', marginBottom: '-3px' }}>{toggle === 2 ? "Followings" : "Followers"}</p>
             </DialogTitle>
-            <Divider/>
             {
-              followers === 0 ? <p style={{ textAlign: 'center', marginTop: '19px' }}>Nothing to see</p> :
                 <DialogContent style={{ marginTop: '-9px', minHeight: '5px' }} dividers>
                   <Followers toggle={toggle} userId={user?._id} />
-
                 </DialogContent>
             }
           </Dialog>

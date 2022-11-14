@@ -11,7 +11,7 @@ import { useRef } from 'react'
 import Comment from './Comment'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/Auth'
-import { Dialog } from '@mui/material'
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 
 
 export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
@@ -25,12 +25,16 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
     const [getComments, setGetComments] = useState([])
     const [show, setShow] = useState(false)
     const inputRef = useRef()
+    const [captionText, setCaptionText] = useState('')
+    const [captionShow, setCaptionShow] = useState('')
+    const [iFollow, setIFollow] = useState(false)
 
     useEffect(() => {
         api.get(`${url}/user/get/${userId}`).then(res => {
             setUser(res.data)
+            setIFollow(res.data.followers.includes(context.auth._id))
         })
-    }, [userId])
+    }, [context.auth._id, userId])
 
     useEffect(() => {
         if (!user) return
@@ -40,6 +44,8 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
             setLikesCount(res.data.likes.length)
             setGetComments(res.data.comments.reverse())
             setPost(res.data)
+            setCaptionShow(res.data.caption)
+            setCaptionText(res.data.caption)
         })
     }, [postId, user])
 
@@ -96,10 +102,41 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
             }
         })
     }
+    const handleCopy = () => {
+        navigator.clipboard.writeText(`${window.location.origin}/post/${postId}`)
+        context.throwSuccess('Copied to clipboard')
+        handleCloseMenu()
+    }
+    const [openCaption, setOpenCaption] = React.useState(false);
+
+    const handleClickOpenCaption = () => {
+        setOpenCaption(true);
+    };
+
+    const handleCloseCaption = () => {
+        setOpenCaption(false);
+    };
+    const handleChangeCaption = () => {
+        api.put(`${url}/post/update/${postId}`, {
+            caption: captionText
+        }).then(res => {
+            if (res.data) {
+                setCaptionShow(captionText)
+                handleCloseCaption()
+            }
+        })
+    }
+    const unFollow = () => {
+        api.get(`${url}/user/handlefollow/${user._id}`).then((res) => {
+            if (res.data)
+                setIFollow(follow => !follow)
+        }).catch(err => context.throwErr(err.message))
+    }
+
     return (
         <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden', justifyContent: 'space-between' }}>
             <div className="left-dialog" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
-                <img style={{ width: '100%', margin: 'auto' }} src={post && post.files[0].link} alt="" />
+                <img style={{ width: '90%',margin: 'auto',objectFit:'contain' }} src={post && post.files[0].link} alt="" />
             </div>
             <div className="right-dialog" style={{ minWidth: '460px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
                 <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '5px', paddingTop: '1.25px' }}>
@@ -123,7 +160,8 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                                     minWidth: '350px',
                                     maxWidth: '350px',
                                     padding: 0,
-                                    overflowY: 'auto'
+                                    overflowY: 'auto',
+                                    borderRadius: '15px'
                                 }
                             }}
                             onClose={handleCloseMenu}
@@ -135,14 +173,18 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                                     userId === context.auth._id ? <div className="option" onClick={() => deletepost()} style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
                                         Delete
                                     </div> :
-                                        <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'red', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
-                                            Unfollow
-                                        </div>
+                                        iFollow ?
+                                            <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'red', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
+                                                Unfollow
+                                            </div> :
+                                            <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.37px', color: 'black', marginTop: '0px', textAlign: 'center', cursor: 'pointer' }}>
+                                                Follow
+                                            </div>
                                 }
-                                {userId === context.auth._id && <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                                {userId === context.auth._id && <div onClick={() => handleClickOpenCaption()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
                                     Edit
                                 </div>}
-                                <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
+                                <div className="option" onClick={() => handleCopy()} style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
                                     Copy link
                                 </div>
                                 <div onClick={() => handleCloseMenu()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginBottom: '0px', textAlign: 'center', cursor: 'pointer' }}>
@@ -152,6 +194,42 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                             </div>
                         </Dialog>
 
+
+                        {/* caption */}
+                        <Dialog
+                            PaperProps={{
+                                style: {
+                                    minHeight: '16%',
+                                    maxHeight: '55%',
+                                    minWidth: '380px',
+                                    maxWidth: '380px',
+                                    padding: '9px 5px',
+                                    overflowY: 'auto',
+                                    borderRadius: '15px'
+                                }
+                            }}
+                            open={openCaption} onClose={handleCloseCaption}>
+                            <DialogTitle sx={{ fontSize: '15px', fontFamily: 'Poppins' }}>Edit Caption</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    value={captionText}
+                                    onChange={e => setCaptionText(e.target.value)}
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    InputProps={{
+                                        style: { fontSize: '13.5px', fontFamily: 'Poppins' }
+                                    }}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <button style={{ backgroundColor: 'transparent', padding: '7px 9px' }} onClick={handleCloseCaption}>Cancel</button>
+                                <button style={{ backgroundColor: 'transparent', padding: '7px 9px' }} onClick={() => { handleChangeCaption(); handleCloseCaption() }}>Save</button>
+                            </DialogActions>
+                        </Dialog>
 
                     </div>
                 </div>
@@ -164,7 +242,7 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                                 <Link to={`/${user?.username}`}><img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
                             </div>
                             <div className="right-comment" onMouseOver={() => setShow(true)} onMouseLeave={() => setShow(false)} style={{ display: 'flex', flexDirection: 'column', marginLeft: '9px' }}>
-                                <p style={{ fontSize: '13px' }} className="username-comment"><Link to={`/${user?.username}`} style={{ fontWeight: 'bold' }}>{user?.username}</Link> {post?.caption}</p>
+                                <p style={{ fontSize: '13px' }} className="username-comment"><Link to={`/${user?.username}`} style={{ fontWeight: 'bold' }}>{user?.username}</Link> {captionShow}</p>
                                 <div className="comment-labels">
                                     <div className="same-line" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                         <p className='timestamp' style={{ fontSize: '11.5px' }} >

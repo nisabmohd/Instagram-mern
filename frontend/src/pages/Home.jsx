@@ -29,6 +29,9 @@ export default function Home() {
   function filterPosts(id) {
     setPosts(posts => posts.filter(item => item._id !== id))
   }
+  function filterUserPosts(uid) {
+    setPosts(posts => posts.filter(item => item.owner !== uid))
+  }
   function newPost(post) {
     setPosts(posta => [post, ...posts])
   }
@@ -64,7 +67,7 @@ export default function Home() {
           }
           {
             posts.map(item =>
-              <Card filterPosts={filterPosts} key={item._id} id={item._id} img={item.files[0].link} likes={item.likes} saved={item.saved} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={item.createdAt} />
+              <Card filterUserPosts={filterUserPosts} filterPosts={filterPosts} key={item._id} id={item._id} img={item.files[0].link} likes={item.likes} saved={item.saved} userId={item.owner} avatar="https://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mp" username="karen__." caption={item.caption} comments={item.comments} time={item.createdAt} />
             )
 
           }
