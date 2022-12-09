@@ -8,7 +8,7 @@ import { api } from '../../Interceptor/apiCall'
 import defaultImg from '../../assets/dafault.png'
 
 
-export default function RoomName({ people }) {
+export default function RoomName({ people, handleSelected, roomId }) {
     const context = useContext(AuthContext)
     const id = people.filter((id) => id !== context.auth._id)
     const [user, setUser] = useState()
@@ -21,7 +21,7 @@ export default function RoomName({ people }) {
         findUser()
     }, [id])
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} onClick={() => handleSelected(roomId, { user })}>
             <img style={{ borderRadius: '50%', width: '55px' }} src={user?.avatar ? user.avatar : defaultImg} alt="" />
             <div className="nameandmsg" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '12px', }}>
                 <p style={{ fontSize: '15.75px' }}>{user?.name}</p>
