@@ -10,6 +10,7 @@ import { api } from '../../Interceptor/apiCall';
 
 export default function RoomName({ roomId }) {
     const context = useContext(AuthContext)
+    const [roomImage, setRoomImage] = useState()
     const [roomName, setRoomName] = useState('')
     useEffect(() => {
         async function findRoomId() {
@@ -17,6 +18,7 @@ export default function RoomName({ roomId }) {
                 const nameArr = res.data.people.filter(id => id !== context.auth._id)
                 return api.get(`${url}/user/get/${nameArr[0]}`).then((res) => {
                     setRoomName(res.data.name);
+                    setRoomImage(res.data.avatar)
                 })
             }).then((resp => {
                 console.log(resp.data);
@@ -27,7 +29,7 @@ export default function RoomName({ roomId }) {
     }, [context.auth._id, roomId])
     return (
         <Link to={`/chats/${roomId}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} >
-            <img style={{ borderRadius: '50%', width: '55px' }} src={defaultImg} alt="" />
+            <img style={{ borderRadius: '50%', width: '55px' }} src={roomImage || defaultImg} alt="" />
             <div className="nameandmsg" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '12px', }}>
                 <p style={{ fontSize: '15.75px' }}>{roomName ? roomName : "...."}</p>
                 <p style={{ fontSize: '14px', color: 'gray' }}>Heya</p>
