@@ -34,7 +34,7 @@ function App() {
     });
   };
 
-  
+
   return (
     <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess }}>
       <Toaster />
@@ -74,7 +74,15 @@ function App() {
             }
           />
           <Route
-            path="/chats"
+            path="/:username"
+            element={
+              <Private>
+                <Profile />
+              </Private>
+            }
+          />
+          <Route
+            path="/chats/:id"
             element={
               <Private>
                 <Chat />
@@ -90,14 +98,7 @@ function App() {
               </Private>
             }
           />
-          <Route
-            path="/:username"
-            element={
-              <Private>
-                <Profile />
-              </Private>
-            }
-          />
+
           <Route
             path="/saved/:username"
             element={

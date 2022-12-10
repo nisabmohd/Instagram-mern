@@ -133,7 +133,7 @@ export const Navbar = () => {
               </>
             );
           }} />
-          <Link to="/chats">{messageOutline}</Link>
+          <Link to="/chats/all">{messageOutline}</Link>
 
           <button onClick={handleClickOpen} className="no-style " >{postUploadOutline}</button>
           <Dialog
@@ -168,7 +168,7 @@ export const Navbar = () => {
                           multiline
                           rows={4}
                           InputProps={{
-                            style:{fontSize: '13.5px', fontFamily: 'Poppins' }
+                            style: { fontSize: '13.5px', fontFamily: 'Poppins' }
                           }}
                           value={caption} onChange={e => setCaption(e.target.value)}
                         />

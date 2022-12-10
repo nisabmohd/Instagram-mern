@@ -89,6 +89,15 @@ export const Profile = ({ post = true }) => {
     setMore(false);
   };
 
+  const handShake = () => {
+    if (!user) return
+    api.post(`${url}/chat/handshake`, {
+      "_id": user._id
+    }).then((res) => {
+      navigate(`/chats/${res.data.roomId}`)
+    }).catch(err => console.log(err))
+  }
+
   return (
     <div className='home' style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="user-info" style={{ display: 'flex', flexDirection: 'row', width: '84%', margin: 'auto', marginTop: '20px' }}>
@@ -104,7 +113,8 @@ export const Profile = ({ post = true }) => {
             <p style={{ fontSize: '29px', marginRight: '22px', fontWeight: 'lighter', color: '#424141' }}>{user?.username}</p>
             {
               user?._id !== context.auth._id &&
-              <button style={{ border: '1px solid #c1c1c1', padding: '4px 7px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', color: '#424141' }}>Message</button>
+              <button onClick={() => handShake()} style={{ border: '1px solid #c1c1c1', padding: '4px 7px', fontSize: '14px', borderRadius: '4px', fontWeight: 'bold', marginRight: '22px', color: '#424141' }}>Message</button>
+              //
             }
             {
               user?._id === context.auth._id ?
@@ -176,9 +186,9 @@ export const Profile = ({ post = true }) => {
               <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px', marginBottom: '-3px' }}>{toggle === 2 ? "Followings" : "Followers"}</p>
             </DialogTitle>
             {
-                <DialogContent style={{ marginTop: '-9px', minHeight: '5px' }} dividers>
-                  <Followers toggle={toggle} userId={user?._id} />
-                </DialogContent>
+              <DialogContent style={{ marginTop: '-9px', minHeight: '5px' }} dividers>
+                <Followers toggle={toggle} userId={user?._id} />
+              </DialogContent>
             }
           </Dialog>
           <div className="bioandstuff" style={{ marginTop: '20px' }}>

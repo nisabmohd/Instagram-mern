@@ -13,8 +13,13 @@ exports.getRooms = async (req, res) => {
     }
 }
 
-exports.createRoom = async (req, res) => {
+exports.createOrGetRoom = async (req, res) => {
     try {
+        const have = await Chat.findOne({ people: { $all: [req.body._id, req.user._id] } })
+        console.log(have);
+        if (have) {
+            return res.send(have)
+        }
         const newChat = new Chat({
             roomId: id(),
             people: [
@@ -23,6 +28,19 @@ exports.createRoom = async (req, res) => {
         })
         const room = await newChat.save()
         res.send(room)
+    } catch (err) {
+        res.send({
+            success: false,
+            message: err.message,
+        });
+    }
+}
+
+
+exports.findRoom = async (req, res) => {
+    try {
+        const result = await Chat.findOne({ roomId: req.params.roomId })
+        res.send(result)
     } catch (err) {
         res.send({
             success: false,

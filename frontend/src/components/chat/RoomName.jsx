@@ -1,32 +1,37 @@
-import React, { } from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { useContext } from 'react'
-import { url } from '../../baseUrl'
-import { AuthContext } from '../../context/Auth'
-import { api } from '../../Interceptor/apiCall'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import defaultImg from '../../assets/dafault.png'
+import { url } from '../../baseUrl';
+import { AuthContext } from '../../context/Auth';
+import { api } from '../../Interceptor/apiCall';
 
 
-export default function RoomName({ people, handleSelected, roomId }) {
+export default function RoomName({ roomId }) {
     const context = useContext(AuthContext)
-    const id = people.filter((id) => id !== context.auth._id)
-    const [user, setUser] = useState()
+    const [roomName, setRoomName] = useState('')
     useEffect(() => {
-        if (!id) return
-        async function findUser() {
-            const res = await api.get(`${url}/user/get/${id}`)
-            setUser(res.data)
+        async function findRoomId() {
+            api.get(`${url}/chat/${roomId}`).then(res => {
+                const nameArr = res.data.people.filter(id => id !== context.auth._id)
+                return api.get(`${url}/user/get/${nameArr[0]}`).then((res) => {
+                    setRoomName(res.data.name);
+                })
+            }).then((resp => {
+                console.log(resp.data);
+                setRoomName(resp.data.name)
+            })).catch(err => console.log(err))
         }
-        findUser()
-    }, [id])
+        findRoomId()
+    }, [context.auth._id, roomId])
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} onClick={() => handleSelected(roomId, { user })}>
-            <img style={{ borderRadius: '50%', width: '55px' }} src={user?.avatar ? user.avatar : defaultImg} alt="" />
+        <Link to={`/chats/${roomId}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} >
+            <img style={{ borderRadius: '50%', width: '55px' }} src={defaultImg} alt="" />
             <div className="nameandmsg" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '12px', }}>
-                <p style={{ fontSize: '15.75px' }}>{user?.name}</p>
+                <p style={{ fontSize: '15.75px' }}>{roomName ? roomName : "...."}</p>
                 <p style={{ fontSize: '14px', color: 'gray' }}>Heya</p>
             </div>
-        </div>
+        </Link>
     )
 }
