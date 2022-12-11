@@ -45,8 +45,8 @@ export default function RoomName({ roomId }) {
         <Link to={`/chats/${roomId}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} >
             <img style={{ borderRadius: '50%', width: '55px' }} src={roomImage || defaultImg} alt="" />
             <div className="nameandmsg" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '12px', }}>
-                <p style={{ fontSize: '15.75px' }}>{roomName ? roomName : "...."}</p>
-                <p style={{ fontSize: '14px', color: 'gray' }}>{lastmessage === "like_true" ? <FavoriteIcon sx={{ fontSize: '18px', marginTop: '4px', color: 'red' }} /> : lastmessage.includes("http") ? "image" : lastmessage.length > 27 ? lastmessage.slice(0, 27) + "  ..." : lastmessage}</p>
+                <p style={{ fontSize: '13.75px' }}>{roomName ? roomName : "...."}</p>
+                <p style={{ fontSize: '12px', color: 'gray' }}>{lastmessage === "like_true" ? <FavoriteIcon sx={{ fontSize: '18px', marginTop: '4px', color: 'red' }} /> : lastmessage.includes("http") ? "image" : lastmessage.length > 27 ? lastmessage.slice(0, 27) + "  ..." : lastmessage}</p>
             </div>
         </Link>
     )

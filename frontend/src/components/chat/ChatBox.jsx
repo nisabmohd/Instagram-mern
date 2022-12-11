@@ -139,7 +139,7 @@ export default function ChatBox({ roomId }) {
                 <Link to={`/${roomDetails}`} >
                     <div className="info_user_chat" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '28px' }}>
                         <img src={roomImage || defaultImg} style={{ width: '40px', borderRadius: '50%' }} alt="" />
-                        <p style={{ marginLeft: '10px' }}>{RoomName}</p>
+                        <p style={{ marginLeft: '10px', fontSize: '14px' }}>{RoomName}</p>
                     </div>
                 </Link>
                 <div className="svg_info" style={{ marginRight: '18px' }}>
@@ -149,7 +149,7 @@ export default function ChatBox({ roomId }) {
                 </div>
             </div>
             <div className="chat_content" style={{ width: '100%' }}>
-                <div className="converstaions" ref={scrollRef} style={{ height: '72vh', overflowY: 'scroll', padding: '20px 0px', width: '100%' }}>
+                <div className="converstaions" ref={scrollRef} style={{ height: '72vh', overflowY: 'scroll', padding: '20px 0px', width: '100%', fontSize: '14px' }}>
 
                     {
                         snapShotMessages.map((msg, index) => {
