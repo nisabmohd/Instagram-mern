@@ -136,7 +136,7 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
     return (
         <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden', justifyContent: 'space-between' }}>
             <div className="left-dialog" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
-                <img style={{ width: '90%',margin: 'auto',objectFit:'contain' }} src={post && post.files[0].link} alt="" />
+                <img style={{ width: '90%', margin: 'auto', objectFit: 'contain' }} src={post && post.files[0].link} alt="" />
             </div>
             <div className="right-dialog" style={{ minWidth: '460px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
                 <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '5px', paddingTop: '1.25px' }}>

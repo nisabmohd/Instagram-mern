@@ -136,7 +136,7 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                             <Link to={user?.username}><img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
                         }
                     </div>
-                    <div className="username">
+                    <div className="username" style={{ marginTop: '-8px' }}>
                         <Link to={user?.username} style={{ fontWeight: 'bold', fontSize: '13.15px', marginLeft: '9px' }}>{user?.username}</Link>
                     </div>
                 </div>
