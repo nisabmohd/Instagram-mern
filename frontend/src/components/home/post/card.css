@@ -1,4 +1,4 @@
-.card{
+.card {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -8,4 +8,5 @@
     padding-bottom: 15px;
     margin-bottom: 15px;
     background-color: white;
+    overflow: hidden;
 }

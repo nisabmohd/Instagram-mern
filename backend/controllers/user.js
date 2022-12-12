@@ -189,6 +189,28 @@ exports.search = async (req, res) => {
   }
 };
 
+
+// suggestions
+exports.suggestions = async (req, res) => {
+  try {
+    const notFollowed = await User.find({
+      $and: [
+        { followers: { $ne: req.user._id } },
+        { _id: { $ne: req.user._id } }
+      ]
+    })
+      .limit(parseInt(req.query.limit ?? 5))
+    res.send(notFollowed)
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+}
+
+
+
 // forgot password
 
 // add story
@@ -197,6 +219,5 @@ exports.search = async (req, res) => {
 
 // followings users story
 
-// suggestions
 
 // read unread notifications to read
