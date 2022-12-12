@@ -1,5 +1,5 @@
 import { collection, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useState } from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function RoomName({ roomId }) {
 
-    const q = query(collection(db, roomId), orderBy("timestamp", "desc"), limit(1))
+    const q = useMemo(() => query(collection(db, roomId), orderBy("timestamp", "desc"), limit(1)), [roomId])
 
     const context = useContext(AuthContext)
     const [roomImage, setRoomImage] = useState()
@@ -39,7 +39,7 @@ export default function RoomName({ roomId }) {
             setlastmessage(messages[0].message)
         });
         return () => unsubscribe()
-    }, [])
+    }, [q])
 
     return (
         <Link to={`/chats/${roomId}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} >

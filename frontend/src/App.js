@@ -60,9 +60,7 @@ function App() {
           <Route
             path="/forgot"
             element={
-              <Redirect>
-                <Forgot />
-              </Redirect>
+              <Forgot />
             }
           />
           <Route
@@ -108,7 +106,7 @@ function App() {
             }
           />
           <Route
-            path="/accounts/edit"
+            path="/accounts/:params"
             element={
               <Private>
                 <Settings />

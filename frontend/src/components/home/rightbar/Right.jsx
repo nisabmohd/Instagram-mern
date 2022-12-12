@@ -19,7 +19,7 @@ export default function Right() {
 
     useEffect(() => {
         api.get(`${url}/user/suggestions?limit=15`).then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             setSuggestedUsers(res.data.slice(0, 5))
             setCompleteSuggestions(res.data)
         }).catch(err => console.log(err))
@@ -52,7 +52,7 @@ export default function Right() {
                     <p style={{ color: '#0095F6', fontSize: '14.55px' }}>Switch</p>
                 </div>
             </div>
-            <div className="suggestions" style={{ marginTop: '21px' }}>
+            <div className="suggestions" style={{ marginTop: '28px' }}>
                 <div className="header-suggest" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <p style={{ color: 'gray', fontSize: '14.75px' }}>Suggetions for you</p>
                     <button onClick={() => handleClickOpen()} className='no-style'><p style={{ color: 'black', fontSize: '14.05px' }}>See All</p></button>
@@ -86,7 +86,7 @@ export default function Right() {
                         }
                     </Dialog>
                 </div>
-                <div className="allusers" style={{ display: 'flex', alignItems: 'center', marginTop: '17px', flexDirection: 'column' }}>
+                <div className="allusers" style={{ display: 'flex', alignItems: 'center', marginTop: '22px', flexDirection: 'column' }}>
                     {
                         suggestedUsers.map(user => {
                             return <UserCard key={user._id} userId={user._id} avatar={user.avatar} username={user.username} name={user.name} />

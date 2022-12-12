@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import defaultImg from '../../assets/dafault.png'
 import { Link } from 'react-router-dom'
 import { emojiIcon, galleryIcon, likeOutline } from '../../assets/svgIcons';
@@ -21,7 +21,7 @@ export default function ChatBox({ roomId }) {
     const [message, setMessage] = useState('')
     const [snapShotMessages, setSnapShotMessages] = useState([])
 
-    const q = query(collection(db, roomId), orderBy("timestamp", "asc"))
+    const q = useMemo(() => query(collection(db, roomId), orderBy("timestamp", "asc")), [roomId])
     const scrollRef = useRef()
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function ChatBox({ roomId }) {
             setSnapShotMessages(messages)
         });
         return () => unsubscribe()
-    }, [roomId])
+    }, [q, roomId])
 
     useEffect(() => {
         updateScroll()
@@ -66,10 +66,6 @@ export default function ChatBox({ roomId }) {
             console.error(e);
         }
     }
-    //  TODO:
-    // image send in chat
-    // emoji bar
-
 
     const resizeFile = (file) =>
         new Promise((resolve) => {

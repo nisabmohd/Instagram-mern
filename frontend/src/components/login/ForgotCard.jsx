@@ -4,9 +4,9 @@ import img from '../../assets/lock.png'
 
 export const ForgotCard = () => {
     return (
-        <div style={{ display: 'flex', alignItems: 'center',width:'100%',justifyContent:'center',height:'90vh'}}>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', height: '90vh' }}>
             <div className="forgot-box border">
-                <img src={img} style={{marginBottom:'20px'}} alt="" />
+                <img src={img} style={{ marginBottom: '20px' }} alt="" />
                 <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '16px' }}>Trouble with logging in?</p>
                 <p style={{ textAlign: 'center', fontSize: '14px', color: 'gray', width: '77%', marginTop: '17px' }}>Enter your email address, phone number or username, and we'll send you a link to get back into your account.</p>
                 <input className='border' style={{ marginTop: '10px', width: '75%', height: '39px', fontSize: '13px', padding: '0 9px', outline: 'none', borderRadius: '5px', backgroundColor: '#fafafa ' }} type="text" placeholder='Username or email  address' />

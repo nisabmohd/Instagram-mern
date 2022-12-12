@@ -147,7 +147,7 @@ export const Profile = ({ post = true }) => {
               open={openMore}
             >
               <div>
-                <div className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginTop: '0px', textAlign: 'center', cursor: 'pointer' }}>
+                <div onClick={() => navigate('/accounts/reset')} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', marginTop: '0px', textAlign: 'center', cursor: 'pointer' }}>
                   Change password
                 </div>
                 <div onClick={() => context.logout()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer' }}>
