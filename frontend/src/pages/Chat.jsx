@@ -19,7 +19,7 @@ export const Chat = () => {
   }, [])
 
   return (
-    <div className="chatpage" style={{ width: '100%', backgroundColor: 'white', marginTop: '18px', border: '1px solid #dbdbdb', display: 'flex', flexDirection: 'row', height: '90vh', marginBottom: '3vh', borderRadius: '4px' }}>
+    <div className="chatpage" style={{ width: '90%', backgroundColor: 'white', border: '1px solid #dbdbdb', display: 'flex', flexDirection: 'row', height: '90vh', margin: 'auto', marginBottom: '3vh', borderRadius: '4px', marginTop: '2vh', }}>
       <div className="left_chat_bar" style={{ width: '33%', borderRight: '1px solid #dbdbdb', height: '100%', overflowY: 'scroll' }}>
         <div className="username" style={{ borderBottom: '1px solid #dbdbdb', width: '100%', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <p style={{ fontWeight: 'bold', fontSize: '15px', marginLeft: '28px' }}>{"Messages"}</p>
