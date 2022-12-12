@@ -19,6 +19,7 @@ export default function Right() {
 
     useEffect(() => {
         api.get(`${url}/user/suggestions?limit=15`).then(res => {
+            console.log(res.data);
             setSuggestedUsers(res.data.slice(0, 5))
             setCompleteSuggestions(res.data)
         }).catch(err => console.log(err))
