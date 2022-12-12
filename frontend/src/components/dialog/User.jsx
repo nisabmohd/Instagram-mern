@@ -30,9 +30,9 @@ export const User = ({ user, setShow = undefined }) => {
             </div>
             {
                 iFollow ?
-                    <button onClick={()=>handleFollow()} style={{ border: 'none', outline: 'none', padding: '1px 5px', borderRadius: '5px', color: '#4e4e4e', fontSize: '13px', width: '105px', fontWeight: 'bold', marginLeft: 'auto', height: '30px' }}>UnFollow</button>
+                    <button onClick={() => handleFollow()} style={{ border: 'none', outline: 'none', padding: '1px 5px', borderRadius: '5px', color: '#4e4e4e', fontSize: '13px', width: '105px', fontWeight: 'bold', marginLeft: 'auto', height: '30px' }}>UnFollow</button>
                     :
-                    <button onClick={()=>handleFollow()} style={{ border: 'none', outline: 'none', background: 'blue', padding: '1px 5px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', fontSize: '13px', width: '105px', fontWeight: 'bold', marginLeft: 'auto', height: '30px' }}>Follow</button>
+                    <button onClick={() => handleFollow()} style={{ border: 'none', outline: 'none', background: 'blue', padding: '1px 5px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', fontSize: '13px', width: '105px', fontWeight: 'bold', marginLeft: 'auto', height: '30px' }}>Follow</button>
             }
 
         </div>

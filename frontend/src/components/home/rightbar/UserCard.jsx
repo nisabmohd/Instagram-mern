@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { url } from '../../../baseUrl'
 import { api } from '../../../Interceptor/apiCall'
+import deafultImg from '../../../assets/dafault.png'
 
 export function UserCard({ avatar, username, name, userId }) {
     const [iFollow, setIFollow] = useState(false)
@@ -17,7 +18,7 @@ export function UserCard({ avatar, username, name, userId }) {
             <div className="left" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <div className="user-img" style={{ marginRight: '14px' }}>
                     <Link to={`/${username}`}>
-                        <img src={avatar && avatar} style={{ width: '39px', borderRadius: '50%', }} alt="" />
+                        <img src={avatar ?? deafultImg} style={{ width: '39px', borderRadius: '50%', }} alt="" />
                     </Link>
                 </div>
                 <div className="username" style={{ display: 'flex', flexDirection: 'column', marginTop: '-4px' }}>

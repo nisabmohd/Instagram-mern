@@ -12,7 +12,6 @@ import { Link, useParams } from 'react-router-dom'
 export const Settings = () => {
     const context = useContext(AuthContext)
     const params = useParams()
-    console.log(params);
     const [username, setUsername] = useState(context.auth.username)
     const [email, setEmail] = useState('')
     const [bio, setBio] = useState(context.auth.bio)
@@ -95,9 +94,20 @@ export const Settings = () => {
         }
     }
 
-    // async function handlePasswordChange(){
-
-    // }
+    async function handlePasswordChange() {
+        api.put(`${url}/user/changepassword`, {
+            password: resetPasword,
+            newPassword: resetNewPasword,
+            confirmPassword: resetConfirmPasword
+        }).then(res => {
+            if (res.data?.success) {
+                context.throwSuccess('Updated password')
+                setResetConfirmPassword('')
+                setResetNewPassword('')
+                setResetPassword('')
+            }
+        }).catch(err => context.throwErr(err.response.data.message))
+    }
 
 
     return (
@@ -201,7 +211,7 @@ export const Settings = () => {
                                     <p style={{ marginRight: '27px', fontWeight: 'bold', fontSize: '14px' }}>Old Password</p>
                                 </div>
                                 <div className="tableright" style={{ width: '80%' }}>
-                                    <input type="text" value={resetPasword} onChange={(e) => setResetPassword(e.target.value)} style={{
+                                    <input type="password" value={resetPasword} onChange={(e) => setResetPassword(e.target.value)} style={{
                                         outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%', fontWeight: '14px', fontSize: '14px', backgroundColor: '#ececec'
                                         , height: '29px'
                                     }} />
@@ -212,7 +222,7 @@ export const Settings = () => {
                                     <p style={{ marginRight: '27px', fontWeight: 'bold', fontSize: '14px' }}>New Password</p>
                                 </div>
                                 <div className="tableright" style={{ width: '80%' }}>
-                                    <input type="text" value={resetNewPasword} onChange={(e) => setResetNewPassword(e.target.value)} style={{
+                                    <input type="password" value={resetNewPasword} onChange={(e) => setResetNewPassword(e.target.value)} style={{
                                         outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%', fontWeight: '14px', fontSize: '14px', backgroundColor: '#ececec'
                                         , height: '29px'
                                     }} />
@@ -223,7 +233,7 @@ export const Settings = () => {
                                     <p style={{ marginRight: '27px', fontWeight: 'bold', fontSize: '14px' }}> Confirm New password</p>
                                 </div>
                                 <div className="tableright" style={{ width: '80%' }}>
-                                    <input type="text" value={resetConfirmPasword} onChange={(e) => setResetConfirmPassword(e.target.value)} style={{
+                                    <input type="password" value={resetConfirmPasword} onChange={(e) => setResetConfirmPassword(e.target.value)} style={{
                                         outline: 'none', border: '1px solid #dbdbdb', padding: '3px 9px', borderRadius: '3px', width: '60%', fontWeight: '14px', fontSize: '14px', backgroundColor: '#ececec'
                                         , height: '29px'
                                     }} />
@@ -240,7 +250,7 @@ export const Settings = () => {
                                                 border: 'none', outline: 'none', background: 'blue', padding: '4px 9px', borderRadius: '5px', color: 'gray', backgroundColor: 'rgb(172 194 212)', marginTop: '18px', fontSize: '13px', width: '155px', cursor: 'not-allowed', height: '33px'
                                             }}>Change Password</button>
                                             :
-                                            <button style={{ border: 'none', outline: 'none', background: 'blue', padding: '4px 9px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', marginTop: '18px', fontSize: '13px', width: '155px', fontWeight: 'bold', height: '33px' }}>Change Password</button>
+                                            <button onClick={() => handlePasswordChange()} style={{ border: 'none', outline: 'none', background: 'blue', padding: '4px 9px', borderRadius: '5px', color: 'white', backgroundColor: '#2196f3', marginTop: '18px', fontSize: '13px', width: '155px', fontWeight: 'bold', height: '33px' }}>Change Password</button>
                                     }
 
                                 </div>

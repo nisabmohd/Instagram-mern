@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require('bcrypt')
 
 // get a user by username
 exports.getUser = async (req, res) => {
@@ -209,6 +210,31 @@ exports.suggestions = async (req, res) => {
   }
 }
 
+//change password
+exports.changePassword = async (req, res) => {
+  try {
+    console.log(req.body);
+    const user = await User.findOne({ _id: req.user._id }).select("+password");
+    console.log(user);
+    const isCorrect = await bcrypt.compare(req.body.password, user.password)
+    if (!isCorrect) return res.status(400).send({
+      message: 'Current password is wrong'
+    })
+    if (req.body.newPassword !== req.body.confirmPassword) return res.status(400).send({
+      message: 'Confirm password and new password doesnt match'
+    })
+    const updated = await User.updateOne({ _id: req.user._id }, { $set: { password: bcrypt.hashSync(req.body.newPassword, 10) } })
+    res.send({
+      success: true,
+      message: "Updated password",
+    })
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+}
 
 
 // forgot password
