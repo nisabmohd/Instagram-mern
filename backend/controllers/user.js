@@ -237,6 +237,18 @@ exports.changePassword = async (req, res) => {
 }
 
 
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ _id: { $ne: `${req.user._id}` } })
+    res.send(users)
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+}
+
 // forgot password
 
 // add story

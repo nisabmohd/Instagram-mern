@@ -1,9 +1,11 @@
-const { getUser, followHandle, getFollowings, getFollowers, notications, hasNotications, updateUser, search, getUserById, suggestions, changePassword } = require('../controllers/user')
+const { getUser, followHandle, getFollowings, getFollowers, notications, hasNotications, updateUser, search, getUserById, suggestions, changePassword, getAllUsers } = require('../controllers/user')
 const { isAuthenticated } = require('../middlewares/auth')
 
 const router = require('express').Router()
 
 router.route('/').put(isAuthenticated, updateUser)
+
+router.route('/allusers').get(isAuthenticated, getAllUsers)
 
 router.route("/suggestions").get(isAuthenticated, suggestions)
 
