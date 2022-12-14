@@ -29,6 +29,14 @@ export const Chat = () => {
     setOpen(false);
   };
 
+  function addRoom(room) {
+    setRooms(prev => [...prev, room])
+  }
+
+  function deleteRoom(roomId) {
+    setRooms(prev => prev.filter(item => item.roomId !== roomId))
+  }
+
   return (
     <div className="chatpage" style={{ width: '90%', backgroundColor: 'white', border: '1px solid #dbdbdb', display: 'flex', flexDirection: 'row', height: '90vh', margin: 'auto', marginBottom: '3vh', borderRadius: '4px', marginTop: '2vh', }}>
       <div className="left_chat_bar" style={{ width: '33%', borderRight: '1px solid #dbdbdb', height: '100%', overflowY: 'scroll' }}>
@@ -58,7 +66,7 @@ export const Chat = () => {
               <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px', marginBottom: '-3px' }}>{"New Message"}</p>
               <p> &nbsp; </p>
             </DialogTitle>
-            <Select handleClose={handleClose} />
+            <Select addRoom={addRoom} handleClose={handleClose} />
           </Dialog>
         </div>
         {
@@ -68,7 +76,7 @@ export const Chat = () => {
       <div className="right_chatbar" style={{ width: '67%' }}>
         {
           params.id === "all" ? <Default /> :
-            <ChatBox roomId={params.id} />
+            <ChatBox deleteRoom={deleteRoom} roomId={params.id} />
         }
       </div>
     </div>

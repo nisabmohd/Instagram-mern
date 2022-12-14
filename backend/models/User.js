@@ -77,12 +77,6 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-  conversations: [
-    {
-      type: String,
-      ref: "Room",
-    },
-  ],
   private: {
     type: Boolean,
     default: false,

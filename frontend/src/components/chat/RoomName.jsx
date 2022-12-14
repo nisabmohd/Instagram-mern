@@ -11,7 +11,7 @@ import { db } from '../../firebase'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function RoomName({ roomId }) {
-
+    // console.log("roomcompoent  " + roomId);
     const q = useMemo(() => query(collection(db, roomId), orderBy("timestamp", "desc"), limit(1)), [roomId])
 
     const context = useContext(AuthContext)

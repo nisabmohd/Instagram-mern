@@ -5,7 +5,7 @@ import { url } from '../../baseUrl'
 import { api } from '../../Interceptor/apiCall'
 import SelectUser from './SelectUser'
 
-export default function Select({ handleClose }) {
+export default function Select({ handleClose, addRoom }) {
     const [selected, setSelected] = useState([])
     const [selectedIds, setSelectedIds] = useState([])
     const [users, setUsers] = useState([])
@@ -32,6 +32,7 @@ export default function Select({ handleClose }) {
             // console.log(res);
             handleClose()
             navigate(`/chats/${res.data.roomId}`)
+            addRoom(res.data)
         }).catch(err => console.log(err))
     }
 
