@@ -1,20 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import defaultImg from '../../assets/dafault.png'
 import Checkbox from '@mui/material/Checkbox';
 
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-export default function SelectUser({ user, handleSelect, removeUser }) {
+export default function SelectUser({ user, handleSelect, removeUser, selects }) {
     const [checked, setChecked] = useState(false)
+
     function handleCheckBoxClick() {
         if (checked) {
-            removeUser(user)
+            removeUser(user._id)
         } else {
             handleSelect(user)
         }
         setChecked(prev => !prev)
     }
+
+    useEffect(() => {
+        if (selects.includes(user._id)) return
+        setChecked(false)
+    }, [selects, user._id])
+
+
     return (
         <div style={{ display: 'flex', flexDirection: 'row', margin: '3px 0px', alignItems: 'flex-start', padding: '5px 12px' }}>
             <div className="user-img" >
@@ -26,6 +34,7 @@ export default function SelectUser({ user, handleSelect, removeUser }) {
             </div>
             <div className="checbox" style={{ marginLeft: 'auto' }}>
                 <Checkbox
+                    checked={checked}
                     onClick={() => handleCheckBoxClick()}
                     icon={<RadioButtonUncheckedIcon />}
                     checkedIcon={<CheckCircleIcon />}

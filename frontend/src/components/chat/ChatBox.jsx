@@ -12,6 +12,7 @@ import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy } from 
 import { db, storage } from '../../firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import Resizer from "react-image-file-resizer";
+import OtherMessage from './OtherMessage';
 
 export default function ChatBox({ roomId }) {
     const [RoomName, setRoomName] = useState('')
@@ -117,13 +118,16 @@ export default function ChatBox({ roomId }) {
     useEffect(() => {
         api.get(`${url}/chat/${roomId}`).then(res => {
             const nameArr = res.data.people.filter(id => id !== context.auth._id)
-            return api.get(`${url}/user/get/${nameArr[0]}`).then((res) => {
-                setRoomName(res.data.name);
-                setRoomImage(res.data.avatar)
-                setRoomDetails(res.data.username)
-            })
+            if (nameArr.length > 1) {
+                return api.get(`${url}/user/get/${nameArr[0]}`).then(resp => {
+                    return { data: { name: `${resp.data.name} and ${nameArr.length - 1} others`, avatar: "https://images.squarespace-cdn.com/content/v1/53eba949e4b0c2eda84a38cc/1592250464335-933Q01Q1A0JOXSIRDVSR/social.png?format=500w", username: '' } }
+                })
+            }
+            return api.get(`${url}/user/get/${nameArr[0]}`)
         }).then((resp => {
             setRoomName(resp.data.name)
+            setRoomImage(resp.data.avatar)
+            setRoomDetails(resp.data.username)
         })).catch(err => console.log(err))
 
     }, [context.auth._id, roomId])
@@ -132,12 +136,23 @@ export default function ChatBox({ roomId }) {
     return (
         <div style={{ width: '100%', position: 'relative', height: '100%' }}>
             <div className="header_chat" style={{ width: '100%', borderBottom: '1px solid #dbdbdb', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Link to={`/${roomDetails}`} >
-                    <div className="info_user_chat" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '28px' }}>
-                        <img src={roomImage || defaultImg} style={{ width: '40px', borderRadius: '50%' }} alt="" />
-                        <p style={{ marginLeft: '10px', fontSize: '14px' }}>{RoomName}</p>
-                    </div>
-                </Link>
+                {
+                    roomDetails ?
+                        <Link to={`/${roomDetails}`} >
+                            <div className="info_user_chat" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '28px' }}>
+                                <img src={roomImage || defaultImg} style={{ width: '40px', borderRadius: '50%', backgroundColor: '#eaeaea' }} alt="" />
+                                <p style={{ marginLeft: '10px', fontSize: '14px' }}>{RoomName}</p>
+                            </div>
+                        </Link>
+                        :
+                        <div >
+                            <div className="info_user_chat" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '28px' }}>
+                                <img src={roomImage || defaultImg} style={{ width: '40px', borderRadius: '50%', backgroundColor: '#eaeaea' }} alt="" />
+                                <p style={{ marginLeft: '10px', fontSize: '14px' }}>{RoomName}</p>
+                            </div>
+                        </div>
+                }
+
                 <div className="svg_info" style={{ marginRight: '18px' }}>
                     <Link to={`/${roomDetails}`} className='no_style' style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <svg aria-label="View thread details" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></polyline></svg>
@@ -163,28 +178,7 @@ export default function ChatBox({ roomId }) {
                                             }
                                         </div>
                                 :
-                                msg.message === "like_true" ?
-                                    <div className="other_partytext" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '18px', }}>
-                                        <img style={{ width: '30px', borderRadius: '50%', marginBottom: '-7px', marginLeft: '18px' }} src={roomImage || defaultImg} alt="" />
-                                        <div className="other_text" style={{ width: 'fit-content', marginLeft: '12px', color: 'black', padding: '10px 16px', borderRadius: '22px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '22px' }}>
-                                            <svg aria-label="Like" className="_ab6-" color="#ed4956" fill="#ed4956" height="44" role="img" viewBox="0 0 48 48" width="44"><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-                                        </div>
-                                    </div>
-                                    :
-                                    msg.file ?
-                                        <div className="other_partytext" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: '18px', }}>
-                                            <img style={{ width: '30px', borderRadius: '50%', marginTop: '15px', marginLeft: '18px' }} src={roomImage || defaultImg} alt="" />
-                                            <div className="other_text" style={{ width: 'fit-content', marginLeft: '12px', color: 'black', padding: '10px 16px', borderRadius: '22px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '22px' }}>
-                                                <img style={{ maxWidth: '400px', borderRadius: '14px', border: '1px solid #e3e3e3', marginLeft: '-8px' }} src={msg.message} alt="img" />
-                                            </div>
-                                        </div>
-                                        :
-                                        <div className="other_partytext" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: '18px', }}>
-                                            <img style={{ width: '30px', borderRadius: '50%', marginTop: '12px', marginLeft: '18px' }} src={roomImage || defaultImg} alt="" />
-                                            <div className="other_text" style={{ width: 'fit-content', marginLeft: '12px', backgroundColor: '#dbdbdb', color: 'black', padding: '10px 16px', borderRadius: '22px', maxWidth: '60%' }}>
-                                                {msg.message}
-                                            </div>
-                                        </div>
+                                <OtherMessage msg={msg} />
                             }
                             </div>
                         })

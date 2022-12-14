@@ -1,4 +1,4 @@
-const { getRooms, findRoom, createOrGetRoom } = require('../controllers/chat')
+const { getRooms, findRoom, createOrGetRoom, groupHandShake } = require('../controllers/chat')
 const { isAuthenticated } = require('../middlewares/auth')
 
 const router = require('express').Router()

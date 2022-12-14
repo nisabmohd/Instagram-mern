@@ -92,7 +92,7 @@ export const Profile = ({ post = true }) => {
   const handShake = () => {
     if (!user) return
     api.post(`${url}/chat/handshake`, {
-      "_id": user._id
+      "people": [user._id]
     }).then((res) => {
       navigate(`/chats/${res.data.roomId}`)
     }).catch(err => console.log(err))

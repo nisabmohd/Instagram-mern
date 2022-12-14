@@ -58,7 +58,7 @@ export const Chat = () => {
               <p style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', marginTop: '-5px', marginBottom: '-3px' }}>{"New Message"}</p>
               <p> &nbsp; </p>
             </DialogTitle>
-            <Select />
+            <Select handleClose={handleClose} />
           </Dialog>
         </div>
         {

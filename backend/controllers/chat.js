@@ -15,20 +15,20 @@ exports.getRooms = async (req, res) => {
 
 exports.createOrGetRoom = async (req, res) => {
     try {
-        const have = await Chat.findOne({ people: { $all: [req.body._id, req.user._id] } })
-        console.log(have);
+        const have = await Chat.findOne({ people: { $all: [...req.body.people, req.user._id] } })
         if (have) {
             return res.send(have)
         }
         const newChat = new Chat({
             roomId: id(),
             people: [
-                req.user._id, req.body._id
+                req.user._id, ...req.body.people
             ],
         })
         const room = await newChat.save()
         res.send(room)
     } catch (err) {
+        console.log(err);
         res.send({
             success: false,
             message: err.message,
