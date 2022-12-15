@@ -30,7 +30,7 @@ export const Chat = () => {
   };
 
   function addRoom(room) {
-    const present = room.filter(item => item.roomId === room.roomId)
+    const present = rooms.filter(item => item.roomId === room.roomId)
     if (present.length !== 0) return
     setRooms(prev => [...prev, room])
   }
