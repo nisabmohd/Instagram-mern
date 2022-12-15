@@ -33,7 +33,7 @@ export default function Details({ handleDetailsToggle, roomId, handleLeaveChat }
 
             </div>
             <div className="options_chat" style={{ padding: '0 15px', borderBottom: '1px solid #dbdbdb' }}>
-                <p onClick={() => handleLeaveChat()} style={{ marginLeft: '10px', fontSize: '14.5px', marginTop: '18px', marginBottom: '15px', color: '#e87e7e', cursor: 'pointer' }}>Leave chat / delete chat</p>
+                <p onClick={() => handleLeaveChat()} style={{ marginLeft: '10px', fontSize: '14.5px', marginTop: '18px', marginBottom: '15px', color: '#e87e7e', cursor: 'pointer' }}>{people.length !== 1 ? "Leave chat" : "Delete chat"}</p>
             </div>
         </div>
     )
