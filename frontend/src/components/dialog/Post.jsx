@@ -12,6 +12,7 @@ import Comment from './Comment'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/Auth'
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
+import Emoji from '../emoji/Emoji'
 
 
 export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
@@ -28,6 +29,8 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
     const [captionText, setCaptionText] = useState('')
     const [captionShow, setCaptionShow] = useState('')
     const [iFollow, setIFollow] = useState(false)
+    const [showEmojiPicker, setEmojiPicker] = useState(false)
+
 
     useEffect(() => {
         api.get(`${url}/user/get/${userId}`).then(res => {
@@ -133,12 +136,16 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
         }).catch(err => context.throwErr(err.message))
     }
 
+    function getEmoji(emoji) {
+        setComment(prev => prev + emoji)
+    }
+
     return (
         <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden', justifyContent: 'space-between' }}>
             <div className="left-dialog" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
                 <img style={{ width: '90%', margin: 'auto', objectFit: 'contain' }} src={post && post.files[0].link} alt="" />
             </div>
-            <div className="right-dialog" style={{ minWidth: '460px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }}>
+            <div className="right-dialog" style={{ minWidth: '460px', overflowY: 'scroll', borderLeft: '2px solid rgb(231 231 231)', padding: '10px 0px', display: 'flex', flexDirection: 'column' }} onClick={() => setEmojiPicker(false)}>
                 <div className="user-post-details" style={{ marginBottom: '7px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #dbdbdb', paddingBottom: '5px', paddingTop: '1.25px' }}>
                     <div className="right-post-details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '18.7px' }}>
                         <div className="user-img">
@@ -235,8 +242,6 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                 </div>
                 <div className="comments" style={{ padding: '10px 19px', height: '84.05%' }}>
                     <div className="coments-itr" style={{ height: '90%', overflowY: 'auto', marginBottom: '10px' }}>
-
-
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '43px' }}>
                             <div className="caption-right">
                                 <Link to={`/${user?.username}`}><img src={user?.avatar ? user.avatar : defaultImg} style={{ minWidth: '35px', height: '35px', objectFit: 'cover', borderRadius: '50%', }} alt="" /></Link>
@@ -301,7 +306,7 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
 
                 </div>
                 <div className="addComment" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '9px', marginTop: '22px', width: '95%', borderTop: '1px solid #dbdbdb', paddingTop: '15px', marginBottom: '3px' }}>
-                    <button className="no-style" >
+                    <button className="no-style" onClick={(e) => { e.stopPropagation(); setEmojiPicker(prev => !prev) }} >
                         {emojiIcon}
                     </button>
                     <input ref={inputRef} value={comment} onChange={e => setComment(e.target.value)} type="text" placeholder="Add a comment" style={{ width: '87%', height: '22px', outline: 'none', border: 'none', fontSize: '13px', paddingLeft: '9px' }} />
@@ -312,6 +317,11 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                     }
                 </div>
             </div>
+            {
+                showEmojiPicker && <div className="emoji-picker" style={{ position: 'absolute', bottom: '70px', right: '95px', zIndex: '99' }}>
+                    <Emoji getEmoji={getEmoji} />
+                </div>
+            }
         </div >
     )
 }
