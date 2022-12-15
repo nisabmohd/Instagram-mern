@@ -42,15 +42,15 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
     useEffect(() => {
         if (!user) return
         api.get(`${url}/post/${postId}`).then((res) => {
-            setIliked(res.data.likes.includes(user?._id))
-            setIsaved(res.data.saved.includes(user?._id))
+            setIliked(res.data.likes.includes(context.auth._id))
+            setIsaved(res.data.saved.includes(context.auth._id))
             setLikesCount(res.data.likes.length)
             setGetComments(res.data.comments.reverse())
             setPost(res.data)
             setCaptionShow(res.data.caption)
             setCaptionText(res.data.caption)
         })
-    }, [postId, user])
+    }, [context.auth._id, postId, user])
 
     function handleLike() {
         api.put(`${url}/post/handlelike/${postId}`).then((res) => {
