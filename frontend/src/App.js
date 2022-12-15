@@ -13,6 +13,7 @@ import { Profile } from "./pages/Profile";
 import { Settings } from "./pages/Settings";
 import toast, { Toaster } from "react-hot-toast";
 import { Chat } from "./pages/Chat";
+import Story from "./pages/Story";
 
 function App() {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
@@ -84,6 +85,14 @@ function App() {
             element={
               <Private>
                 <Chat />
+              </Private>
+            }
+          />
+          <Route
+            path="/story/:userId"
+            element={
+              <Private>
+                <Story />
               </Private>
             }
           />

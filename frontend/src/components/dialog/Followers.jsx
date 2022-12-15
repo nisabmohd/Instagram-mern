@@ -3,7 +3,7 @@ import { url } from '../../baseUrl'
 import { api } from '../../Interceptor/apiCall'
 import { User } from './User'
 
-export const Followers = ({ userId, toggle }) => {
+export const Followers = ({ userId, toggle, handleClose }) => {
   const [users, setUsers] = useState([])
   console.log(userId);
   useEffect(() => {
@@ -25,7 +25,7 @@ export const Followers = ({ userId, toggle }) => {
         users.length === 0 && <p style={{ textAlign: 'center', marginTop: '19px' }}>Nothing to see</p>
       }
       {
-        users.map((item => <User key={item._id} user={item} />))
+        users.map((item => <User handleClose={handleClose} key={item._id} user={item} />))
 
       }
     </div>

@@ -187,7 +187,7 @@ export const Profile = ({ post = true }) => {
             </DialogTitle>
             {
               <DialogContent style={{ marginTop: '-9px', minHeight: '5px' }} dividers>
-                <Followers toggle={toggle} userId={user?._id} />
+                <Followers handleClose={handleClose} toggle={toggle} userId={user?._id} />
               </DialogContent>
             }
           </Dialog>
