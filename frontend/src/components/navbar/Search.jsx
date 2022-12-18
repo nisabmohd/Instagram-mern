@@ -4,6 +4,7 @@ import { api } from '../../Interceptor/apiCall'
 import { url } from '../../baseUrl'
 import { User } from '../dialog/User'
 import { Spinner } from '../../assets/Spinner'
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Search() {
   const [text, setText] = useState('')
@@ -30,7 +31,7 @@ export default function Search() {
 
   return (
     <>
-      <div className="search" onBlur={() => setShow(false)} style={{ position: 'relative' }}>
+      <div className="search" style={{ position: 'relative' }}>
         <SearchIcon sx={{ fontSize: '17px', marginRight: '8px', color: 'gray' }} />
         <input
           onClick={() => setShow(true)}
@@ -38,8 +39,9 @@ export default function Search() {
           onChange={e => setText(e.target.value)}
           style={{ width: "100%", fontSize: '14px' }}
           type="text" className="noborder" placeholder="Search" />
+        {show && <CloseIcon onClick={() => setShow(false)} sx={{ fontSize: '17px', marginRight: '8px', color: 'gray', cursor: 'pointer' }} />}
       </div>
-      {show && <div className="containerSuggest" style={{ position: 'absolute', top: '58px', backgroundColor: 'white', width: '390px', border: '1px solid #e7e7e7', borderRadius: '11px', minHeight: '75px', maxHeight: '300px', overflowY: 'auto', padding: '15px 15px' }}>
+      {show && <div className="containerSuggest" style={{ position: 'absolute', top: '58px', backgroundColor: 'white', width: '390px', border: '1px solid #e7e7e7', borderRadius: '8px', minHeight: '75px', maxHeight: '300px', overflowY: 'auto', padding: '15px 15px' }}>
         {loading && <Spinner />}
         {userResults.length === 0 && !loading ? <p style={{ fontSize: '13px', textAlign: 'center', marginTop: '22px' }}>Nothing to see !</p>
           :

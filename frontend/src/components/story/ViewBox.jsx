@@ -9,7 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 export default function ViewBox() {
     return (
-        <div style={{ backgroundColor: 'gray', minWidth: '400px', height: '95vh', borderRadius: '9px', maxWidth: '445px', overflow: 'hidden', position: 'absolute', top: '2.75vh' }}>
+        <div style={{ backgroundColor: 'gray', width: '25vw', minWidth: '445px', height: '95vh', borderRadius: '9px', overflow: 'hidden', position: 'absolute', top: '2.75vh' }}>
             <div className="header_story" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', position: 'absolute', top: '15px', width: '100%' }}>
                 <div className="left_header_story" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', color: 'white', marginLeft: '14px' }}>
                     <img src="https://firebasestorage.googleapis.com/v0/b/instagram-4b51d.appspot.com/o/images%2Fdownload.JPEG?alt=media&token=6dec60aa-aad7-4243-be90-a37aabff24f6" style={{ width: '35px', borderRadius: '50%' }} alt="" />
