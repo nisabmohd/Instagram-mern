@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 
 const StorySchema = new mongoose.Schema(
   {
+    id: {
+      type: String,
+      required: true
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
     },
     data: {
       type: String,
@@ -13,7 +17,7 @@ const StorySchema = new mongoose.Schema(
     seen: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "user",
       },
     ],
   },

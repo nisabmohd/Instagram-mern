@@ -213,9 +213,7 @@ exports.suggestions = async (req, res) => {
 //change password
 exports.changePassword = async (req, res) => {
   try {
-    console.log(req.body);
     const user = await User.findOne({ _id: req.user._id }).select("+password");
-    console.log(user);
     const isCorrect = await bcrypt.compare(req.body.password, user.password)
     if (!isCorrect) return res.status(400).send({
       message: 'Current password is wrong'
