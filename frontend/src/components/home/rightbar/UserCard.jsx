@@ -22,12 +22,12 @@ export function UserCard({ avatar, username, name, userId }) {
                     </Link>
                 </div>
                 <div className="username" style={{ display: 'flex', flexDirection: 'column', marginTop: '-4px' }}>
-                    <Link to={`/${username}`} style={{ fontSize: '12.75px', marginLeft: '9px', marginTop: '0px', fontWeight: 'bold', textDecoration: 'none' }}>{username && username}</Link>
-                    <Link to={`/${username}`} style={{ fontSize: '10.85px', marginLeft: '9px', color: 'gray', marginTop: '3.7px', textDecoration: 'none' }}>{name}</Link>
+                    <Link to={`/${username}`} style={{ fontSize: '13px', marginLeft: '9px', marginTop: '0px', fontWeight: 'bold', textDecoration: 'none' }}>{username && username}</Link>
+                    <Link to={`/${username}`} style={{ fontSize: '12px', marginLeft: '9px', color: 'gray', marginTop: '3.7px', textDecoration: 'none' }}>{name}</Link>
                 </div>
             </div>
             <div className="follow-btn">
-                <button onClick={() => handleFollow()} className='no-style'><p style={{ color: !iFollow ? '#0095F6' : 'rgb(200 40 17)', fontSize: '12.55px' }}>{iFollow ? "Unfollow" : "Follow"}</p></button>
+                <button onClick={() => handleFollow()} className='no-style'><p style={{ color: !iFollow ? '#0095F6' : 'rgb(200 40 17)', fontSize: '13.25px' }}>{iFollow ? "Unfollow" : "Follow"}</p></button>
             </div>
         </div>
     )

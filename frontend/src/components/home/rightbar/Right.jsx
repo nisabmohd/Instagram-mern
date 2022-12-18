@@ -45,7 +45,7 @@ export default function Right() {
                     }
                     <div className="name" style={{ display: 'flex', flexDirection: 'column', marginLeft: '18px' }}>
                         <Link to={`/${auth?.username}`} style={{ color: 'black', fontSize: '14.75px', fontWeight: 'bold' }}>{auth?.username}</Link>
-                        <Link to={`/${auth?.username}`} style={{ color: 'gray', fontSize: '14.75px', marginTop: '9px' }}>{auth?.name}</Link>
+                        <Link to={`/${auth?.username}`} style={{ color: 'gray', fontSize: '14.35px', marginTop: '4.5px' }}>{auth?.name}</Link>
                     </div>
                 </div>
                 <div className="switch">

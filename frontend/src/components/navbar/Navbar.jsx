@@ -3,7 +3,7 @@ import "./navbar.css";
 import logo from "./logo.png";
 import Search from "./Search";
 import { Link, NavLink } from "react-router-dom";
-import { exploreFill, homeFill, likeFill, likeIconFill, messageFill, messageOutline, profileIcon, savedIcon, settingsIcon, switchAccountIcon } from "../../assets/svgIcons";
+import { exploreFill, homeFill, messageFill, messageOutline, profileIcon, savedIcon, settingsIcon, switchAccountIcon } from "../../assets/svgIcons";
 import { exploreOutline } from "../../assets/svgIcons";
 import { postUploadOutline } from "../../assets/svgIcons";
 import { likeOutline } from "../../assets/svgIcons";
