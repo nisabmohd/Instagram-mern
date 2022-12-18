@@ -3,7 +3,7 @@ import "./navbar.css";
 import logo from "./logo.png";
 import Search from "./Search";
 import { Link, NavLink } from "react-router-dom";
-import { exploreFill, homeFill, messageOutline, profileIcon, savedIcon, settingsIcon, switchAccountIcon } from "../../assets/svgIcons";
+import { exploreFill, homeFill, likeFill, likeIconFill, messageFill, messageOutline, profileIcon, savedIcon, settingsIcon, switchAccountIcon } from "../../assets/svgIcons";
 import { exploreOutline } from "../../assets/svgIcons";
 import { postUploadOutline } from "../../assets/svgIcons";
 import { likeOutline } from "../../assets/svgIcons";
@@ -22,11 +22,13 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from '../../firebase';
 
 
-export const Navbar = () => {
+export const Navbar = ({ active }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [imgurl, setImgurl] = useState('')
   const context = useContext(AuthContext)
   const [caption, setCaption] = useState('')
+  const [innerActive, setInnerActive] = useState()
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -38,15 +40,18 @@ export const Navbar = () => {
   const [anchorElNot, setAnchorElNot] = React.useState(null);
   const openNot = Boolean(anchorElNot);
   const handleClickNot = (event) => {
+    setInnerActive("notification")
     setAnchorElNot(event.currentTarget);
   };
   const handleCloseNot = () => {
     setAnchorElNot(null);
+    setInnerActive()
   };
 
   const [openDailog, setOpenDilaog] = React.useState(false);
 
   const handleClickOpen = () => {
+    setInnerActive("newpost")
     setOpenDilaog(true);
   };
 
@@ -54,6 +59,7 @@ export const Navbar = () => {
     setImgurl('')
     setCaption('')
     setOpenDilaog(false);
+    setInnerActive()
   };
 
   const logout = async () => {
@@ -125,17 +131,13 @@ export const Navbar = () => {
           <Search />
         </div>
         <div className="icons">
-          <NavLink to="/" children={({ isActive }) => {
-            const file = isActive ? homeFill : homeOutline;
-            return (
-              <>
-                {file}
-              </>
-            );
-          }} />
-          <Link to="/chats/all">{messageOutline}</Link>
+          <NavLink to="/" >{(active === "home" && !innerActive) ? homeFill : homeOutline}</NavLink>
+          <Link to="/chats/all">{(active === "chat" && !innerActive) ? messageFill : messageOutline}</Link>
 
-          <button onClick={handleClickOpen} className="no-style " >{postUploadOutline}</button>
+          <button onClick={handleClickOpen} className="no-style " >{innerActive === "newpost" ?
+            <svg aria-label="New post" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="m12.003 5.545-.117.006-.112.02a1 1 0 0 0-.764.857l-.007.117V11H6.544l-.116.007a1 1 0 0 0-.877.876L5.545 12l.007.117a1 1 0 0 0 .877.876l.116.007h4.457l.001 4.454.007.116a1 1 0 0 0 .876.877l.117.007.117-.007a1 1 0 0 0 .876-.877l.007-.116V13h4.452l.116-.007a1 1 0 0 0 .877-.876l.007-.117-.007-.117a1 1 0 0 0-.877-.876L17.455 11h-4.453l.001-4.455-.007-.117a1 1 0 0 0-.876-.877ZM8.552.999h6.896c2.754 0 4.285.579 5.664 1.912 1.255 1.297 1.838 2.758 1.885 5.302L23 8.55v6.898c0 2.755-.578 4.286-1.912 5.664-1.298 1.255-2.759 1.838-5.302 1.885l-.338.003H8.552c-2.754 0-4.285-.579-5.664-1.912-1.255-1.297-1.839-2.758-1.885-5.302L1 15.45V8.551c0-2.754.579-4.286 1.912-5.664C4.21 1.633 5.67 1.05 8.214 1.002L8.552 1Z"></path></svg>
+            :
+            postUploadOutline}</button>
           <Dialog
             maxWidth="lg"
             open={openDailog}
@@ -237,21 +239,16 @@ export const Navbar = () => {
 
           </Menu>
 
-          <NavLink to="/explore" children={({ isActive }) => {
-            const file = isActive ? exploreFill : exploreOutline;
-            return (
-              <>
-                {file}
-              </>
-            );
-          }} />
+          <NavLink to="/explore">{(active === "explore" && !innerActive) ? exploreFill : exploreOutline}</NavLink>
 
 
-          <button className="no-style " onClick={handleClickNot} >{likeOutline}</button>
+          <button className="no-style " onClick={handleClickNot} >{innerActive === "notification" ?
+            <svg aria-label="Notifications" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 48 48" width="24"><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+            : likeOutline}</button>
 
 
           <button onClick={handleClick} className="no-style " >
-            <img style={{ minWidth: '27px', height: '27px', objectFit: 'cover', borderRadius: '50%' }} src={context?.auth?.avatar ? context.auth.avatar : defaultImg} alt="" />
+            <img style={{ minWidth: '27px', height: '27px', objectFit: 'cover', borderRadius: '50%', border: (active === "myprofile" && !innerActive) ? '2px solid #333333' : "2px solid white", marginLeft: '-2px' }} src={context?.auth?.avatar ? context.auth.avatar : defaultImg} alt="" />
           </button>
           <Menu
             anchorEl={anchorEl}

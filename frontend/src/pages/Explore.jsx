@@ -5,10 +5,17 @@ import { api } from '../Interceptor/apiCall'
 import { url } from '../baseUrl'
 import { useState } from 'react'
 import { Spinner } from '../assets/Spinner'
+import { useContext } from 'react'
+import { AuthContext } from "../context/Auth";
+
 
 export default function Explore() {
   const [posts, setPost] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const context = useContext(AuthContext)
+
+
   useEffect(() => {
     api.get(`${url}/post/get/explore`).then(res => {
       console.log(res.data);
@@ -21,6 +28,12 @@ export default function Explore() {
       setPost([])
     }
   }, [])
+
+
+  useEffect(() => {
+    context.handleActive("explore")
+  }, [context])
+
   return (
     <div className='home'>
       {

@@ -17,6 +17,7 @@ import Story from "./pages/Story";
 
 function App() {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
+  const [active, setActive] = useState('home')
 
   const throwErr = (err) => {
     toast.error(err, {
@@ -35,11 +36,15 @@ function App() {
     });
   };
 
+  function handleActive(page) {
+    setActive(page)
+  }
+
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess }}>
+    <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess, handleActive }}>
       <Toaster />
-      {auth && <Navbar />}
+      {auth && <Navbar active={active} />}
       <div className="width60">
         <Routes>
           <Route

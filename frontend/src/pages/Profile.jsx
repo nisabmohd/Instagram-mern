@@ -26,9 +26,14 @@ export const Profile = ({ post = true }) => {
       setUser(resp.data)
       setFollowers(resp.data.followers.length)
       setIFollow(resp.data.followers.includes(context.auth._id))
+      if (resp.data._id === context.auth._id) {
+        context.handleActive("myprofile")
+      } else {
+        context.handleActive()
+      }
     }).catch(err => console.log(err))
     return () => setUser()
-  }, [context.auth._id, params.username])
+  }, [context, params.username])
 
   useEffect(() => {
     if (!user) return

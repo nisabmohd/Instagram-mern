@@ -10,17 +10,25 @@ import { url } from '../baseUrl'
 import { Dialog, DialogTitle } from '@mui/material'
 import Select from '../components/chat/Select'
 import CloseIcon from '@mui/icons-material/Close';
+import { useContext } from 'react'
+import { AuthContext } from "../context/Auth";
+
 
 export const Chat = () => {
   const [rooms, setRooms] = useState([])
   const [open, setOpen] = React.useState(false);
   const params = useParams()
+  const context = useContext(AuthContext)
 
   useEffect(() => {
     api.get(`${url}/chat/getrooms`).then(res => {
       setRooms(res.data)
     }).catch(err => console.log(err))
   }, [])
+
+  useEffect(() => {
+    context.handleActive("chat")
+  }, [context])
 
   const handleClickOpen = () => {
     setOpen(true);

@@ -25,7 +25,13 @@ export default function Home() {
     return () => {
       setPosts([])
     }
+
   }, [])
+
+  useEffect(() => {
+    context.handleActive("home")
+  }, [context])
+
   function filterPosts(id) {
     setPosts(posts => posts.filter(item => item._id !== id))
   }
