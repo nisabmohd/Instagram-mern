@@ -30,6 +30,7 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
     const [captionShow, setCaptionShow] = useState('')
     const [iFollow, setIFollow] = useState(false)
     const [showEmojiPicker, setEmojiPicker] = useState(false)
+    const [captionMoreDialog, setCaptionMoreDialog] = useState(false)
 
 
     useEffect(() => {
@@ -95,6 +96,14 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
         setMore(false);
     };
 
+    const handleClickCaptionMenu = () => {
+        setCaptionMoreDialog(true);
+    };
+    const handleCloseCaptionMenu = () => {
+        setCaptionMoreDialog(false);
+
+    };
+
     function deletepost() {
         api.delete(`${url}/post/delete/${postId}`).then((res) => {
             if (res.data) {
@@ -140,6 +149,9 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
         setComment(prev => prev + emoji)
     }
 
+    function filterComment(id) {
+        setGetComments(prev => prev.filter(item => item._id !== id))
+    }
     return (
         <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', overflow: 'hidden', justifyContent: 'space-between' }}>
             <div className="left-dialog" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
@@ -177,11 +189,11 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                         >
                             <div>
                                 {
-                                    userId === context.auth._id ? <div className="option" onClick={() => deletepost()} style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
+                                    userId === context.auth._id ? <div className="option" onClick={() => deletepost()} style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: '#e33636', fontWeight: 'bold', cursor: 'pointer' }}>
                                         Delete
                                     </div> :
                                         iFollow ?
-                                            <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'red', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
+                                            <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: '#e33636', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
                                                 Unfollow
                                             </div> :
                                             <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.37px', color: 'black', marginTop: '0px', textAlign: 'center', cursor: 'pointer' }}>
@@ -255,12 +267,40 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
                                         </p>
                                         {
                                             user?._id === context.auth._id &&
-                                            <button className='no-style' style={{ marginLeft: '6px', fontSize: '12px', cursor: 'pointer', height: '10px', marginTop: '-12px' }}>
+                                            <button onClick={() => handleClickCaptionMenu()} className='no-style' style={{ marginLeft: '6px', fontSize: '12px', cursor: 'pointer', height: '10px', marginTop: '-12px' }}>
                                                 {
                                                     show && commentMore
                                                 }
                                             </button>
                                         }
+
+
+                                        {/* caption more dialog */}
+                                        <Dialog
+                                            PaperProps={{
+                                                style: {
+                                                    minHeight: '8%',
+                                                    maxHeight: '55%',
+                                                    minWidth: '350px',
+                                                    maxWidth: '350px',
+                                                    padding: 0,
+                                                    overflowY: 'auto',
+                                                    borderRadius: '15px'
+                                                }
+                                            }}
+                                            onClose={handleCloseCaptionMenu}
+                                            aria-labelledby="customized-dialog-title"
+                                            open={captionMoreDialog}
+                                        >
+                                            <div>
+                                                {userId === context.auth._id && <div onClick={() => handleClickOpenCaption()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer', paddingTop: '14px' }}>
+                                                    Edit
+                                                </div>}
+                                                <div onClick={() => handleCloseCaptionMenu()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'black', textAlign: 'center', cursor: 'pointer', paddingBottom: '-5px' }}>
+                                                    Cancel
+                                                </div>
+                                            </div>
+                                        </Dialog>
 
                                     </div>
                                 </div>
@@ -270,7 +310,7 @@ export const Post = ({ postId, userId, filterPosts, setOpenDilaog }) => {
 
 
                         {
-                            getComments?.map(item => <Comment key={item._id} userId={item.user} time={item.createdAt} text={item.comment} />)
+                            getComments?.map(item => <Comment filterComment={filterComment} key={item._id} owner={post?.owner} userId={item.user} time={item.createdAt} text={item.comment} postId={postId} id={item._id} />)
                         }
 
                     </div>

@@ -168,10 +168,10 @@ export default function Card({ img, likes, caption, time, comments, userId, id, 
                         >
                             <div>
                                 {
-                                    userId === context.auth._id ? <div onClick={() => deletepost()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
+                                    userId === context.auth._id ? <div onClick={() => deletepost()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', textAlign: 'center', color: '#e33636', fontWeight: 'bold', cursor: 'pointer' }}>
                                         Delete
                                     </div> :
-                                        <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: 'red', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
+                                        <div onClick={() => unFollow()} className="option" style={{ borderBottom: '1px solid #dfdfdf', width: '100%', padding: '12px 0', fontSize: '14.17px', color: '#e33636', marginTop: '0px', textAlign: 'center', fontWeight: 'bold', cursor: 'pointer' }}>
                                             Unfollow
                                         </div>
                                 }
