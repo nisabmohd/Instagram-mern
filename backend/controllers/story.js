@@ -72,8 +72,11 @@ exports.homeStory = async (req, res) => {
         const user = await User.findOne({ _id: req.user._id });
         console.log(user);
         const allStories = []
-        Promise.all(user.followings.map(async item => allStories.push(await Story.findOne({ $and: [{ owner: item }, { "createdAt": { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }] }))
-        )).then(() => {
+        Promise.all(user.followings.map(async item => {
+            const t = await Story.find({ $and: [{ owner: item }, { "createdAt": { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }] })
+            if (t.length != 0)
+                allStories.push(t)
+        })).then(() => {
             res.send(allStories)
         })
     } catch (err) {
@@ -89,3 +92,13 @@ exports.homeStory = async (req, res) => {
 
 
 // previous story
+
+
+// addHighlight
+
+
+// removeHighlight
+
+
+// viewHighlight
+

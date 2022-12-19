@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Image } from '../components/post/Image'
-import defaultimg from '../assets/dafault.png'
 import { Spinner } from '../assets/Spinner'
 import { url } from '../baseUrl'
 import { api } from '../Interceptor/apiCall'
@@ -9,6 +8,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../context/Auth'
 import { Dialog, DialogContent, DialogTitle, } from '@mui/material'
 import { Followers } from '../components/dialog/Followers'
+import Story from '../components/profile/Story'
 
 export const Profile = ({ post = true }) => {
   const navigate = useNavigate()
@@ -107,11 +107,7 @@ export const Profile = ({ post = true }) => {
     <div className='home' style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="user-info" style={{ display: 'flex', flexDirection: 'row', width: '84%', margin: 'auto', marginTop: '20px' }}>
         <div className="image-user">
-          <div className="imageuser" style={{ borderRadius: '50%', border: '3px solid #c1c1c1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', objectFit: 'cover' }}>
-            {
-              <img className='pf' src={user?.avatar ? user.avatar : defaultimg} style={{ minWidth: '145px', height: '145px', borderRadius: '50%', objectFit: 'cover' }} alt="" />
-            }
-          </div>
+          <Story avatar={user?.avatar} uid={user?._id} />
         </div>
         <div className="follow-details" style={{ marginLeft: '5vw' }}>
           <div className="samline" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
