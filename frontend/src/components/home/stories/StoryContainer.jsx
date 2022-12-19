@@ -14,7 +14,7 @@ export default function StoryContainer() {
     }, [])
     return (
         <>
-            {stories.length === 0 && <p>Nothing to see here</p>}
+            {stories.length === 0 && <p style={{ margin: 'auto', textAlign: 'center' }}>Nothing to see here</p>}
             {
                 stories.map(story =>
                     <Story key={story[0].id} id={story[0].id} owner={story[0].owner} seen={[]} />
