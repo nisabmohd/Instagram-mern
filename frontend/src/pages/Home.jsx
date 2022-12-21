@@ -9,7 +9,7 @@ import { Spinner } from "../assets/Spinner";
 import { AuthContext } from "../context/Auth";
 import StoryContainer from "../components/home/stories/StoryContainer";
 
-export default function Home() {
+export default function Home({ stories }) {
   const [loading, setLoading] = useState(true)
   const [posts, setPosts] = useState([])
   const context = useContext(AuthContext)
@@ -47,7 +47,7 @@ export default function Home() {
     <div className="home">
       <div className="left-home">
         <div className="stories">
-          <StoryContainer />
+          <StoryContainer stories={stories} />
         </div>
         <div className="posts">
           {

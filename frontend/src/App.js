@@ -5,7 +5,7 @@ import Explore from "./pages/Explore";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthContext } from "./context/Auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Private } from "./routers/Private";
 import Redirect from "./routers/Redirect";
 import { Forgot } from "./pages/Forgot";
@@ -14,10 +14,13 @@ import { Settings } from "./pages/Settings";
 import toast, { Toaster } from "react-hot-toast";
 import { Chat } from "./pages/Chat";
 import Story from "./pages/Story";
+import { api } from "./Interceptor/apiCall";
+import { url } from "./baseUrl";
 
 function App() {
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
   const [active, setActive] = useState('home')
+  const [stories, setStories] = useState([])
 
   const throwErr = (err) => {
     toast.error(err, {
@@ -36,8 +39,36 @@ function App() {
     });
   };
 
+  useEffect(() => {
+    api.get(`${url}/story/home`).then((res) => {
+      setStories(res.data)
+    }).catch(err => console.log(err))
+  }, [])
+
   function handleActive(page) {
     setActive(page)
+  }
+
+  const findStory = (id) => {
+    console.log(id);
+    const flatArr = []
+    stories.forEach(item => {
+      flatArr.push(...item)
+    })
+    const currentIndex = flatArr.findIndex((item) => item.id === id)
+    console.log(currentIndex);
+    if (currentIndex === -1) {
+      return {
+        prev: undefined,
+        current: undefined,
+        next: undefined
+      }
+    }
+    return {
+      prev: currentIndex - 1 >= 0 ? flatArr[currentIndex - 1] : undefined,
+      current: flatArr[currentIndex],
+      next: currentIndex + 1 < flatArr.length ? flatArr[currentIndex + 1] : undefined
+    }
   }
 
 
@@ -97,7 +128,7 @@ function App() {
             path="/story/:userId"
             element={
               <Private>
-                <Story />
+                <Story findStory={findStory} />
               </Private>
             }
           />
@@ -106,7 +137,7 @@ function App() {
             path="/"
             element={
               <Private>
-                <Home />
+                <Home stories={stories} />
               </Private>
             }
           />
