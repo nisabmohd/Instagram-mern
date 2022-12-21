@@ -12,19 +12,44 @@ import ReactTimeAgo from 'react-time-ago';
 import { Link, useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { Box, LinearProgress } from '@mui/material';
 
 export default function ViewBox({ stories }) {
     const [user, setUser] = useState()
+    const [bar, setBar] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {
         if (!stories) return
         api.get(`${url}/user/get/${stories?.current?.owner}`).then((res) => {
             setUser(res.data)
         }).catch(err => console.log(err))
-    }, [stories])
+        const barValue = setInterval(() => {
+            setBar(prev => {
+                if (prev + 9 > 100) {
+                    return 100
+                } return prev + 9
+            })
+        }, 500)
+        const timer = setTimeout(() => {
+            clearInterval(barValue)
+            if (!stories.next) navigate('/')
+            navigate(`/story/${stories.next.owner}?id=${stories.next.id}`)
+        }, 6000)
+
+        return () => {
+            clearInterval(barValue);
+            clearInterval(timer)
+            setBar(0)
+        }
+    }, [navigate, stories])
+
     return (
         <div style={{ backgroundColor: 'gray', width: '25vw', minWidth: '445px', height: '95vh', borderRadius: '9px', position: 'absolute', top: '2.75vh', boxShadow: '0 0 200px rgba(0,0,0,0.9) inset' }}>
+            <Box sx={{ width: '100%', color: '#656565' }}>
+                <LinearProgress sx={{ position: 'absolute', top: '0.55vh', width: '98%', left: '5px', borderRadius: '7px' }} color="inherit" variant="determinate" value={bar} />
+            </Box>
             <div className="header_story" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', position: 'absolute', top: '15px', width: '100%', }}>
+
                 <div className="left_header_story" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', color: 'white', marginLeft: '14px' }}>
                     <Link to={`/${user?.username}`}>
                         <img src={user?.avatar} style={{ width: '35px', borderRadius: '50%' }} alt="" />

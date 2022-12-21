@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTitle, } from '@mui/material'
 import { Followers } from '../components/dialog/Followers'
 import Story from '../components/profile/Story'
 
-export const Profile = ({ post = true }) => {
+export const Profile = ({ findStory, post = true }) => {
   const navigate = useNavigate()
   const context = useContext(AuthContext)
   const [user, setUser] = useState()
@@ -107,7 +107,7 @@ export const Profile = ({ post = true }) => {
     <div className='home' style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="user-info" style={{ display: 'flex', flexDirection: 'row', width: '84%', margin: 'auto', marginTop: '20px' }}>
         <div className="image-user">
-          <Story avatar={user?.avatar} uid={user?._id} />
+          <Story profile={true} avatar={user?.avatar} uid={user?._id} />
         </div>
         <div className="follow-details" style={{ marginLeft: '5vw' }}>
           <div className="samline" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>

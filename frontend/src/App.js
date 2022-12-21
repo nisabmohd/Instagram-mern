@@ -73,7 +73,7 @@ function App() {
 
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess, handleActive }}>
+    <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess, handleActive, findStory }}>
       <Toaster />
       {auth && <Navbar active={active} />}
       <div className="width60">
@@ -128,7 +128,7 @@ function App() {
             path="/story/:userId"
             element={
               <Private>
-                <Story findStory={findStory} />
+                <Story />
               </Private>
             }
           />
