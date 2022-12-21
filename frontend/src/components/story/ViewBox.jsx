@@ -22,7 +22,8 @@ export default function ViewBox({ stories }) {
         if (!stories) return
         api.get(`${url}/user/get/${stories?.current?.owner}`).then((res) => {
             setUser(res.data)
-        }).catch(err => console.log(err))
+            return api.put(`${url}/story/seen/${stories?.current?.id}`)
+        }).then((res) => console.log(res.data)).catch(err => console.log(err))
         const barValue = setInterval(() => {
             setBar(prev => {
                 if (prev + 9 > 100) {

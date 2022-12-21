@@ -10,12 +10,16 @@ import { url } from '../../../baseUrl'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogTitle, } from '@mui/material'
 import { User } from '../../dialog/User'
+import AddIcon from '@mui/icons-material/Add';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../../../firebase'
 
 export default function Right() {
     const { auth } = useContext(AuthContext)
     const [suggestedUsers, setSuggestedUsers] = useState([])
     const [completeSuggestions, setCompleteSuggestions] = useState([])
     const [open, setOpen] = React.useState(false);
+    const context = useContext(AuthContext)
 
     useEffect(() => {
         api.get(`${url}/user/suggestions?limit=15`).then(res => {
@@ -33,16 +37,46 @@ export default function Right() {
         setOpen(false);
     };
 
+    async function handleStoryUpload(e) {
+        const file = e.target.files[0]
+        if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+            const storageRef = ref(storage, 'images/' + file.name);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                },
+                (error) => {
+                    console.log(error);
+                    context.throwErr("Some error occured")
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        api.post(`${url}/story`, {
+                            data: downloadURL
+                        }).then(res => {
+                            if (res.data) {
+                                context.throwSuccess("story uplaoded")
+                            }
+                        }).catch(err => console.log(err))
+                    });
+                }
+            );
+        } else {
+            context.throwErr('File type not supported')
+        }
+    }
 
 
     return (
         <div style={{ marginTop: '15px' }}>
             <div className="my-acc" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="img" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    {
-                        <Link to={`/${auth?.username}`}><img src={auth?.avatar ? auth.avatar : defaultImg} style={{ minWidth: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt="" /></Link>
-
-                    }
+                    <Link to={`/${auth?.username}`} style={{ position: 'relative' }}><img src={auth?.avatar ? auth.avatar : defaultImg} style={{ minWidth: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', }} alt="" /></Link>
+                    <input onChange={e => handleStoryUpload(e)} type="file" id="story_up" hidden />
+                    <label htmlFor="story_up" title="Add new story" style={{ position: 'relative', top: '15px', left: '-12px', backgroundColor: '#0095F6', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', padding: '2px', cursor: 'pointer' }}><AddIcon sx={{ fontSize: '16px', color: 'white' }} /></label>
                     <div className="name" style={{ display: 'flex', flexDirection: 'column', marginLeft: '18px' }}>
                         <Link to={`/${auth?.username}`} style={{ color: 'black', fontSize: '14.75px', fontWeight: 'bold' }}>{auth?.username}</Link>
                         <Link to={`/${auth?.username}`} style={{ color: 'gray', fontSize: '14.35px', marginTop: '4.5px' }}>{auth?.name}</Link>
