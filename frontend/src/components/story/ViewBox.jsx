@@ -83,7 +83,7 @@ export default function ViewBox({ stories }) {
             }
             <div className="header_comments" style={{ width: '100%', position: 'absolute', bottom: '18px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <div className="input_story_reply" style={{ width: '75%' }}>
-                    <input style={{ width: '100%', marginLeft: '14px', height: '40px', borderRadius: '16px', paddingLeft: '8px', outline: 'none', color: 'white', border: '1px solid white', fontSize: '12px' }} type="text" placeholder='Reply to thenisab' />
+                    <input style={{ width: '100%', marginLeft: '14px', height: '40px', borderRadius: '16px', paddingLeft: '8px', outline: 'none', color: 'white', border: '1px solid white', fontSize: '12px' }} type="text" placeholder={'Reply to ' + user?.username} />
                 </div>
                 <div className="input_story_reactions" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginRight: '9px', justifyContent: 'space-between', width: '70px', marginLeft: 'auto' }}>
                     <FavoriteBorderIcon sx={{ color: 'white', fontSize: '30px' }} />
