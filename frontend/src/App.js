@@ -16,8 +16,15 @@ import { Chat } from "./pages/Chat";
 import Story from "./pages/Story";
 import { api } from "./Interceptor/apiCall";
 import { url } from "./baseUrl";
+import io from 'socket.io-client'
+
+
+const socket = io('http://localhost:8000');
 
 function App() {
+  socket.on('connection', function (data) {
+    console.log(data);
+  });
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
   const [active, setActive] = useState('home')
   const [stories, setStories] = useState([])
@@ -44,6 +51,15 @@ function App() {
       setStories(res.data)
     }).catch(err => console.log(err))
   }, [])
+
+  useEffect(() => {
+    socket.on('connect')
+    socket.emit('online', { uid: auth._id })
+    return () => {
+      socket.off('connect');
+    };
+  }, [auth._id]);
+
 
   function handleActive(page) {
     setActive(page)

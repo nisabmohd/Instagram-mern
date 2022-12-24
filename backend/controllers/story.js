@@ -70,7 +70,6 @@ exports.addSeen = async (req, res) => {
 exports.homeStory = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.user._id });
-        console.log(user);
         const allStories = []
         Promise.all(user.followings.map(async item => {
             const t = await Story.find({ $and: [{ owner: item }, { "createdAt": { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }] })

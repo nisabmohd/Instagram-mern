@@ -111,6 +111,14 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  online: {
+    type: Boolean,
+    default: false
+  },
+  lastSeen: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 module.exports = new mongoose.model("User", userSchema);

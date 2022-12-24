@@ -15,6 +15,7 @@ import Resizer from "react-image-file-resizer";
 import OtherMessage from './OtherMessage';
 import MyMessage from './MyMessage';
 import Details from './Details';
+import ReactTimeAgo from 'react-time-ago'
 import Emoji from '../emoji/Emoji';
 
 export default function ChatBox({ roomId, deleteRoom }) {
@@ -27,6 +28,9 @@ export default function ChatBox({ roomId, deleteRoom }) {
     const [details, setDetails] = useState(false)
     const navigate = useNavigate()
     const [showEmojiPicker, setEmojiPicker] = useState(false)
+    const [online, setOnline] = useState(false)
+    const [lastSeen, SetLastSeen] = useState()
+
 
     const q = useMemo(() => query(collection(db, roomId), orderBy("timestamp", "asc")), [roomId])
     const scrollRef = useRef()
@@ -129,11 +133,13 @@ export default function ChatBox({ roomId, deleteRoom }) {
             const nameArr = res.data.people.filter(id => id !== context.auth._id)
             if (nameArr.length > 1) {
                 return api.get(`${url}/user/get/${nameArr[0]}`).then(resp => {
-                    return { data: { name: `${resp.data.name} and ${nameArr.length - 1} others`, avatar: "https://images.squarespace-cdn.com/content/v1/53eba949e4b0c2eda84a38cc/1592250464335-933Q01Q1A0JOXSIRDVSR/social.png?format=500w", username: '' } }
+                    return { data: { name: `${resp.data.name} and ${nameArr.length - 1} others`, avatar: "https://images.squarespace-cdn.com/content/v1/53eba949e4b0c2eda84a38cc/1592250464335-933Q01Q1A0JOXSIRDVSR/social.png?format=500w", username: '', online: false } }
                 })
             }
             return api.get(`${url}/user/get/${nameArr[0]}`)
         }).then((resp => {
+            setOnline(resp.data.online)
+            SetLastSeen(resp.data.lastSeen)
             setRoomName(resp.data.name)
             setRoomImage(resp.data.avatar)
             setRoomDetails(resp.data.username)
@@ -166,8 +172,27 @@ export default function ChatBox({ roomId, deleteRoom }) {
                                     roomDetails ?
                                         <Link to={`/${roomDetails}`} >
                                             <div className="info_user_chat" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '28px' }}>
-                                                <img src={roomImage || defaultImg} style={{ width: '40px', borderRadius: '50%', backgroundColor: '#eaeaea' }} alt="" />
-                                                <p style={{ marginLeft: '10px', fontSize: '14px' }}>{RoomName}</p>
+                                                <img src={roomImage || defaultImg} style={{ width: '40px', borderRadius: '50%', backgroundColor: '#eaeaea', position: 'relative' }} alt="" />
+                                                {
+                                                    online &&
+                                                    <div style={{
+                                                        backgroundColor: 'green', width: '15px', height: '15px', borderRadius: '50%', position: 'relative', top: '15px', left: '-9px', zIndex
+                                                            : '99'
+                                                    }}></div>
+                                                }
+                                                <div className="det_online" style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
+                                                    <p style={{ fontSize: '14px' }}>{RoomName}</p>
+                                                    {
+                                                        online ?
+                                                            <p style={{ fontSize: '13px', color: 'gray' }}>Active Now</p>
+                                                            :
+                                                            <p style={{ fontSize: '13px', color: 'gray', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>{lastSeen && <>
+                                                                <p style={{ marginRight: '5px' }}> Active </p>
+                                                                <ReactTimeAgo date={Date.parse(lastSeen)} locale="en-US" timeStyle="twitter" />
+                                                                <p style={{ marginLeft: '5px' }}>ago</p>
+                                                            </>}</p>
+                                                    }
+                                                </div>
                                             </div>
                                         </Link>
                                         :

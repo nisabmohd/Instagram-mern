@@ -23,6 +23,7 @@ import { storage } from '../../firebase';
 
 
 export const Navbar = ({ active }) => {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [imgurl, setImgurl] = useState('')
   const context = useContext(AuthContext)
@@ -120,6 +121,7 @@ export const Navbar = ({ active }) => {
       console.log(res.data);
     })
   }
+
 
   return (
     <div className="navbar flex">

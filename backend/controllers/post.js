@@ -173,7 +173,6 @@ exports.addComment = async (req, res) => {
 
 exports.updateComment = async (req, res) => {
   try {
-    console.log(req.query);
     const comment = await Post.updateOne(
       { _id: req.params.postId, "comments._id": req.query.commentId },
       { $set: { "comments.$.comment": req.body.comment } }
