@@ -54,11 +54,12 @@ function App() {
 
   useEffect(() => {
     socket.on('connect')
-    socket.emit('online', { uid: auth._id })
+    if (auth)
+      socket.emit('online', { uid: auth._id })
     return () => {
       socket.off('connect');
     };
-  }, [auth._id]);
+  }, [auth]);
 
 
   function handleActive(page) {
