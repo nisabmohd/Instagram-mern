@@ -4,6 +4,8 @@ require('./config/db').connectToDB()
 const cors = require('cors')
 const app = express();
 const server = require('http').createServer(app);
+app.use(express.json())
+app.use(cors())
 const io = require('socket.io')(server, {
     cors: {
         origin: '*',
@@ -20,8 +22,7 @@ const chatRoute = require('./routes/chat')
 const storyRoute = require('./routes/story');
 const User = require('./models/User');
 
-app.use(express.json())
-app.use(cors())
+
 
 app.use('/auth', authRoute)
 app.use('/post', postRoute)
