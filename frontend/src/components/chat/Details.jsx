@@ -28,7 +28,7 @@ export default function Details({ handleDetailsToggle, roomId, handleLeaveChat }
             <div className="memebers" style={{ padding: '0 15px', borderBottom: '1px solid #dbdbdb' }}>
                 <p style={{ marginLeft: '10px', fontSize: '15.5px', marginTop: '18px', marginBottom: '8px' }}>Members</p>
                 {
-                    people.map(userId => <UserCardDetails key={userId} uid={userId} />)
+                    people.map(userId => <UserCardDetails showOnline={true} key={userId} uid={userId} />)
                 }
 
             </div>

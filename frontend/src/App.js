@@ -17,6 +17,7 @@ import Story from "./pages/Story";
 import { api } from "./Interceptor/apiCall";
 import { url } from "./baseUrl";
 import io from 'socket.io-client'
+import { Password } from './pages/Password'
 
 
 const socket = io('http://localhost:8000');
@@ -47,10 +48,11 @@ function App() {
   };
 
   useEffect(() => {
+    if (!auth) return
     api.get(`${url}/story/home`).then((res) => {
       setStories(res.data)
     }).catch(err => console.log(err))
-  }, [])
+  }, [auth])
 
   useEffect(() => {
     socket.on('connect')
@@ -167,6 +169,7 @@ function App() {
               </Private>
             }
           />
+          <Route path="/reset/:token" element={<Password />} />
           <Route
             path="/accounts/:params"
             element={

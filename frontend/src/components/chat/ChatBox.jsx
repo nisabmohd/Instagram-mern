@@ -36,6 +36,7 @@ export default function ChatBox({ roomId, deleteRoom }) {
     const scrollRef = useRef()
 
     useEffect(() => {
+        setDetails(false)
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const messages = [];
             querySnapshot.forEach((doc) => {

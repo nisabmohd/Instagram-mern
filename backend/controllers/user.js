@@ -1,5 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require('bcrypt')
+const { SendMail } = require('../utils/mail')
+const { v4: uid } = require('uuid')
+const ResetTokens = require('../models/ResetTokens')
 
 // get a user by username
 exports.getUser = async (req, res) => {
@@ -245,13 +248,70 @@ exports.getAllUsers = async (req, res) => {
   }
 }
 
+
 // forgot password
+exports.resetPassword = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      $or: [{ email: req.body.text }, { username: req.body.text }],
+    })
+    if (!user) return res.status(400).json({ success: false, message: "No user found" })
+    const token = uid()
+    const prevToken = await ResetTokens.findOne({ email: user.email })
+    if (prevToken) {
+      await ResetTokens.updateOne({ email: user.email }, { $set: { token: token } })
+    } else {
+      const newTokenSave = new ResetTokens({
+        token, email: user.email
+      })
+      await newTokenSave.save()
+    }
+    await SendMail(`${process.env.CLIENT_URL}/reset/${token}`, user.email)
+    res.json({ success: true, message: 'Reset link sent to email' })
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+}
 
-// add story
 
-// get user story
+exports.checkResetToken = async (req, res) => {
+  try {
+    const tokenDoc = await ResetTokens.findOne({ token: req.params.token })
+    if (!tokenDoc) return res.status(400).json({ success: false, message: 'Invalid Link' })
+    const now = Date.now();
+    const createdAt = Date.parse(tokenDoc.updatedAt);
+    const oneDay = 24 * 60 * 60 * 1000;
+    const isMoreThanADay = (now - createdAt) > oneDay;
+    if (isMoreThanADay) return res.status(400).json({ success: false, message: 'Link Expired' })
+    res.json({ success: true })
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+}
 
-// followings users story
 
+exports.handleNewPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body
+    const tokenDoc = await ResetTokens.findOne({ token })
+    if (!tokenDoc) return res.status(400).json({ success: false, message: 'Something went wrong' })
+    User.updateOne({ email: tokenDoc.email }, { $set: { password: bcrypt.hashSync(password, 10) } }).then(() => {
+      return ResetTokens.deleteOne({ token })
+    }).then(() => {
+      res.json({ success: true })
+    })
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
+  }
+}
 
 // read unread notifications to read

@@ -1,4 +1,4 @@
-const { getUser, followHandle, getFollowings, getFollowers, notications, hasNotications, updateUser, search, getUserById, suggestions, changePassword, getAllUsers } = require('../controllers/user')
+const { getUser, followHandle, getFollowings, getFollowers, notications, hasNotications, updateUser, search, getUserById, suggestions, changePassword, getAllUsers, resetPassword, checkResetToken, handleNewPassword } = require('../controllers/user')
 const { isAuthenticated } = require('../middlewares/auth')
 
 const router = require('express').Router()
@@ -11,7 +11,13 @@ router.route("/suggestions").get(isAuthenticated, suggestions)
 
 router.route("/changepassword").put(isAuthenticated, changePassword)
 
+router.route("/reset").post(resetPassword)
+
+router.route('/newpassword').post(handleNewPassword)
+
 router.route('/:username').get(getUser)
+
+router.route("/checkreset/:token").get(checkResetToken)
 
 router.route('/get/:id').get(getUserById)
 
