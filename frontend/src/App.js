@@ -20,7 +20,7 @@ import io from "socket.io-client";
 import { Password } from "./pages/Password";
 import AuthRedirect from "./pages/AuthRedirect";
 
-const socket = io(url);
+export const socket = io(url);
 
 function App() {
   socket.on("connection", function (data) {

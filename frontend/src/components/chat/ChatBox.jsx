@@ -17,18 +17,22 @@ import MyMessage from './MyMessage';
 import Details from './Details';
 import ReactTimeAgo from 'react-time-ago'
 import Emoji from '../emoji/Emoji';
+import { socket } from '../../App';
+import Typing from './Typing';
 
 export default function ChatBox({ roomId, deleteRoom }) {
+    const typesocket = useMemo(() => socket, [])
     const [RoomName, setRoomName] = useState('')
     const [roomDetails, setRoomDetails] = useState('')
     const context = useContext(AuthContext)
     const [roomImage, setRoomImage] = useState()
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState()
     const [snapShotMessages, setSnapShotMessages] = useState([])
     const [details, setDetails] = useState(false)
     const navigate = useNavigate()
     const [showEmojiPicker, setEmojiPicker] = useState(false)
     const [online, setOnline] = useState(false)
+    const [typing, setTyping] = useState()
     const [lastSeen, SetLastSeen] = useState()
 
 
@@ -50,6 +54,17 @@ export default function ChatBox({ roomId, deleteRoom }) {
     useEffect(() => {
         updateScroll()
     }, [snapShotMessages])
+
+    useEffect(() => {
+        typesocket.on(`typinglistenon${roomId}`, (uid) => {
+            setTyping(uid)
+            updateScroll()
+        })
+        typesocket.on(`typinglistenoff${roomId}`, (uid) => {
+            setTyping(undefined)
+            updateScroll()
+        })
+    }, [roomId, typesocket])
 
     function handleDetailsToggle() {
         setDetails(prev => !prev)
@@ -99,6 +114,18 @@ export default function ChatBox({ roomId, deleteRoom }) {
             );
         });
 
+    useEffect(() => {
+        if (message === undefined) return
+        const timer = setTimeout(() => {
+            typesocket.emit("typingoff", { uid: context.auth._id, roomId })
+        }, 1500)
+        typesocket.emit("typingon", { uid: context.auth._id, roomId })
+        return () => clearTimeout(timer)
+    }, [context.auth._id, message, roomId, typesocket])
+
+    function handleMessageInput(e) {
+        setMessage(e.target.value)
+    }
     async function handleUplaodImage(e) {
         const file = e.target.files[0]
         if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
@@ -223,6 +250,7 @@ export default function ChatBox({ roomId, deleteRoom }) {
                                             </div>
                                         })
                                     }
+                                    {typing && <Typing user={typing} />}
 
                                 </div>
 
@@ -232,7 +260,7 @@ export default function ChatBox({ roomId, deleteRoom }) {
                                         <button onClick={(e) => { e.stopPropagation(); setEmojiPicker(prev => !prev) }} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             {emojiIcon}
                                         </button>
-                                        <input onKeyDown={e => handleKeyPress(e)} onChange={e => setMessage(e.target.value)} value={message} style={{ width: '80%', height: '100%', border: 'none', marginLeft: '5px', outline: 'none' }} type="text" placeholder='Message...' />
+                                        <input onKeyDown={e => handleKeyPress(e)} onChange={handleMessageInput} value={message} style={{ width: '80%', height: '100%', border: 'none', marginLeft: '5px', outline: 'none' }} type="text" placeholder='Message...' />
                                         <input onChange={(e) => handleUplaodImage(e)} type="file" id="image_chat" hidden />
                                         <label htmlFor="image_chat" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                                             {galleryIcon}

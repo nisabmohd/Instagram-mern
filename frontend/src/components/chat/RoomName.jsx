@@ -48,7 +48,7 @@ export default function RoomName({ roomId }) {
 
     return (
         <Link to={`/chats/${roomId}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: "18px 0", paddingLeft: '22px', cursor: 'pointer' }} >
-            <img style={{ borderRadius: '50%', width: '52px', backgroundColor: '#eaeaea', position: 'relative' }} src={roomImage || defaultImg} alt="" />
+            <img style={{ borderRadius: '50%', width: '52px', height: '52px', backgroundColor: '#eaeaea', position: 'relative', objectFit: 'cover' }} src={roomImage || defaultImg} alt="" />
             {
                 online &&
                 <div style={{
