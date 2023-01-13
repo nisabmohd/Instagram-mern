@@ -16,19 +16,19 @@ import { Chat } from "./pages/Chat";
 import Story from "./pages/Story";
 import { api } from "./Interceptor/apiCall";
 import { url } from "./baseUrl";
-import io from 'socket.io-client'
-import { Password } from './pages/Password'
+import io from "socket.io-client";
+import { Password } from "./pages/Password";
+import AuthRedirect from "./pages/AuthRedirect";
 
-
-const socket = io('http://localhost:8000');
+const socket = io(url);
 
 function App() {
-  socket.on('connection', function (data) {
+  socket.on("connection", function (data) {
     console.log(data);
   });
   const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("user")));
-  const [active, setActive] = useState('home')
-  const [stories, setStories] = useState([])
+  const [active, setActive] = useState("home");
+  const [stories, setStories] = useState([]);
 
   const throwErr = (err) => {
     toast.error(err, {
@@ -48,51 +48,56 @@ function App() {
   };
 
   useEffect(() => {
-    if (!auth) return
-    api.get(`${url}/story/home`).then((res) => {
-      setStories(res.data)
-    }).catch(err => console.log(err))
-  }, [auth])
+    if (!auth) return;
+    api
+      .get(`${url}/story/home`)
+      .then((res) => {
+        setStories(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [auth]);
 
   useEffect(() => {
-    socket.on('connect')
-    if (auth)
-      socket.emit('online', { uid: auth._id })
+    socket.on("connect");
+    if (auth) socket.emit("online", { uid: auth._id });
     return () => {
-      socket.off('connect');
+      socket.off("connect");
     };
   }, [auth]);
 
-
   function handleActive(page) {
-    setActive(page)
+    setActive(page);
   }
 
   const findStory = (id) => {
     console.log(id);
-    const flatArr = []
-    stories.forEach(item => {
-      flatArr.push(...item)
-    })
-    const currentIndex = flatArr.findIndex((item) => item.id === id)
+    const flatArr = [];
+    stories.forEach((item) => {
+      flatArr.push(...item);
+    });
+    const currentIndex = flatArr.findIndex((item) => item.id === id);
     console.log(currentIndex);
     if (currentIndex === -1) {
       return {
         prev: undefined,
         current: undefined,
-        next: undefined
-      }
+        next: undefined,
+      };
     }
     return {
       prev: currentIndex - 1 >= 0 ? flatArr[currentIndex - 1] : undefined,
       current: flatArr[currentIndex],
-      next: currentIndex + 1 < flatArr.length ? flatArr[currentIndex + 1] : undefined
-    }
-  }
-
+      next:
+        currentIndex + 1 < flatArr.length
+          ? flatArr[currentIndex + 1]
+          : undefined,
+    };
+  };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, throwErr, throwSuccess, handleActive, findStory }}>
+    <AuthContext.Provider
+      value={{ auth, setAuth, throwErr, throwSuccess, handleActive, findStory }}
+    >
       <Toaster />
       {auth && <Navbar active={active} />}
       <div className="width60">
@@ -113,12 +118,7 @@ function App() {
               </Redirect>
             }
           />
-          <Route
-            path="/forgot"
-            element={
-              <Forgot />
-            }
-          />
+          <Route path="/forgot" element={<Forgot />} />
           <Route
             path="/explore"
             element={
@@ -135,6 +135,7 @@ function App() {
               </Private>
             }
           />
+          <Route path="/oauth/redirect" element={<AuthRedirect />} />
           <Route
             path="/chats/:id"
             element={

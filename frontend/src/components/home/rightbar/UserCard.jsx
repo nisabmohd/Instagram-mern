@@ -18,7 +18,7 @@ export function UserCard({ avatar, username, name, userId }) {
             <div className="left" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <div className="user-img" style={{ marginRight: '14px' }}>
                     <Link to={`/${username}`}>
-                        <img src={avatar ?? deafultImg} style={{ width: '39px', borderRadius: '50%', }} alt="" />
+                        <img src={avatar ?? deafultImg} style={{ width: '39px', borderRadius: '50%', height: '39px', objectFit: 'cover' }} alt="" />
                     </Link>
                 </div>
                 <div className="username" style={{ display: 'flex', flexDirection: 'column', marginTop: '-4px' }}>

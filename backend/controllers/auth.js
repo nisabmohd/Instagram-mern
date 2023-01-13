@@ -49,7 +49,7 @@ exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({
       $or: [{ email: req.body.text }, { username: req.body.text }],
-    }).select("+password");
+    });
     if (!user)
       return res.status(401).send({
         success: false,
@@ -129,45 +129,46 @@ exports.logout = async (req, res) => {
 };
 
 exports.googleoauth = async (req, res) => {
-  const { id_token, access_token } = await getUserFromCode(req.query.code);
-  const user = await userDetails(access_token, id_token);
-  let isUser = await User.findOne({ email: user.email });
-  if (!isUser) {
-    // save user to db
-    const temp = new User({
-      username: user.name.split(" ").join(""),
-      name: user.name,
-      email: user.email,
-      avatar: user.picture,
-    });
-    isUser = temp.save();
-  }
-  const access_token_server = jwt.sign(
-    { _id: isUser._id },
-    process.env.JWT_Secret,
-    {
-      expiresIn: "30m",
+  try {
+    const { id_token, access_token } = await getUserFromCode(req.query.code);
+    const user = await userDetails(access_token, id_token);
+    let isUser = await User.findOne({ email: user.email });
+    if (!isUser) {
+      const temp = new User({
+        username: user.name.split(" ").join(""),
+        name: user.name,
+        email: user.email,
+        avatar: user.picture,
+      });
+      isUser = temp.save();
     }
-  );
-  const refresh_token_server = jwt.sign(
-    { _id: isUser._id },
-    process.env.JWT_Refresh_Secret
-  );
-  const refToken = new Token({
-    token: refresh_token_server,
-  });
-  await refToken.save();
-  const options = {
-    success: true,
-    access_token_server,
-    refresh_token_server,
-  };
-  console.log(
-    `${process.env.CLIENT_URL}?success=true&access_token=${access_token_server}&refresh_token=${refresh_token_server}`
-  );
-  res.redirect(
-    `${process.env.CLIENT_URL}?success=true&access_token=${access_token_server}&refresh_token=${refresh_token_server}`
-  );
+    const access_token_server = jwt.sign(
+      { _id: isUser._id },
+      process.env.JWT_Secret,
+      {
+        expiresIn: "30m",
+      }
+    );
+    const refresh_token_server = jwt.sign(
+      { _id: isUser._id },
+      process.env.JWT_Refresh_Secret
+    );
+    const refToken = new Token({
+      token: refresh_token_server,
+    });
+    await refToken.save();
+    const options = {
+      success: true,
+      access_token_server,
+      refresh_token_server,
+    };
+    res.redirect(
+      `${process.env.CLIENT_URL}/oauth/redirect?uid=${isUser._id}&access_token=${access_token_server}&refresh_token=${refresh_token_server}`
+    );
+  } catch (err) {
+    console.log(err);
+    res.send("Something unexpected happened.");
+  }
 };
 
 async function getUserFromCode(code) {
