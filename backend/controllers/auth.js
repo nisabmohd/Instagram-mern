@@ -2,6 +2,9 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Token = require("../models/AuthTokens");
+const axios = require("axios");
+const qs = require("qs");
+const fs = require("fs");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -124,3 +127,85 @@ exports.logout = async (req, res) => {
     });
   }
 };
+
+exports.googleoauth = async (req, res) => {
+  const { id_token, access_token } = await getUserFromCode(req.query.code);
+  const user = await userDetails(access_token, id_token);
+  let isUser = await User.findOne({ email: user.email });
+  if (!isUser) {
+    // save user to db
+    const temp = new User({
+      username: user.name.split(" ").join(""),
+      name: user.name,
+      email: user.email,
+      avatar: user.picture,
+    });
+    isUser = temp.save();
+  }
+  const access_token_server = jwt.sign(
+    { _id: isUser._id },
+    process.env.JWT_Secret,
+    {
+      expiresIn: "30m",
+    }
+  );
+  const refresh_token_server = jwt.sign(
+    { _id: isUser._id },
+    process.env.JWT_Refresh_Secret
+  );
+  const refToken = new Token({
+    token: refresh_token_server,
+  });
+  await refToken.save();
+  const options = {
+    success: true,
+    access_token_server,
+    refresh_token_server,
+  };
+  console.log(
+    `${process.env.CLIENT_URL}?success=true&access_token=${access_token_server}&refresh_token=${refresh_token_server}`
+  );
+  res.redirect(
+    `${process.env.CLIENT_URL}?success=true&access_token=${access_token_server}&refresh_token=${refresh_token_server}`
+  );
+};
+
+async function getUserFromCode(code) {
+  const url = "https://oauth2.googleapis.com/token";
+  const values = {
+    code,
+    client_id: process.env.clientid,
+    client_secret: process.env.clientsecret,
+    redirect_uri: process.env.redirect_url,
+    grant_type: "authorization_code",
+  };
+
+  try {
+    const res = await axios.post(url, qs.stringify(values), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    // throw new Error(error);
+  }
+}
+
+async function userDetails(access_token, id_token) {
+  return axios
+    .get(
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
+      {
+        headers: {
+          Authorization: `Bearer ${id_token}`,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .catch((error) => {
+      console.error(`Failed to fetch user`);
+      throw new Error(error.message);
+    });
+}

@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
   ],
   password: {
     type: String,
-    require: [true, "Enter Password"],
     minLength: 6,
     select: false,
   },
@@ -113,12 +112,12 @@ const userSchema = new mongoose.Schema({
   ],
   online: {
     type: Boolean,
-    default: false
+    default: false,
   },
   lastSeen: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 
 module.exports = new mongoose.model("User", userSchema);
