@@ -7,7 +7,16 @@ Make sure you have installed all of the following prerequisites on your developm
 * Git - [Download & Install Git](https://git-scm.com/downloads). OSX and Linux machines typically have this already installed.
 * Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager. If you encounter any problems, you can also use this [GitHub Gist](https://gist.github.com/isaacs/579814) to install Node.js.
 
+
+## Cloning The GitHub Repository
+The recommended way to get this repo clone is to use git to directly clone the repository:
+
+```bash
+$ git clone https://github.com/nisabmohd/Instagram-mern.git
+```
+
 ## Environment variables React setup 
+create .env file in frontend/src
 ```
 REACT_APP_API_URL=http://localhost:8000
 REACT_APP_GOOGLE_OAUTH_REDIRECT_URL=http://localhost:8000/auth/google/oauth
@@ -15,6 +24,7 @@ REACT_APP_GOOGLE_CLIENT_ID= {google auth client id}
 
 ```
 ## Environment variables Node setup 
+create .env file in backend
 ```
 PORT = {port number}
 Mongo_URI= {your mongo uri}
@@ -29,13 +39,6 @@ redirect_url=http://localhost:8000/auth/google/oauth
 
 ```
 
-
-## Cloning The GitHub Repository
-The recommended way to get this repo clone is to use git to directly clone the repository:
-
-```bash
-$ git clone https://github.com/nisabmohd/Instagram-mern.git
-```
 
 ## Running Your Application
 
