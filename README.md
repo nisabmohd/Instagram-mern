@@ -31,7 +31,7 @@ redirect_url=http://localhost:8000/auth/google/oauth
 
 
 ## Cloning The GitHub Repository
-The recommended way to get ChatGPT clone is to use git to directly clone the repository:
+The recommended way to get this repo clone is to use git to directly clone the repository:
 
 ```bash
 $ git clone https://github.com/nisabmohd/Instagram-mern.git
